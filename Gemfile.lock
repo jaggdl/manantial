@@ -269,6 +269,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  base64 (= 0.2.0)
   bcrypt_pbkdf
   bootsnap
   capistrano (~> 3.11)
