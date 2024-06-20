@@ -1,43 +1,20 @@
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Rails No Build</a>
+<div class="space-y-4">
+  <h1 class="text-3xl font-bold w-full">José Alfredo García García de León</h1>
+  <div class="flex items-start">
+    <%= image_tag("headshot.jpg", class: "w-16 h-16 mr-4 float-left rounded-full") %>
+    <p class="prose">
+      I am a fullstack web developer with +6 years of experience.
+      Currently working at <a href="https://envato.com">Envato</a>
+      and bootstraping <a href="https://cyberhole.io">Cyberhole</a>.
+      Creator of <a href="https://www.youtube.com/@TopsSegunChatGPT">Tops Según ChatGPT</a>
+      (<a href="https://www.youtube.com/@TopPicksbyChatGPT">Tops Picks by ChatGPT</a>).
+    </p>
   </div>
-</nav>
-
-<div class="container py-5" data-controller="hello">
-  <h1>Example of using Boostrap without bundling</h1>
-
-  <ul class="list-group py-5">
-    <li class="list-group-item">Using import maps</li>
-    <li class="list-group-item">With Turbo</li>
-    <li class="list-group-item">Stimulus</li>
-  </ul>
-
-
-  <div class="text-center my-3">
-    <button
-      class="btn btn-lg btn-primary px-5 mb-3"
-      data-action="hello#sayHi">
-      SAY HI TO THE WORLD
-    </button>
-
-    <div class="text-secondary">Please see the hello_controller.js to see StimulusJS with Bootstrap in action</div>
-  </div>
-
-  <div class="modal modal-lg" tabindex="-1" data-hello-target="modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body bg-primary-subtle">
-          <h1 class="display-1 text-center">HELLO WORLD!</h1>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <article class="prose">
+    <p>
+      Feel free to reach out via email at <a href="mailto:jose@cyberhole.io">jose@cyberhole.io</a>.
+      You can also find me <a href="https://x.com/J_A_Garcia">on Twitter</a>
+      and <a href="https://www.linkedin.com/in/jos%C3%A9-alfredo-garc%C3%ADa-2b5640284/">on LinkedIn</a>.
+    </p>
+  </article>
 </div>

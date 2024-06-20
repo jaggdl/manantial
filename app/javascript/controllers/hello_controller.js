@@ -6,9 +6,7 @@ export default class extends Controller {
   }
 
   sayHi() {
-    new bootstrap.Modal(this.modalTarget, {
-      backdrop: 'static'
-    }).show();
+    '<p>Hello</p>'
   }
 
 }
