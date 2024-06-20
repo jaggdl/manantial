@@ -1,1 +1,131 @@
+/* styles.scss */
 
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@mixin max-w-xl {
+  max-width: 36rem; /* 576px */
+}
+
+@mixin mx-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin mt-28 {
+  margin-top: 7rem; /* 112px */
+}
+
+@mixin px-5 {
+  padding-left: 1.25rem; /* 20px */
+  padding-right: 1.25rem; /* 20px */
+}
+
+@mixin flex {
+  display: flex;
+}
+
+@mixin flex-wrap {
+  flex-wrap: wrap;
+}
+
+body {
+  main {
+    @include container;
+    @include max-w-xl;
+    @include mx-auto;
+    @include mt-28;
+    @include px-5;
+    @include flex;
+    @include flex-wrap;
+  }
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem; /* 4 * 0.25rem = 1rem */
+}
+
+.text-3xl {
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.25rem; /* 36px */
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.items-start {
+  align-items: flex-start;
+}
+
+.w-16 {
+  width: 4rem; /* 64px */
+}
+
+.h-16 {
+  height: 4rem; /* 64px */
+}
+
+.mr-4 {
+  margin-right: 1rem; /* 16px */
+}
+
+.float-left {
+  float: left;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.prose {
+  max-width: 65ch;
+}
+
+article.prose p {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+@mixin max-w-xl {
+  max-width: 36rem; /* 576px */
+}
+
+@mixin mx-auto {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@mixin mt-28 {
+  margin-top: 7rem; /* 112px */
+}
+
+@mixin px-5 {
+  padding-left: 1.25rem; /* 20px */
+  padding-right: 1.25rem; /* 20px */
+}
+
+@mixin flex {
+  display: flex;
+}
+
+@mixin flex-wrap {
+  flex-wrap: wrap;
+}
