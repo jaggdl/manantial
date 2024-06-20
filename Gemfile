@@ -78,3 +78,7 @@ gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
 gem 'ed25519'
 gem 'bcrypt_pbkdf'
 gem 'sassc-rails'
+
+gem 'redcarpet'
+
+gem 'friendly_id', '~> 5.4.0'
