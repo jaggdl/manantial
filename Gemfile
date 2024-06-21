@@ -82,3 +82,5 @@ gem 'sassc-rails'
 gem 'redcarpet'
 
 gem 'friendly_id', '~> 5.4.0'
+gem 'devise'
+gem 'carrierwave', '~> 2.0'

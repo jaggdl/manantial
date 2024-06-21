@@ -1,6 +1,16 @@
 /* styles.scss */
 
-@mixin container {
+body {
+  margin: 0;
+}
+
+ul, li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -8,46 +18,25 @@
   padding-left: 1rem;
 }
 
-@mixin max-w-xl {
+.max-w-xl {
   max-width: 36rem; /* 576px */
 }
 
-@mixin mx-auto {
+.mx-auto {
   margin-right: auto;
   margin-left: auto;
 }
 
-@mixin mt-28 {
+.mt-28 {
   margin-top: 7rem; /* 112px */
-}
-
-@mixin px-5 {
-  padding-left: 1.25rem; /* 20px */
-  padding-right: 1.25rem; /* 20px */
-}
-
-@mixin flex {
-  display: flex;
-}
-
-@mixin flex-wrap {
-  flex-wrap: wrap;
-}
-
-body {
-  main {
-    @include container;
-    @include max-w-xl;
-    @include mx-auto;
-    @include mt-28;
-    @include px-5;
-    @include flex;
-    @include flex-wrap;
-  }
 }
 
 .space-y-4 > * + * {
   margin-top: 1rem; /* 4 * 0.25rem = 1rem */
+}
+
+.space-x-4 > * + * {
+  margin-left: 1rem; /* 4 * 0.25rem = 1rem */
 }
 
 .text-3xl {
@@ -96,7 +85,7 @@ article.prose p {
   margin-bottom: 1em;
 }
 
-@mixin container {
+.container {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -104,28 +93,48 @@ article.prose p {
   padding-left: 1rem;
 }
 
-@mixin max-w-xl {
+.max-w-xl {
   max-width: 36rem; /* 576px */
 }
 
-@mixin mx-auto {
+.mx-auto {
   margin-right: auto;
   margin-left: auto;
 }
 
-@mixin mt-28 {
-  margin-top: 7rem; /* 112px */
+.mt-16 {
+	margin-top: 4rem; /* 64px */
 }
 
-@mixin px-5 {
+.p-3 {
+ 	padding: 0.75rem; /* 12px */
+}
+
+.px-5 {
   padding-left: 1.25rem; /* 20px */
   padding-right: 1.25rem; /* 20px */
 }
 
-@mixin flex {
+.flex {
   display: flex;
 }
 
-@mixin flex-wrap {
+.flex-wrap {
   flex-wrap: wrap;
+}
+
+.justify-end {
+  justify-content: end;
+}
+
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.post-item {
+  width: calc(50% - 5px);
 }

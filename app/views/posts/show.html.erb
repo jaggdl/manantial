@@ -1,3 +1,6 @@
+<% if @post.image.present? %>
+  <%= image_tag @post.image.cover.url, class: 'w-full' %>
+<% end %>
 <h1><%= @post.title %></h1>
 <p><%= @post.description %></p>
 <div><%= @post.markdown_to_html %></div>

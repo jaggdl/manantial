@@ -1,13 +1,24 @@
-<h1>Blog Posts</h1>
+<h1>Jose Alfredo's Blog</h1>
 
-<%= link_to 'New Post', new_post_path %>
+<% if user_signed_in? %>
+  <%= link_to 'New Post', new_post_path %>
+<% end %>
 
-<ul>
+<ul class="posts-grid">
   <% @posts.each do |post| %>
     <li>
-      <%= link_to post.title, post %>
-      <%= link_to 'Edit', edit_post_path(post) %>
-      <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <div>
+        <% if post.image.present? %>
+          <%= link_to post do %>
+            <%= image_tag post.image.thumb.url, class: 'w-full' %>
+          <% end %>
+        <% end %>
+        <%= link_to post.title, post %>
+      </div>
+      <% if user_signed_in? %>
+        <%= link_to 'Edit', edit_post_path(post) %>
+        <%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <% end %>
     </li>
   <% end %>
 </ul>
