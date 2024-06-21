@@ -8,7 +8,7 @@
   <% @posts.each do |post| %>
     <li>
       <%= link_to post, class: 'group hover:no-underline' do %>
-        <span class="text-sm text-gray-700 w-full block text-right mb-2"><%= time_since_created(post.created_at) %></span>
+        <span class="text-sm opacity-70 w-full block text-right mb-2"><%= time_since_created(post.created_at) %></span>
         <% if post.image.present? %>
           <div class="w-full overflow-hidden rounded">
             <%= image_tag post.image.thumb.url, class: 'w-full transition-transform duration-200 transform group-hover:scale-105' %>
@@ -16,11 +16,13 @@
         <% end %>
         <div class="flex justify-between items-start mt-2">
           <span class="block text-lg font-semibold group-hover:underline"><%= post.title %></span>
-          <% if user_signed_in? %>
-            <%= link_to 'Edit', edit_post_path(post) %>
-          <% end %>
         </div>
         <span class="block "><%= post.description %></span>
+      <% end %>
+      <% if user_signed_in? %>
+        <div class="w-full flex justify-end">
+          <%= link_to 'Edit', edit_post_path(post) %>
+        </div>
       <% end %>
     </li>
   <% end %>
