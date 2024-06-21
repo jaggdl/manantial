@@ -4,20 +4,12 @@
   <meta name="description" content="<%= @post.description %>">
 <% end %>
 
-<%= link_to "Jose Alfredo's Blog", posts_path, class: 'text-2xl font-semibold mb-4 block' %>
-<div class="space-y-4">
-
-  <% if @post.image.present? %>
-    <%= image_tag @post.image.cover.url, class: 'w-full' %>
-  <% end %>
-
-  <div class="space-y-2">
-    <h1 class="text-6xl font-bold"><%= @post.title %></h1>
-    <p><%= @post.description %></p>
-  </div>
-  <div class="prose"><%= @post.markdown_to_html %></div>
-
-</div>
+<% if @post.image.present? %>
+  <%= image_tag @post.image.cover.url, class: 'w-full' %>
+<% end %>
+<h1><%= @post.title %></h1>
+<p><%= @post.description %></p>
+<div><%= @post.markdown_to_html %></div>
 
 <%= link_to 'Edit', edit_post_path(@post) %>
 <%= link_to 'Back', posts_path %>
