@@ -7,13 +7,33 @@ set :repo_url, "git@github.com:jaggdl/portfolio.git"
 # Deploy to the user's home directory
 set :deploy_to, "/home/deploy/#{fetch :application}"
 
+# set :linked_dirs, %w[db/production.sqlite3]
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
 # Optionally, you can symlink your database.yml and/or secrets.yml file from the shared directory during deploy
 # This is useful if you don't want to use ENV variables
 append :linked_files, 'config/database.yml'
 
-set :linked_dirs, %w[db/production.sqlite3]
+namespace :deploy do
+  desc 'Upload database.yml'
+  task :upload_database_yml do
+    on roles(:app) do
+      unless test("[ -f #{shared_path}/config/database.yml ]")
+        upload! 'config/database.yml', "#{shared_path}/config/database.yml"
+      end
+    end
+  end
+
+  before :starting, :upload_database_yml
+
+  task :copy_sqlite do
+    on roles(:all) do |_host|
+      execute "cp #{current_path}/db/production.sqlite3 #{release_path}/db/"
+    end
+  end
+
+  after 'deploy:updated', 'deploy:copy_sqlite'
+end
 
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
