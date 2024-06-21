@@ -29,6 +29,8 @@ end
 # This is useful if you don't want to use ENV variables
 append :linked_files, 'config/database.yml'
 
+set :linked_dirs, %w[db/production.sqlite3]
+
 # Default branch is :master
 set :branch, 'main'
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
