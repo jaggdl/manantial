@@ -8,7 +8,7 @@
 <div class="space-y-4">
 
   <% if @post.image.present? %>
-    <%= image_tag @post.image.cover.url, class: 'w-full' %>
+    <%= image_tag @post.image.thumb.url, class: 'w-full' %>
   <% end %>
 
   <div class="space-y-2">
