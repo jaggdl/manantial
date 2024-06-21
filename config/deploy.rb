@@ -9,27 +9,14 @@ set :deploy_to, "/home/deploy/#{fetch :application}"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
-# Only keep the last 5 releases to save disk space
-set :keep_releases, 5
-
-namespace :deploy do
-  desc 'Upload database.yml to shared/config'
-  task :upload_database_yml do
-    on roles(:app) do
-      execute :mkdir, "-p #{shared_path}/config"
-      upload! 'config/database.yml', "#{shared_path}/config/database.yml"
-    end
-  end
-
-  before :starting, 'deploy:upload_database_yml'
-end
-
-
 # Optionally, you can symlink your database.yml and/or secrets.yml file from the shared directory during deploy
 # This is useful if you don't want to use ENV variables
 append :linked_files, 'config/database.yml'
 
 set :linked_dirs, %w[db/production.sqlite3]
+
+# Only keep the last 5 releases to save disk space
+set :keep_releases, 5
 
 # Default branch is :master
 set :branch, 'main'
@@ -51,8 +38,6 @@ set :branch, 'main'
 # Default value for :linked_files is []
 # append :linked_files, "config/database.yml", 'config/master.key'
 
-# Default value for linked_dirs is []
-# append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "vendor", "storage"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
