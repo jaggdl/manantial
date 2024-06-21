@@ -9,6 +9,8 @@ set :deploy_to, "/home/deploy/#{fetch :application}"
 
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', '.bundle', 'public/system', 'public/uploads'
 
+append :linked_files, 'config/database.yml', 'db/production.sqlite3'
+
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
 
@@ -21,13 +23,16 @@ namespace :deploy do
     end
   end
 
+  # Create the necessary directories in the shared folder
+  task :create_db_directory do
+    on roles(:app) do
+      execute :mkdir, "-p #{shared_path}/db"
+    end
+  end
+
   before :starting, 'deploy:upload_database_yml'
+  before :starting, 'deploy:create_db_directory'
 end
-
-
-# Optionally, you can symlink your database.yml and/or secrets.yml file from the shared directory during deploy
-# This is useful if you don't want to use ENV variables
-append :linked_files, 'config/database.yml'
 
 # Default branch is :master
 set :branch, 'main'
