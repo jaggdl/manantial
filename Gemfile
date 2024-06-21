@@ -84,3 +84,5 @@ gem 'redcarpet'
 gem 'friendly_id', '~> 5.4.0'
 gem 'devise'
 gem 'carrierwave', '~> 2.0'
+
+gem "tailwindcss-rails", "~> 2.6"
