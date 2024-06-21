@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>José Alfredo García García de León – Full-stack developer</title>
+    <title><%= content_for?(:title) ? yield(:title) : "José Alfredo García García de León – Full-stack developer" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%= yield :head %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>

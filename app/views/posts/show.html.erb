@@ -1,3 +1,9 @@
+<% content_for :title, @post.title %>
+<% content_for :head do %>
+  <meta name="title" content="<%= @post.title %>">
+  <meta name="description" content="<%= @post.description %>">
+<% end %>
+
 <% if @post.image.present? %>
   <%= image_tag @post.image.cover.url, class: 'w-full' %>
 <% end %>
