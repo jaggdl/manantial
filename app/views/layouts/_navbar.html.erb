@@ -1,6 +1,6 @@
 <nav class="flex justify-end space-x-4 p-5 max-w-xl mx-auto">
-  <%= active_link_to I18n.t('menu.about'), root_path %>
-  <%= active_link_to I18n.t('menu.blog'), posts_path %>
+  <%= link_to I18n.t('menu.about'), root_path %>
+  <%= link_to I18n.t('menu.blog'), posts_path %>
   <% target_locale = I18n.locale == :en ? :es : :en %>
-  <%= active_link_to I18n.t('menu.language'), url_for(locale: target_locale == :en ? nil : target_locale) %>
+  <%= link_to I18n.t('menu.language'), url_for(locale: target_locale == :en ? nil : target_locale) %>
 </nav>

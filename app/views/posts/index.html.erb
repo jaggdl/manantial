@@ -20,8 +20,8 @@
         <span class="block "><%= post.description %></span>
       <% end %>
       <% if user_signed_in? %>
-        <div class="w-full flex justify-end">
-          <%= link_to 'Edit', edit_post_path(post) %>
+        <div class="w-full flex justify-end space-x-2">
+          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-primary' %>
         </div>
       <% end %>
     </li>
