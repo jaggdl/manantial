@@ -1,8 +1,10 @@
 <div class="space-y-4">
   <h1 class="text-3xl font-bold w-full"><%= I18n.t 'full_name' %></h1>
-  <div class="flex items-start">
-    <%= image_tag("headshot.jpg", class: "w-16 h-16 mr-4 float-left rounded-full") %>
-    <p class="prose">
+  <div class="">
+    <div class="inline w-16 h-16 mr-4 float-left rounded-full overflow-hidden">
+      <%= image_tag("headshot.jpg", class: "w-16 h-16") %>
+    </div>
+    <p class="prose flex-0 inline">
       <%= raw(I18n.t 'description') %>
     </p>
   </div>
