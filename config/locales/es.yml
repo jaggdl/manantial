@@ -18,3 +18,5 @@ es:
     about: Acerca de
     blog: Blog
     language: In English
+
+  blog_title: "Blog de %{name}"

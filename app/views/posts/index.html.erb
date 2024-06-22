@@ -1,4 +1,6 @@
-<h1 class="text-3xl font-bold mb-12"><%= I18n.t 'short_name' %>'s Blog</h1>
+<% content_for :title, I18n.t('blog_title', name: I18n.t('short_name')) %>
+
+<h1 class="text-3xl font-bold mb-12"><%= I18n.t('blog_title', name: I18n.t('short_name')) %></h1>
 
 <% if user_signed_in? %>
   <%= link_to 'New Post', new_post_path %>
@@ -8,14 +10,9 @@
   <% @posts.each do |post| %>
     <li>
       <%= link_to post, class: 'group hover:no-underline' do %>
-        <span class="text-sm opacity-70 w-full block text-right mb-2"><%= time_since_created(post.created_at) %></span>
-        <% if post.image.present? %>
-          <div class="w-full overflow-hidden rounded">
-            <%= image_tag post.image.xs.url, class: 'w-full transition-transform duration-200 transform group-hover:scale-105' %>
-          </div>
-        <% end %>
-        <div class="flex justify-between items-start mt-2">
-          <span class="block text-lg font-semibold group-hover:underline"><%= post.title %></span>
+        <%= render partial: 'posts/post_image', locals: { post: post, classes: 'h-48' } %>
+        <div class="mt-2">
+          <span class="inline text-lg font-semibold group-hover:underline"><%= post.title %></span>
         </div>
         <span class="block "><%= post.description %></span>
       <% end %>

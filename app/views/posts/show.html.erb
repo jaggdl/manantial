@@ -1,14 +1,12 @@
-<% content_for :title, @post.title %>
+<% content_for :title, "#{@post.title} – #{I18n.t('blog_title', name: I18n.t('short_name'))}" %>
 <% content_for :head do %>
   <meta name="title" content="<%= @post.title %>">
   <meta name="description" content="<%= @post.description %>">
 <% end %>
 
-<%= link_to "#{I18n.t 'short_name'}'s Blog", posts_path, class: 'text-2xl font-semibold mb-4 block' %>
+<%= link_to I18n.t('blog_title', name: I18n.t('short_name')), posts_path, class: 'text-2xl font-semibold mb-4 block' %>
 
-<% if @post.image.present? %>
-  <%= image_tag @post.image.xs.url, class: 'w-full rounded mb-4' %>
-<% end %>
+<%= render partial: 'posts/post_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
 
 <div class="space-y-2 mb-8">
   <h1 class="text-4xl lg:text-6xl font-bold"><%= @post.title %></h1>
@@ -18,4 +16,3 @@
 <div class="prose"><%= @post.markdown_to_html %></div>
 
 <%= link_to 'Edit', edit_post_path(@post) if user_signed_in? %>
-<%= link_to 'Back', posts_path %>

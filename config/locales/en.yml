@@ -49,3 +49,5 @@ en:
     about: About
     blog: Blog
     language: En español
+
+  blog_title: "%{name}'s Blog"
