@@ -1,20 +1,14 @@
 <div class="space-y-4">
-  <h1 class="text-3xl font-bold w-full">José Alfredo García García de León</h1>
+  <h1 class="text-3xl font-bold w-full"><%= I18n.t 'full_name' %></h1>
   <div class="flex items-start">
     <%= image_tag("headshot.jpg", class: "w-16 h-16 mr-4 float-left rounded-full") %>
     <p class="prose">
-      I am a fullstack <strong>web developer</strong>.
-      Currently working at <a href="https://envato.com">Envato</a>
-      and bootstraping <a href="https://cyberhole.io">Cyberhole</a>.
-      Creator of <a href="https://www.youtube.com/@TopsSegunChatGPT">Tops Según ChatGPT</a>
-      (<a href="https://www.youtube.com/@TopPicksbyChatGPT">Tops Picks by ChatGPT</a>).
+      <%= raw(I18n.t 'description') %>
     </p>
   </div>
   <article class="prose">
     <p>
-      Feel free to reach out via email at <a href="mailto:jose@cyberhole.io">jose@cyberhole.io</a>.
-      You can also find me <a href="https://x.com/J_A_Garcia">on Twitter</a>
-      and <a href="https://www.linkedin.com/in/jos%C3%A9-alfredo-garc%C3%ADa-2b5640284/">on LinkedIn</a>.
+      <%= raw(I18n.t 'contact') %>
     </p>
   </article>
 </div>

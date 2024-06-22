@@ -4,7 +4,7 @@
   <meta name="description" content="<%= @post.description %>">
 <% end %>
 
-<%= link_to "Jose Alfredo's Blog", posts_path, class: 'text-2xl font-semibold mb-4 block' %>
+<%= link_to "#{I18n.t 'short_name'}'s Blog", posts_path, class: 'text-2xl font-semibold mb-4 block' %>
 
 <% if @post.image.present? %>
   <%= image_tag @post.image.thumb.url, class: 'w-full rounded mb-4' %>

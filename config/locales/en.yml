@@ -30,4 +30,22 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  full_name: José Alfredo García García de León
+  short_name: José Alfredo
+
+  description: |
+    I am a full-stack <strong>web developer</strong>.
+    Currently working at <a href="https://envato.com">Envato</a>
+    and bootstraping <a href="https://cyberhole.io">Cyberhole</a>.
+    Creator of <a href="https://www.youtube.com/@TopsSegunChatGPT">Tops Según ChatGPT</a>
+    (<a href="https://www.youtube.com/@TopPicksbyChatGPT">Tops Picks by ChatGPT</a>).
+
+  contact: |
+    Feel free to reach out via email at <a href="mailto:jose@cyberhole.io">jose@cyberhole.io</a>.
+    You can also find me <a href="https://x.com/J_A_Garcia">on Twitter</a>
+    and <a href="https://www.linkedin.com/in/jos%C3%A9-alfredo-garc%C3%ADa-2b5640284/">on LinkedIn</a>.
+
+  menu:
+    about: About
+    blog: Blog
+    language: En español
