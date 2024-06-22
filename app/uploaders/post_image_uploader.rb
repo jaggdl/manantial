@@ -1,51 +1,41 @@
 class PostImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  # Choose what kind of storage to use for this uploader:
   storage :file
-  # storage :fog
 
-  # Override the directory where uploaded files will be stored.
-  # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    "cover.jpg" if original_filename
+    original_filename
   end
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url(*args)
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
-
-  version :thumb do
-    process resize_to_fit: [800, 400]
+  version :xs do
+    process resize_to_fit: [480, nil]
   end
 
-  version :cover do
-    process resize_to_fit: [1600, 800]
+  version :sm do
+    process resize_to_fit: [640, nil]
+  end
+
+  version :md do
+    process resize_to_fit: [768, nil]
+  end
+
+  version :lg do
+    process resize_to_fit: [1024, nil]
+  end
+
+  version :xl do
+    process resize_to_fit: [1280, nil]
+  end
+
+  version :xxl do
+    process resize_to_fit: [1536, nil]
   end
 
   def extension_allowlist
     %w[jpg jpeg png]
   end
-
-  # Process files as they are uploaded:
-  # process scale: [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
-
-  # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process resize_to_fit: [50, 50]
-  # end
 end
