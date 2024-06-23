@@ -5,17 +5,16 @@
 
   <meta property="og:title" content="<%= @post.title %>">
   <meta property="og:description" content="<%= @post.description %>">
-  <meta property="og:image" itemprop="image" content="<%= @post.og_image.url %>">
+  <meta property="og:image" itemprop="image" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
   <meta property="og:url" content="<%= post_url(@post) %>">
   <meta property="og:type" content="article">
   <meta property="og:updated_time" content="<%= @post.updated_at.to_i %>" />
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta property="twitter:domain" content="<%= ENV['DOMAIN'].sub('https://', '').sub('http://', '') %>">
-  <meta property="twitter:url" content="<%= "#{ENV['DOMAIN']}/blog/#{@post.slug}" %>">
+  <meta property="twitter:site" content="@j_a_garcia">
   <meta name="twitter:title" content="<%= @post.title %>">
   <meta name="twitter:description" content="<%= @post.description %>">
-  <meta name="twitter:image" content="<%= @post.og_image.url %>">
+  <meta name="twitter:image" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
 
 <% end %>
 

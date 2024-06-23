@@ -23,34 +23,12 @@ class Post < ApplicationRecord
     markdown.render(self.markdown).html_safe
   end
 
-  def generate_og_image
-    I18n.available_locales.each do |locale|
-      I18n.with_locale(locale) do
-        store_og_image(locale)
-      end
-    end
-  end
-
   OG_IMAGE_DIMENSIONS = {
-    :width =>1200,
-    :height => 630
+    width: 1200,
+    height: 630
   }.freeze
 
-  private
-
-  def store_og_image(locale)
-    require 'tempfile'
-
-    image_file = Tempfile.new(['generated_image', '.png'])
-    image_file.close
-
-    system("wkhtmltoimage --quality 90 --width #{OG_IMAGE_DIMENSIONS[:width]} --height #{OG_IMAGE_DIMENSIONS[:height]} #{ENV['DOMAIN']}/#{locale.to_s}/blog/#{self.slug}/og_image #{image_file.path}")
-
-    Mobility.with_locale(locale) do
-      self.og_image = File.open(image_file.path)
-      save
-    end
-
-    image_file.unlink
+  def enqueue_og_image_generation
+    OgImageGeneratorJob.perform_later(self.id)
   end
 end

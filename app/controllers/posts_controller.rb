@@ -17,7 +17,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
-      @post.generate_og_image
+      @post.enqueue_og_image_generation
       redirect_to @post, notice: 'Post was successfully created.'
     else
       render :new
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
-      @post.generate_og_image
+      @post.enqueue_og_image_generation
       redirect_to @post, notice: 'Post was successfully updated.'
     else
       render :edit
