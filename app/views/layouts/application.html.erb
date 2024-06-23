@@ -7,8 +7,15 @@
     <%= csp_meta_tag %>
 
     <%= yield :head %>
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
+    <meta property="og:locale" content="<%= locale_with_territory %>" />
+    <% I18n.available_locales.each do |locale| %>
+      <% if locale != I18n.locale %>
+        <meta property="og:locale:alternate" content="<%= locale_with_territory(locale) %>" />
+      <% end %>
+    <% end %>
+
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
