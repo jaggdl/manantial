@@ -12,7 +12,7 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bund
 
 # Optionally, you can symlink your database.yml and/or secrets.yml file from the shared directory during deploy
 # This is useful if you don't want to use ENV variables
-append :linked_files, 'config/database.yml'
+append :linked_files, 'config/database.yml', '.env.production'
 
 namespace :deploy do
   desc 'Upload database.yml'

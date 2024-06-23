@@ -88,4 +88,4 @@ gem 'carrierwave', '~> 2.0'
 gem "tailwindcss-rails", "~> 2.6"
 
 gem 'mobility', '~> 1.3.0.rc3'
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', groups: [:development, :test, :production]
