@@ -44,7 +44,7 @@ class Post < ApplicationRecord
     image_file = Tempfile.new(['generated_image', '.png'])
     image_file.close
 
-    system("wkhtmltoimage --quality 90 --width #{OG_IMAGE_DIMENSIONS[:width]} --height #{OG_IMAGE_DIMENSIONS[:height]} http://localhost:4200/#{locale.to_s}/blog/#{self.slug}/og_image #{image_file.path}")
+    system("wkhtmltoimage --quality 90 --width #{OG_IMAGE_DIMENSIONS[:width]} --height #{OG_IMAGE_DIMENSIONS[:height]} #{ENV['DOMAIN']}/#{locale.to_s}/blog/#{self.slug}/og_image #{image_file.path}")
 
     Mobility.with_locale(locale) do
       self.og_image = File.open(image_file.path)

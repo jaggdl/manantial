@@ -2,11 +2,20 @@
 <% content_for :head do %>
   <meta name="title" content="<%= @post.title %>">
   <meta name="description" content="<%= @post.description %>">
+
   <meta property="og:title" content="<%= @post.title %>">
   <meta property="og:description" content="<%= @post.description %>">
   <meta property="og:image" content="<%= @post.og_image.url %>">
   <meta property="og:url" content="<%= post_url(@post) %>">
   <meta property="og:type" content="article">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="twitter:domain" content="<%= ENV['DOMAIN'].sub('https://', '').sub('http://', '') %>">
+  <meta property="twitter:url" content="<%= "#{ENV['DOMAIN']}/blog/#{@post.slug}" %>">
+  <meta name="twitter:title" content="<%= @post.title %>">
+  <meta name="twitter:description" content="<%= @post.description %>">
+  <meta name="twitter:image" content="<%= @post.og_image.url %>">
+
 <% end %>
 
 <%= link_to I18n.t('blog_title', name: I18n.t('short_name')), posts_path, class: 'text-2xl font-semibold mb-4 block' %>

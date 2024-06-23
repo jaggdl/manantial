@@ -26,6 +26,16 @@ namespace :deploy do
 
   before :starting, :upload_database_yml
 
+  desc 'Upload .env.production'
+  task :upload_env do
+    on roles(:app) do
+      upload! '.env.production', "#{shared_path}/.env.production"
+    end
+  end
+
+  before :starting, :upload_env
+
+  desc 'Persist current DB file'
   task :copy_sqlite do
     on roles(:all) do |_host|
       execute "cp #{current_path}/db/production.sqlite3 #{release_path}/db/"
