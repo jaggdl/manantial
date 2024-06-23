@@ -6,7 +6,11 @@ Rails.application.routes.draw do
     # Defines the root path route ("/")
     root "application#index"
 
-    resources :posts, path: 'blog', param: :id
+    resources :posts, path: 'blog', param: :id do
+      member do
+        get 'og_image'
+      end
+    end
   end
 
   # Define routes without locale

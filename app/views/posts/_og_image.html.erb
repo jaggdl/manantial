@@ -1,0 +1,4 @@
+<div class="relative" style="width:<%= Post::OG_IMAGE_DIMENSIONS[:width] %>px; height:<%= Post::OG_IMAGE_DIMENSIONS[:height] %>px;">
+  <%= image_tag @post.image.xs.url, class: 'w-full h-full object-cover', style: "width: #{Post::OG_IMAGE_DIMENSIONS[:width]}px; height: #{Post::OG_IMAGE_DIMENSIONS[:height]}px"%>
+  <p class="absolute bottom-2 left-2 px-2 py-1 text-3xl" style="color: white;"><%= @post.title %></p>
+</div>

@@ -2,6 +2,11 @@
 <% content_for :head do %>
   <meta name="title" content="<%= @post.title %>">
   <meta name="description" content="<%= @post.description %>">
+  <meta property="og:title" content="<%= @post.title %>">
+  <meta property="og:description" content="<%= @post.description %>">
+  <meta property="og:image" content="<%= @post.og_image.url %>">
+  <meta property="og:url" content="<%= post_url(@post) %>">
+  <meta property="og:type" content="article">
 <% end %>
 
 <%= link_to I18n.t('blog_title', name: I18n.t('short_name')), posts_path, class: 'text-2xl font-semibold mb-4 block' %>

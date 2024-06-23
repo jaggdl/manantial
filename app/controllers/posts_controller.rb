@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :og_image]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
@@ -17,6 +17,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
 
     if @post.save
+      @post.generate_og_image
       redirect_to @post, notice: 'Post was successfully created.'
     else
       render :new
@@ -28,6 +29,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update(post_params)
+      @post.generate_og_image
       redirect_to @post, notice: 'Post was successfully updated.'
     else
       render :edit
@@ -37,6 +39,13 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     redirect_to posts_url, notice: 'Post was successfully destroyed.'
+  end
+
+  def og_image
+    render(
+      partial: 'posts/og_image',
+      layout: 'layouts/og_image'
+    )
   end
 
   private
