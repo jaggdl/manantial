@@ -3,10 +3,17 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.order(created_at: :desc).select(&:translated?)
   end
 
   def show
+    unless @post.translated?
+      if user_signed_in?
+        redirect_to edit_post_path(@post), alert: 'Please translate the post before viewing.'
+      else
+        raise ActiveRecord::RecordNotFound
+      end
+    end
   end
 
   def new

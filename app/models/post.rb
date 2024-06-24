@@ -31,4 +31,8 @@ class Post < ApplicationRecord
   def enqueue_og_image_generation
     OgImageGeneratorJob.perform_later(self.id)
   end
+
+  def translated?
+    title.present? && markdown.present? && description.present?
+  end
 end

@@ -12,13 +12,13 @@
   <% end %>
 
   <div class="space-y-4">
-    <div class="field">
+    <div class="space-y-2">
+      <%= form.label :image, 'Cover image', class: 'block text-sm font-medium leading-6 text-gray-900'  %>
       <% if post.image.present? %>
         <div class="mt-2">
           <%= image_tag post.image.url(:sm), class: 'thumb' %>
         </div>
       <% end %>
-      <%= form.label :image, class: 'block text-sm font-medium leading-6 text-gray-900'  %>
       <%= form.file_field :image %>
     </div>
 
