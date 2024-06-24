@@ -1,6 +1,6 @@
 document.addEventListener('turbo:load', function() {
   const postIdMeta = document.querySelector('meta[name="post-id"]');
   if (postIdMeta) {
-    ahoy.track("Viewed post", { post_id: postIdMeta.content });
+    ahoy.track("Viewed Post", { post_id: postIdMeta.content });
   }
 });

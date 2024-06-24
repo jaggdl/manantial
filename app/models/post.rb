@@ -39,7 +39,7 @@ class Post < ApplicationRecord
   def total_unique_views
     Ahoy::Event.where(
       name: 'Viewed Post',
-      properties: { post_id: self.id }
+      properties: { post_id: self.id.to_s }
     ).distinct.count(:visit_id)
   end
 end
