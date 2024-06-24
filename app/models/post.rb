@@ -36,7 +36,7 @@ class Post < ApplicationRecord
     title.present? && markdown.present? && description.present?
   end
 
-  def total_views
+  def total_unique_views
     Ahoy::Event.where(
       name: 'Viewed Post',
       properties: { post_id: self.id }

@@ -3,7 +3,7 @@
     <%= image_tag post.image.xs.url, class: 'w-full h-full object-cover transition-transform duration-200 transform group-hover:scale-105' %>
     <div class="absolute bottom-2 right-2 space-x-1">
       <span class="px-2 py-1 rounded text-sm bg-black/50 text-gray-200 backdrop-blur-lg">
-        <%= pluralize(post.total_views, t('views.one'), t('views.other')) %>
+        <%= pluralize(post.total_unique_views, t('views.one'), t('views.other')) %>
       </span>
       <span class="px-2 py-1 rounded text-sm bg-black/50 text-gray-200 backdrop-blur-lg"><%= time_since_created(post.created_at) %></span>
     </div>
