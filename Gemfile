@@ -92,3 +92,4 @@ gem 'dotenv-rails', groups: [:development, :test, :production]
 gem "ahoy_matey"
 gem "chartkick"
 gem "groupdate"
+gem "heroicon"
