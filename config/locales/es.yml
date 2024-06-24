@@ -37,3 +37,7 @@ es:
   time_since:
     just_now: "ahora mismo"
     ago: "hace %{value} %{unit}"
+
+  views:
+    one: "Vista"
+    other: "Vistas"

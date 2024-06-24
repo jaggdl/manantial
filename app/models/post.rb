@@ -35,4 +35,11 @@ class Post < ApplicationRecord
   def translated?
     title.present? && markdown.present? && description.present?
   end
+
+  def total_views
+    Ahoy::Event.where(
+      name: 'Viewed Post',
+      properties: { post_id: self.id }
+    ).distinct.count(:visit_id)
+  end
 end

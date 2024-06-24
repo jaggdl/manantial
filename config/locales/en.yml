@@ -65,6 +65,11 @@ en:
     minutes: "minutes"
     second: "second"
     seconds: "seconds"
+
   time_since:
     just_now: "just now"
     ago: "%{value} %{unit} ago"
+
+  views:
+    one: "View"
+    other: "Views"

@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :redirect_to_signup_if_no_users, only: :index
+  skip_before_action :track_ahoy_visit, if: :user_signed_in?
+  after_action :track_ahoy_visit, unless: :user_signed_in?
 
   def index
   end
@@ -20,5 +22,9 @@ class ApplicationController < ActionController::Base
     if User.count.zero?
       redirect_to new_user_registration_path unless request.path == new_user_registration_path
     end
+  end
+
+  def track_ahoy_visit
+    ahoy.track "Page View", request.path_parameters
   end
 end
