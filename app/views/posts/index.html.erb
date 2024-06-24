@@ -1,11 +1,11 @@
 <% content_for :title, I18n.t('blog_title', name: I18n.t('short_name')) %>
 
-<h1 class="text-3xl font-bold mb-12"><%= I18n.t('blog_title', name: I18n.t('short_name')) %></h1>
-
-<% if user_signed_in? %>
-  <%= link_to 'New Post', new_post_path %>
-<% end %>
-
+<div class="flex items-end justify-between mb-6">
+  <h1 class="text-3xl font-bold"><%= I18n.t('blog_title', name: I18n.t('short_name')) %></h1>
+  <% if user_signed_in? %>
+    <%= link_to 'New Post', new_post_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+  <% end %>
+</div>
 <ul class="grid grid-cols-1 gap-6 w-full">
   <% @posts.each do |post| %>
     <li>
@@ -18,7 +18,7 @@
       <% end %>
       <% if user_signed_in? %>
         <div class="w-full flex justify-end space-x-2">
-          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-primary' %>
+          <%= link_to 'Edit', edit_post_path(post), class: 'rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
         </div>
       <% end %>
     </li>

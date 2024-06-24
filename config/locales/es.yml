@@ -20,3 +20,20 @@ es:
     language: In English
 
   blog_title: "Blog de %{name}"
+
+  time_periods:
+    year: "año"
+    years: "años"
+    month: "mes"
+    months: "meses"
+    day: "día"
+    days: "días"
+    hour: "hora"
+    hours: "horas"
+    minute: "minuto"
+    minutes: "minutos"
+    second: "segundo"
+    seconds: "segundos"
+  time_since:
+    just_now: "ahora mismo"
+    ago: "hace %{value} %{unit}"

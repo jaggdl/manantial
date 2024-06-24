@@ -51,3 +51,20 @@ en:
     language: En español
 
   blog_title: "%{name}'s Blog"
+
+  time_periods:
+    year: "year"
+    years: "years"
+    month: "month"
+    months: "months"
+    day: "day"
+    days: "days"
+    hour: "hour"
+    hours: "hours"
+    minute: "minute"
+    minutes: "minutes"
+    second: "second"
+    seconds: "seconds"
+  time_since:
+    just_now: "just now"
+    ago: "%{value} %{unit} ago"

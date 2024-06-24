@@ -29,4 +29,8 @@
 
 <div class="prose"><%= @post.markdown_to_html %></div>
 
-<%= link_to 'Edit', edit_post_path(@post) if user_signed_in? %>
+<% if user_signed_in? %>
+  <div class="w-full flex justify-end space-x-2">
+    <%= link_to 'Edit', edit_post_path(@post), class: 'rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
+  </div>
+<% end %>
