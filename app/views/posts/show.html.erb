@@ -19,6 +19,11 @@
     <meta name="twitter:image" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
   <% end %>
 
+  <meta name="post-id" content="<%= @post.id %>">
+
+  <% unless user_signed_in? %>
+    <%= javascript_import_module_tag 'track_post' %>
+  <% end %>
 <% end %>
 
 <%= link_to I18n.t('blog_title', name: I18n.t('short_name')), posts_path, class: 'text-2xl font-semibold mb-4 block' %>

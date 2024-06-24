@@ -6,8 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= yield :head %>
-
     <meta property="og:locale" content="<%= locale_with_territory %>" />
     <% I18n.available_locales.each do |locale| %>
       <% if locale != I18n.locale %>
@@ -17,12 +15,15 @@
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
     <%= javascript_importmap_tags %>
     <% if user_signed_in? %>
       <%= javascript_import_module_tag 'admin' %>
     <% else %>
       <%= javascript_import_module_tag 'tracking' %>
     <% end %>
+
+    <%= yield :head %>
   </head>
 
   <body>

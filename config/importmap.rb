@@ -11,3 +11,4 @@ pin "Chart.bundle", to: "Chart.bundle.js", preload: false
 pin "ahoy", to: "ahoy.js", preload: false
 pin "admin", preload: false
 pin "tracking", preload: false
+pin "track_post", preload: false
