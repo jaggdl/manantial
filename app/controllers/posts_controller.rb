@@ -1,8 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy, :og_image]
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  skip_before_action :track_ahoy_visit, only: [:og_image]
-  after_action :track_post_view, unless: :user_signed_in?, only: [:show]
 
   def index
     @posts = Post.order(created_at: :desc).select(&:translated?)
@@ -65,9 +63,5 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :description, :markdown, :image)
-  end
-
-  def track_post_view
-    ahoy.track "Viewed Post", post_id: @post.id
   end
 end

@@ -20,6 +20,8 @@
     <%= javascript_importmap_tags %>
     <% if user_signed_in? %>
       <%= javascript_import_module_tag 'admin' %>
+    <% else %>
+      <%= javascript_import_module_tag 'tracking' %>
     <% end %>
   </head>
 
