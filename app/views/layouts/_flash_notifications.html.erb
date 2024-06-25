@@ -8,14 +8,14 @@
         ['bg-blue-50', 'text-blue-800', 'text-blue-400', 'bg-blue-100', 'focus:ring-blue-600', 'focus:ring-offset-blue-50']
       end
   %>
-  <div class="rounded-md <%= bg_color %> p-4 mb-4 flash-message">
+  <div data-controller="flash-notification" data-flash-notification-target="notification" class="rounded-md <%= bg_color %> p-4 mb-4 flash-message">
     <div class="flex">
       <div class="ml-3">
         <p class="text-sm font-medium <%= text_color %>"><%= message %></p>
       </div>
       <div class="ml-auto pl-3">
         <div class="-mx-1.5 -my-1.5">
-          <button type="button" onclick="closeFlashMessage(this)" class="inline-flex rounded-md <%= bg_color %> p-1.5 <%= icon %> hover:<%= hover_bg_color %> focus:outline-none focus:ring-2 <%= ring_color %> <%= ring_offset_color %>" data-dismiss="alert">
+          <button type="button" data-flash-notification-target="closeButton" class="inline-flex rounded-md <%= bg_color %> p-1.5 <%= icon %> hover:<%= hover_bg_color %> focus:outline-none focus:ring-2 <%= ring_color %> <%= ring_offset_color %>" data-dismiss="alert">
             <span class="sr-only">Dismiss</span>
             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -26,12 +26,3 @@
     </div>
   </div>
 <% end %>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    window.closeFlashMessage = function(button) {
-      const flashMessage = button.closest(".flash-message");
-      flashMessage.remove();
-    };
-  });
-</script>
