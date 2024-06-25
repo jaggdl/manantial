@@ -33,4 +33,17 @@ module ApplicationHelper
   def locale_with_territory(locale = nil)
     LOCALES_WITH_TERRITORY[locale || I18n.locale]
   end
+
+  def active_class(path)
+    current_path = request.path
+    is_root = current_path == root_path || current_path == "/es"
+
+    if path == root_path
+      return "font-semibold" if is_root
+    else
+      return "font-semibold" if current_path.start_with?(path)
+    end
+
+    ""
+  end
 end
