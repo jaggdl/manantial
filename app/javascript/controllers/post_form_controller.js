@@ -3,10 +3,6 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ['fileInput', 'imagePreview']
 
-  static get shouldLoad() {
-    return true
-  }
-
   connect() {
     this.fileInputTarget.addEventListener('change', this.handleFileSelect.bind(this));
   }
