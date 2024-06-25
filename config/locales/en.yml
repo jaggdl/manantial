@@ -71,5 +71,5 @@ en:
     ago: "%{value} %{unit} ago"
 
   views:
-    one: "View"
-    other: "Views"
+    one: view
+    other: views

@@ -39,5 +39,5 @@ es:
     ago: "hace %{value} %{unit}"
 
   views:
-    one: "Vista"
-    other: "Vistas"
+    one: vista
+    other: vistas
