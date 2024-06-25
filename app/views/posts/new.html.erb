@@ -1,4 +1,9 @@
 <% content_for :title, "New Post – #{I18n.t('blog_title', name: I18n.t('short_name'))}" %>
+<div class="flex space-x-3 items-center mb-6">
+  <%= link_to posts_path, class: 'inline-flex items-center justify-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' do %>
+    <%= heroicon "arrow-uturn-left" %>
+  <% end %>
+  <h1 class="text-3xl font-bold">New Post</h1>
+</div>
 
-<h1 class="text-3xl font-bold mb-6">New Post</h1>
 <%= render 'form', post: @post %>

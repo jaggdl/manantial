@@ -13,13 +13,11 @@
 
   <div class="space-y-4">
     <div class="space-y-2">
-      <%= form.label :image, 'Cover image', class: 'block text-sm font-medium leading-6 text-gray-900'  %>
-      <% if post.image.present? %>
-        <div class="mt-2">
-          <%= image_tag @post.image.xs.url %>
-        </div>
-      <% end %>
-      <%= form.file_field :image %>
+      <%= form.label :image, 'Cover image', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <div class="mt-2">
+        <%= image_tag post.image.present? ? @post.image.xs.url : '', id: 'image-preview' %>
+      </div>
+      <%= form.file_field :image, id: 'post_image' %>
     </div>
 
     <div class="field">
@@ -42,3 +40,23 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const postImageInput = document.getElementById('post_image');
+    const img = document.getElementById('image-preview');
+
+    postImageInput.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          img.src = e.target.result
+        }
+        reader.readAsDataURL(file);
+      } else {
+        img.src = '';
+      }
+    });
+  });
+</script>
