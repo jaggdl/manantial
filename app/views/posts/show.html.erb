@@ -1,8 +1,7 @@
 <% content_for :title, "#{@post.title} – #{I18n.t('blog_title', name: I18n.t('short_name'))}" %>
-<% content_for :head do %>
-  <meta name="title" content="<%= @post.title %>">
-  <meta name="description" content="<%= @post.description %>">
+<% content_for :description, @post.description %>
 
+<% content_for :head do %>
   <meta property="og:title" content="<%= @post.title %>">
   <meta property="og:description" content="<%= @post.description %>">
   <meta property="og:url" content="<%= post_url(@post) %>">

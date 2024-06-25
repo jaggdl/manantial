@@ -2,6 +2,7 @@
 <html lang="<%= I18n.locale %>">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "José Alfredo García García de León – Full-stack developer" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : I18n.t('description') %>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
