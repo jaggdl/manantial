@@ -72,3 +72,6 @@ es:
       created: "La publicación se creó con éxito."
       updated: "La publicación se actualizó con éxito."
       destroyed: "La publicación se eliminó con éxito."
+
+  recent_posts: "Posts recientes"
+  show_all: "Mostrar todo"

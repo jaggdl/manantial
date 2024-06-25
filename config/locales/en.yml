@@ -104,3 +104,6 @@ en:
       created: "Post was successfully created."
       updated: "Post was successfully updated."
       destroyed: "Post was successfully deleted."
+
+  recent_posts: "Recent posts"
+  show_all: "Show all"
