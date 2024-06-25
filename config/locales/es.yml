@@ -17,6 +17,7 @@ es:
   menu:
     about: Acerca de
     blog: Blog
+    analytics: Analíticas
     language: In English
 
   blog_title: "Blog de %{name}"

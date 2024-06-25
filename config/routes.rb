@@ -11,6 +11,8 @@ Rails.application.routes.draw do
         get 'og_image'
       end
     end
+
+    get 'analytics', to: 'analytics#index'
   end
 
   # Define routes without locale

@@ -48,6 +48,7 @@ en:
   menu:
     about: About
     blog: Blog
+    analytics: Analytics
     language: En español
 
   blog_title: "%{name}'s Blog"
