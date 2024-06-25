@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<%= I18n.locale %>">
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "José Alfredo García García de León – Full-stack developer" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,6 +10,7 @@
     <% I18n.available_locales.each do |locale| %>
       <% if locale != I18n.locale %>
         <meta property="og:locale:alternate" content="<%= locale_with_territory(locale) %>" />
+        <link rel="alternate" href="<%= File.join(ENV['DOMAIN'], url_for(locale: locale)) %>" hreflang="<%= locale_with_territory(locale) %>">
       <% end %>
     <% end %>
 
