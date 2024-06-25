@@ -3,7 +3,7 @@
 <div class="flex items-end justify-between mb-6">
   <h1 class="text-3xl font-bold"><%= I18n.t('blog_title', name: I18n.t('short_name')) %></h1>
   <% if user_signed_in? %>
-    <%= link_to 'New Post', new_post_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+    <%= link_to I18n.t('posts.index.new_post'), new_post_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
   <% end %>
 </div>
 <ul class="grid grid-cols-1 gap-6 w-full">

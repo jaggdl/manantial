@@ -1,4 +1,4 @@
-<% content_for :title, "Edit Post – #{@post.title}" %>
+<% content_for :title, "#{t('posts.edit.title')} – #{@post.title}" %>
 
 <div class="flex items-center justify-between mb-6">
   <div class="flex space-x-3 items-center">
@@ -7,9 +7,9 @@
         <%= heroicon "arrow-uturn-left" %>
       <% end %>
     <% end %>
-    <h1 class="text-3xl font-bold">Edit Post</h1>
+    <h1 class="text-3xl font-bold"><%= t('posts.edit.heading') %></h1>
   </div>
-  <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class: 'rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-600 shadow-sm hover:bg-red-100' %>
+  <%= link_to t('posts.edit.delete'), @post, method: :delete, data: { confirm: t('posts.edit.confirm_delete') }, class: 'rounded-md bg-red-50 px-2.5 py-1.5 text-sm font-semibold text-red-600 shadow-sm hover:bg-red-100' %>
 </div>
 
 <%= render 'form', post: @post %>

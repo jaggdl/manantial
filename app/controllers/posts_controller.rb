@@ -9,7 +9,7 @@ class PostsController < ApplicationController
   def show
     unless @post.translated?
       if user_signed_in?
-        redirect_to edit_post_path(@post), alert: 'Please translate the post before viewing.'
+        redirect_to edit_post_path(@post), alert: I18n.t('posts.alerts.translate_before_viewing')
       else
         raise ActiveRecord::RecordNotFound
       end
@@ -25,7 +25,7 @@ class PostsController < ApplicationController
 
     if @post.save
       @post.enqueue_og_image_generation
-      redirect_to @post, notice: 'Post was successfully created.'
+      redirect_to @post, notice: I18n.t('posts.notices.created')
     else
       render :new
     end
@@ -37,7 +37,7 @@ class PostsController < ApplicationController
   def update
     if @post.update(post_params)
       @post.enqueue_og_image_generation
-      redirect_to @post, notice: 'Post was successfully updated.'
+      redirect_to @post, notice: I18n.t('posts.notices.updated')
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_url, notice: 'Post was successfully destroyed.'
+    redirect_to posts_url, notice: I18n.t('posts.notices.destroyed')
   end
 
   def og_image

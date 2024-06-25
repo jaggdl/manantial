@@ -73,3 +73,34 @@ en:
   views:
     one: view
     other: views
+
+  errors:
+    messages:
+      error: "error"
+      prohibited_this_post: "prohibited this post from being saved"
+
+  posts:
+    index:
+      new_post: "New Post"
+    new:
+      title: "New Post"
+      heading: "New Post"
+    edit:
+      title: "Edit Post"
+      heading: "Edit Post"
+      delete: "Delete"
+      confirm_delete: "Are you sure you want to delete this post?"
+    form:
+      cover_image: "Cover image"
+      title: "Title"
+      description: "Description"
+      markdown: "Markdown"
+      submit: "Create"
+    edit_link:
+      edit: "Edit"
+    alerts:
+      translate_before_viewing: "Please translate the post before viewing."
+    notices:
+      created: "Post was successfully created."
+      updated: "Post was successfully updated."
+      destroyed: "Post was successfully deleted."

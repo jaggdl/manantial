@@ -1,7 +1,7 @@
 <%= form_with(model: post, local: true, html: { multipart: true }) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+      <h2><%= pluralize(post.errors.count, t('errors.messages.error')) %> <%= t('errors.messages.prohibited_this_post') %>:</h2>
 
       <ul>
         <% post.errors.full_messages.each do |message| %>
@@ -13,7 +13,7 @@
 
   <div class="space-y-4" data-controller="post-form">
     <div class="space-y-2">
-      <%= form.label :image, 'Cover image', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.label :image, t('posts.form.cover_image'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <div class="mt-2">
         <%= image_tag post.image.present? ? @post.image.xs.url : '', data: { post_form_target: "imagePreview" }, class: 'w-full' %>
       </div>
@@ -21,22 +21,22 @@
     </div>
 
     <div class="field">
-      <%= form.label :title, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.label :title, t('posts.form.title'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <%= form.text_field :title, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
     </div>
 
     <div class="field">
-      <%= form.label :description, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.label :description, t('posts.form.description'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <%= form.text_area :description, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
     </div>
 
     <div class="field">
-      <%= form.label :markdown, class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.label :markdown, t('posts.form.markdown'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <%= form.text_area :markdown, rows: 20, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
     </div>
 
     <div class="flex justify-end w-full">
-      <%= form.submit 'Submit', class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+      <%= form.submit t('posts.form.submit'), class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
     </div>
   </div>
 <% end %>

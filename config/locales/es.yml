@@ -41,3 +41,34 @@ es:
   views:
     one: vista
     other: vistas
+
+  errors:
+    messages:
+      error: "error"
+      prohibited_this_post: "prohibió que esta publicación se guardara"
+
+  posts:
+    index:
+      new_post: "Nuevo Post"
+    new:
+      title: "Nuevo Post"
+      heading: "Nuevo Post"
+    edit:
+      title: "Editar Post"
+      heading: "Editar Post"
+      delete: "Eliminar"
+      confirm_delete: "¿Estás seguro de que quieres eliminar este post?"
+    form:
+      cover_image: "Imagen de portada"
+      title: "Título"
+      description: "Descripción"
+      markdown: "Contenido en markdown"
+      submit: "Crear"
+    edit_link:
+      edit: "Editar"
+    alerts:
+      translate_before_viewing: "Por favor, traduce la publicación antes de verla."
+    notices:
+      created: "La publicación se creó con éxito."
+      updated: "La publicación se actualizó con éxito."
+      destroyed: "La publicación se eliminó con éxito."
