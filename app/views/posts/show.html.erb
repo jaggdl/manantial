@@ -29,9 +29,11 @@
 
 <div class="relative">
   <%= render partial: 'posts/post_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
-  <div class="absolute top-3 right-2">
-    <%= render partial: 'edit_link', locals: { post: @post } %>
-  </div>
+  <% if user_signed_in? %>
+    <div class="absolute top-3 right-2">
+      <%= render partial: 'edit_link', locals: { post: @post } %>
+    </div>
+  <% end %>
 </div>
 
 <div class="lg:space-y-4 space-y-3 mb-8">
