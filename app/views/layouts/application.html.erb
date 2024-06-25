@@ -10,8 +10,8 @@
     <% I18n.available_locales.each do |locale| %>
       <% if locale != I18n.locale %>
         <meta property="og:locale:alternate" content="<%= locale_with_territory(locale) %>" />
-        <link rel="alternate" href="<%= File.join(ENV['DOMAIN'], url_for(locale: locale)) %>" hreflang="<%= locale_with_territory(locale) %>">
       <% end %>
+      <link rel="alternate" href="<%= File.join(ENV['DOMAIN'], url_for(locale: locale)) %>" hreflang="<%= locale %>">
     <% end %>
 
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
