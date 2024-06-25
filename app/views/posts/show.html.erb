@@ -30,9 +30,9 @@
 
 <%= render partial: 'posts/post_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
 
-<div class="space-y-2 mb-8">
+<div class="lg:space-y-4 space-y-3 mb-8">
   <h1 class="text-4xl lg:text-6xl font-bold"><%= @post.title %></h1>
-  <p><%= @post.description %></p>
+  <p class="text-lg"><%= @post.description %></p>
 </div>
 
 <div class="prose"><%= @post.markdown_to_html %></div>
