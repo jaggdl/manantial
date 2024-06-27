@@ -15,3 +15,6 @@ Ahoy.geocode = false
 # GDPR Compliance
 Ahoy.mask_ips = true
 Ahoy.cookies = :none
+
+# Preventing bots to be counted as visits
+Ahoy.server_side_visits = :when_needed
