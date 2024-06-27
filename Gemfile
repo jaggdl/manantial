@@ -93,3 +93,4 @@ gem "ahoy_matey"
 gem "chartkick"
 gem "groupdate"
 gem "heroicon"
+gem 'sitemap_generator'

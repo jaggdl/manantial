@@ -45,6 +45,21 @@ namespace :deploy do
   before 'deploy:migrate', 'deploy:copy_sqlite'
 end
 
+namespace :sitemap do
+  desc 'Generate sitemap'
+  task generate: :environment do
+    on roles(:app) do
+      within release_path do
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'sitemap:refresh'
+        end
+      end
+    end
+  end
+
+  after 'deploy:published', 'sitemap:generate'
+end
+
 # Only keep the last 5 releases to save disk space
 set :keep_releases, 5
 
