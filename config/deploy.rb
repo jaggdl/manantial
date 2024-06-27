@@ -1,8 +1,6 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.18.1"
 
-set :whenever_command, "bundle exec whenever"
-
 set :application, "portfolio"
 set :repo_url, "git@github.com:jaggdl/portfolio.git"
 
