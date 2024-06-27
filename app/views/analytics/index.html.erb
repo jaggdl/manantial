@@ -18,3 +18,57 @@
 <div id="chart-container">
   <%= line_chart @visitors_data %>
 </div>
+
+<h2 class="text-xl font-bold mt-6">Top Countries</h2>
+<table class="table-auto w-full">
+  <thead>
+    <tr>
+      <th>Country</th>
+      <th>Visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_countries.each do |country, count| %>
+      <tr>
+        <td><%= country %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2 class="text-xl font-bold mt-6">Top Cities</h2>
+<table class="table-auto w-full">
+  <thead>
+    <tr>
+      <th>City</th>
+      <th>Visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_cities.each do |city, count| %>
+      <tr>
+        <td><%= city %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2 class="text-xl font-bold mt-6">Top Device Types</h2>
+<table class="table-auto w-full">
+  <thead>
+    <tr>
+      <th>Device Type</th>
+      <th>Visits</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @top_device_types.each do |device_type, count| %>
+      <tr>
+        <td><%= device_type %></td>
+        <td><%= count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

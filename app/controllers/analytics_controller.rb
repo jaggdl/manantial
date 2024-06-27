@@ -10,6 +10,9 @@ class AnalyticsController < ApplicationController
     end_date = Date.current
 
     @visitors_data = fetch_visitors_data(start_date, end_date, group_period)
+    @top_countries = fetch_top_countries(start_date, end_date)
+    @top_cities = fetch_top_cities(start_date, end_date)
+    @top_device_types = fetch_top_device_types(start_date, end_date)
   end
 
   private
@@ -18,5 +21,26 @@ class AnalyticsController < ApplicationController
     Ahoy::Visit.where(started_at: start_date..end_date)
                .public_send("group_by_#{group_period}", :started_at, range: start_date..end_date)
                .count
+  end
+
+  def fetch_top_countries(start_date, end_date)
+    Ahoy::Visit.where(started_at: start_date..end_date)
+               .group(:country)
+               .order('count_id DESC')
+               .count(:id)
+  end
+
+  def fetch_top_cities(start_date, end_date)
+    Ahoy::Visit.where(started_at: start_date..end_date)
+               .group(:city)
+               .order('count_id DESC')
+               .count(:id)
+  end
+
+  def fetch_top_device_types(start_date, end_date)
+    Ahoy::Visit.where(started_at: start_date..end_date)
+               .group(:device_type)
+               .order('count_id DESC')
+               .count(:id)
   end
 end
