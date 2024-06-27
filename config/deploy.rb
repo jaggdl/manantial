@@ -1,6 +1,9 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.18.1"
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 set :application, "portfolio"
 set :repo_url, "git@github.com:jaggdl/portfolio.git"
 
@@ -47,7 +50,7 @@ end
 
 namespace :sitemap do
   desc 'Generate sitemap'
-  task generate: :environment do
+  task :generate do
     on roles(:app) do
       within release_path do
         with rails_env: fetch(:rails_env) do
