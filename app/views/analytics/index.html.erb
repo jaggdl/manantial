@@ -1,18 +1,20 @@
-<h1>Visitors per Day</h1>
+<h1 class="text-2xl font-bold mb-6">Visitors</h1>
 
-<table class="min-w-full divide-y divide-gray-300">
-  <thead>
-    <tr>
-      <th scope="col" class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Unique visitors</th>
-      <th scope="col" class="whitespace-nowrap px-2 py-3.5 text-left text-sm font-semibold text-gray-900">Total page views</th>
-    </tr>
-  </thead>
-  <tbody class="divide-y divide-gray-200 bg-white">
-    <tr>
-      <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-500 sm:pl-0">AAPS0L</td>
-      <td class="whitespace-nowrap px-2 py-2 text-sm font-medium text-gray-900">Chase &amp; Co.</td>
-    </tr>
-  </tbody>
-</table>
+<div data-controller="analytics">
+  <div>
+    <label for="time_period">Select Time Period:</label>
+    <select id="time_period" name="time_period" data-analytics-target="timePeriodSelect">
+      <%= options_for_select(time_period_options, params[:time_period]) %>
+    </select>
+  </div>
+  <div>
+    <label for="group_period">Select Group Period:</label>
+    <select id="group_period" name="group_period" data-analytics-target="groupPeriodSelect">
+      <%= options_for_select(group_period_options, params[:group_period]) %>
+    </select>
+  </div>
+</div>
 
-<%= line_chart @visitors_per_day %>
+<div id="chart-container">
+  <%= line_chart @visitors_data %>
+</div>
