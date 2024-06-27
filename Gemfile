@@ -95,3 +95,4 @@ gem "groupdate"
 gem "heroicon"
 gem 'sitemap_generator'
 gem 'whenever', require: false
+gem "geocoder"
