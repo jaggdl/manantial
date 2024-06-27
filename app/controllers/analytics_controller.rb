@@ -9,19 +9,14 @@ class AnalyticsController < ApplicationController
     start_date = time_period.days.ago.to_date
     end_date = Date.current
 
-    @visitors_data = case group_period
-                     when 'week'
-                       Ahoy::Visit.where(started_at: start_date..end_date)
-                                  .group_by_week(:started_at, range: start_date..end_date)
-                                  .count
-                     when 'month'
-                       Ahoy::Visit.where(started_at: start_date..end_date)
-                                  .group_by_month(:started_at, range: start_date..end_date)
-                                  .count
-                     else
-                       Ahoy::Visit.where(started_at: start_date..end_date)
-                                  .group_by_day(:started_at, range: start_date..end_date)
-                                  .count
-                     end
+    @visitors_data = fetch_visitors_data(start_date, end_date, group_period)
+  end
+
+  private
+
+  def fetch_visitors_data(start_date, end_date, group_period)
+    Ahoy::Visit.where(started_at: start_date..end_date)
+               .public_send("group_by_#{group_period}", :started_at, range: start_date..end_date)
+               .count
   end
 end
