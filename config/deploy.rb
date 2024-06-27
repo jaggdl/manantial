@@ -2,7 +2,6 @@
 lock "~> 3.18.1"
 
 set :whenever_command, "bundle exec whenever"
-require "whenever/capistrano"
 
 set :application, "portfolio"
 set :repo_url, "git@github.com:jaggdl/portfolio.git"
