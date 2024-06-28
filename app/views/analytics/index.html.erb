@@ -16,59 +16,41 @@
 </div>
 
 <div id="chart-container">
-  <%= line_chart @visitors_data %>
+  <%= line_chart @visitors.raw_data %>
 </div>
 
-<h2 class="text-xl font-bold mt-6">Top Countries</h2>
-<table class="table-auto w-full">
-  <thead>
-    <tr>
-      <th>Country</th>
-      <th>Visits</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @top_countries.each do |country, count| %>
-      <tr>
-        <td><%= country %></td>
-        <td><%= count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% analytics_sections = {
+  "Referring domains" => @analytics_data[:referring_domains],
+  "Entry pages" => @analytics_data[:landing_pages],
+  "Countries" => @analytics_data[:countries],
+  "Cities" => @analytics_data[:cities],
+  "Device Types" => @analytics_data[:device_types]
+} %>
 
-<h2 class="text-xl font-bold mt-6">Top Cities</h2>
-<table class="table-auto w-full">
-  <thead>
-    <tr>
-      <th>City</th>
-      <th>Visits</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @top_cities.each do |city, count| %>
-      <tr>
-        <td><%= city %></td>
-        <td><%= count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<h2 class="text-xl font-bold mt-6">Top Device Types</h2>
-<table class="table-auto w-full">
-  <thead>
-    <tr>
-      <th>Device Type</th>
-      <th>Visits</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @top_device_types.each do |device_type, count| %>
-      <tr>
-        <td><%= device_type %></td>
-        <td><%= count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="grid grid-cols-2 gap-x-4">
+  <% analytics_sections.each do |title, data| %>
+    <div>
+      <h2 class="text-lg font-bold mt-6">Top <%= title %></h2>
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead>
+          <tr>
+            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"><%= title.singularize %></th>
+            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Visitors</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% data.each do |item, count| %>
+            <tr>
+              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0 truncate w-32">
+                <%= item || 'Unknown' %>
+              </td>
+              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                <%= count %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
