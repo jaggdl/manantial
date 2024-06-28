@@ -8,9 +8,7 @@ class Analytics::LandingPages < Analytics::Base
   def format_key(key)
     begin
       uri = URI(key)
-      path_with_query = uri.path
-      path_with_query += "?#{uri.query}" if uri.query
-      path_with_query
+      uri.path
     rescue
       nil
     end

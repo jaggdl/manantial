@@ -6,11 +6,11 @@ class AnalyticsController < ApplicationController
     time_period = params[:time_period].to_i
     time_period = 30 if time_period.zero? # Default to 30 days if not provided
 
-    @group_period = params[:group_period] || 'day'
+    group_period = params[:group_period] || 'day'
     @start_date = time_period.days.ago.to_date
     @end_date = Date.current
 
-    @visitors = Analytics::Visitors.new(@start_date..@end_date, @group_period)
+    @visitors = Analytics::Visitors.new(range: @start_date..@end_date, group_period: group_period)
 
     @analytics_data = [
       :referring_domains,
@@ -25,7 +25,10 @@ class AnalyticsController < ApplicationController
 
   def get_formatted_data(hash)
     classname = "Analytics::#{hash.to_s.camelize}"
-    group = Object.const_get(classname).new(@start_date..@end_date)
+    group = Object.const_get(classname).new(
+      range: @start_date..@end_date,
+      group_limit: 6
+    )
     group.formatted_data
   end
 end

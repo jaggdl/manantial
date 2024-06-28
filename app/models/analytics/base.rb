@@ -1,7 +1,8 @@
 class Analytics::Base
-  def initialize(range, group_period = nil)
+  def initialize(range:, group_period: nil, group_limit: nil)
     @range = range
     @group_period = group_period
+    @group_limit = group_limit
   end
 
   def raw_data
@@ -11,7 +12,17 @@ class Analytics::Base
   end
 
   def formatted_data
-    raw_data.map { |key, value| formatter(key, value) }
+    accumulated_data = Hash.new(0)
+
+    raw_data.each do |key, value|
+      formatted_key = format_key(key)
+      accumulated_data[formatted_key] += value
+    end
+
+    limited_data = accumulated_data.sort_by { |_, value| -value }
+    limited_data = limited_data.take(@group_limit) if @group_limit
+
+    limited_data.map { |formatted_key, total_value| [formatted_key, total_value] }
   end
 
   private
@@ -22,10 +33,6 @@ class Analytics::Base
 
   def group_query
     where_query
-  end
-
-  def formatter(key, value)
-    [format_key(key), format_value(value)]
   end
 
   def format_key(key)
