@@ -1,7 +1,7 @@
 module AnalyticsHelper
   def time_period_options
     [
-      ['Today', '1'],
+      ['Las 24 hours', '1'],
       ['Last 7 days', '7'],
       ['Last 30 days', '30'],
       ['Last 60 days', '60'],
