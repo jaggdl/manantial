@@ -5,4 +5,10 @@ class Analytics::Countries < Analytics::Base
     where_query
       .group(:country)
   end
+
+  def format_key(key)
+    return key unless key.present?
+
+    I18n.t("countries.#{key}")
+  end
 end
