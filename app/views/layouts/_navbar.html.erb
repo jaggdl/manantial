@@ -1,4 +1,4 @@
-<nav class="flex justify-end space-x-4 p-5 max-w-xl mx-auto">
+<nav class="flex justify-end space-x-4 p-5 max-w-2xl mx-auto">
   <%= link_to I18n.t('menu.about'), root_path, class: active_class(root_path) %>
   <%= link_to I18n.t('menu.blog'), posts_path, class: active_class(posts_path) %>
   <% if user_signed_in? %>
