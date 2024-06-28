@@ -18,9 +18,13 @@ class Post < ApplicationRecord
   end
 
   def markdown_to_html
-    renderer = Redcarpet::Render::HTML.new
-    markdown = Redcarpet::Markdown.new(renderer, extensions = {})
-    markdown.render(self.markdown).html_safe
+    @markdown ||= Redcarpet::Markdown.new(
+      MarkdownRendererWithSpecialLinks,
+      autolink: true,
+      space_after_headers: true,
+      fenced_code_blocks: true
+    )
+    @markdown.render(markdown).html_safe
   end
 
   OG_IMAGE_DIMENSIONS = {
