@@ -19,8 +19,8 @@ class AnalyticsController < ApplicationController
 
   def fetch_visitors_data(start_date, end_date, group_period)
     Ahoy::Visit.where(started_at: start_date..end_date)
-               .public_send("group_by_#{group_period}", :started_at, range: start_date..end_date)
-               .count(:id)
+               .public_send("group_by_#{group_period}", :started_at)
+               .count
   end
 
   def fetch_top_countries(start_date, end_date)
