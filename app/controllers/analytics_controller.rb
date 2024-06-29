@@ -7,8 +7,8 @@ class AnalyticsController < ApplicationController
     time_period = 30 if time_period.zero? # Default to 30 days if not provided
 
     group_period = params[:group_period] || 'day'
-    @start_date = time_period.days.ago.to_date
-    @end_date = Date.current
+    @start_date = time_period.days.ago.to_time
+    @end_date = Time.current
 
     @visitors = Analytics::Visitors.new(range: @start_date..@end_date, group_period: group_period)
 
