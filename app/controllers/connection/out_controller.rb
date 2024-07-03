@@ -36,7 +36,7 @@ module Connection
           render :new and return
         end
 
-        redirect_to connection_out_index_path, notice: 'Out was successfully created.'
+        redirect_to connection_out_index_url, notice: 'Out was successfully created.'
       rescue Connection::HttpService::HttpServiceError => e
         flash.now[:alert] = "Error: #{e.message}"
         render :new
@@ -47,7 +47,7 @@ module Connection
       @out = Out.find(params[:id])
       @out.destroy
 
-      redirect_to connection_out_index_path, notice: 'Connection was successfully deleted.'
+      redirect_to connection_out_index_url, notice: 'Connection was successfully deleted.'
     end
 
 
