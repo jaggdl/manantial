@@ -1,0 +1,2 @@
+module Connection::InHelper
+end

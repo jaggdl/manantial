@@ -18,10 +18,10 @@ Rails.application.routes.draw do
   # Define routes without locale
   root to: 'application#index', as: :unlocalized_root
 
-  resources :connections do
-    collection do
-      get 'receive'
-    end
+  namespace :connection do
+    resources :out
+    resources :in
+    resources :set
   end
 
   resources :users, only: [:new, :create]

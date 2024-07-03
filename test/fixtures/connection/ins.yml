@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nonce: MyString
+  domain: MyString
+  message: MyString
+
+two:
+  nonce: MyString
+  domain: MyString
+  message: MyString
