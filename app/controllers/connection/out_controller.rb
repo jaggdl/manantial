@@ -27,8 +27,9 @@ module Connection
           connection_in_index_path,
           body: {
             domain: ENV['domain'],
-            message: message
-          }.to_json
+            message: message,
+            nonce: @out.nonce
+          },
         )
 
         unless @out.save

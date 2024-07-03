@@ -14,7 +14,7 @@ module Connection
         return
       end
 
-      render json: { message: 'Connection was successfully created.', data: @out }, status: :created
+      render json: { message: 'Connection was successfully created.'}, status: :created
     end
 
     private

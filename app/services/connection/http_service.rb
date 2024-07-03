@@ -1,27 +1,34 @@
-# app/services/connection/http_service.rb
 module Connection
   class HttpService
     include HTTParty
 
     class HttpServiceError < StandardError; end
 
-    def initialize(base_url)
-      self.class.base_uri(base_url)
+    def initialize(domain)
+      self.class.base_uri("https://#{domain}")
+      @headers = { 'Content-Type' => 'application/json' }
     end
 
     def get(path, options = {})
+      options[:headers] = @headers.merge(options[:headers] || {})
       handle_response(self.class.get(path, options), path)
     end
 
     def post(path, options = {})
+      options[:headers] = @headers.merge(options[:headers] || {})
+      options[:body] = options[:body].to_json if options[:body]
       handle_response(self.class.post(path, options), path)
     end
 
     def put(path, options = {})
+      options[:headers] = @headers.merge(options[:headers] || {})
+      options[:body] = options[:body].to_json if options[:body]
       handle_response(self.class.put(path, options), path)
     end
 
     def delete(path, options = {})
+      options[:headers] = @headers.merge(options[:headers] || {})
+      options[:body] = options[:body].to_json if options[:body]
       handle_response(self.class.delete(path, options), path)
     end
 
