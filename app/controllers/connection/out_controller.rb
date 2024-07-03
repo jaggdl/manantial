@@ -20,13 +20,14 @@ module Connection
 
       @out.nonce = generate_nonce
       message = out_params[:message] || "Hello, let's connect"
+      origin_url = URI(ENV['DOMAIN'])
 
       begin
         connection_service = Connection::HttpService.new(@out.domain)
         connection_request_response = connection_service.post(
           connection_in_index_path,
           body: {
-            domain: ENV['domain'],
+            domain: origin_url.hostname,
             message: message,
             nonce: @out.nonce
           },
