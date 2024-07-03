@@ -20,8 +20,13 @@ Rails.application.routes.draw do
 
   namespace :connection do
     resources :out
-    resources :in
     resources :set
+
+    resources :in do
+      member do
+        patch :approve
+      end
+    end
   end
 
   resources :users, only: [:new, :create]

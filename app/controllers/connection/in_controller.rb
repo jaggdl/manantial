@@ -17,6 +17,20 @@ module Connection
       render json: { message: 'Connection was successfully created.'}, status: :created
     end
 
+    def destroy
+      @in = In.find(params[:id])
+      @in.destroy
+
+      redirect_to connection_in_index_path, notice: 'Connection was successfully deleted.'
+    end
+
+    def approve
+      @in = In.find(params[:id])
+      @in.update(approved: true) # Assuming there's an approved boolean column in the connections table
+
+      redirect_to connection_in_index_path, notice: 'Connection was successfully approved.'
+    end
+
     private
 
     def in_params

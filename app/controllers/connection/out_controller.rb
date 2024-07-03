@@ -1,7 +1,5 @@
 module Connection
   class OutController < ApplicationController
-    include HTTParty
-
     def index
       @connections_out = Out.all
     end
@@ -38,12 +36,20 @@ module Connection
           render :new and return
         end
 
-        redirect_to @out, notice: 'Out was successfully created.'
+        redirect_to connection_out_index_path, notice: 'Out was successfully created.'
       rescue Connection::HttpService::HttpServiceError => e
         flash.now[:alert] = "Error: #{e.message}"
         render :new
       end
     end
+
+    def destroy
+      @out = Out.find(params[:id])
+      @out.destroy
+
+      redirect_to connection_out_index_path, notice: 'Connection was successfully deleted.'
+    end
+
 
     private
 
