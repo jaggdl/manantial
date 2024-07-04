@@ -8,7 +8,7 @@ module Connection
     def initialize(target_domain)
       origin_url = URI(ENV['DOMAIN'])
 
-      self.class.base_uri("http://#{target_domain}")
+      self.class.base_uri("https://#{target_domain}")
 
       @headers = {
         'Content-Type' => 'application/json',
