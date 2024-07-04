@@ -21,6 +21,13 @@ module Connection
       render json: { message: 'Domain already exists.' }, status: :unprocessable_entity
     end
 
+    def destroy
+      @set = Set.find(params[:id])
+      @set.destroy
+
+      redirect_to connections_url, notice: 'Connection was successfully deleted.'
+    end
+
     private
 
     def set_params

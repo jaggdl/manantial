@@ -39,7 +39,6 @@ module Connection
       redirect_to connections_url, notice: 'Connection was successfully deleted.'
     end
 
-
     private
 
     def out_params
