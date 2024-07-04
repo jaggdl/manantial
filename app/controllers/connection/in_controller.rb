@@ -26,15 +26,17 @@ module Connection
       connection_service = Connection::Service.new(@in.domain)
 
       begin
-        response = connection_service.set_connection(
+        connection_service.set_connection(
           token:,
           nonce: @in.nonce,
         )
 
-        connection_set = Connection::Set.create(
+        Connection::Set.create(
           token:,
           domain: @in.domain,
         )
+
+        @in.destroy
 
         redirect_to connections_url, notice: 'Connection was successfully approved.'
       rescue Connection::Service::Error => e

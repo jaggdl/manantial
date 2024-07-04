@@ -5,10 +5,16 @@ module Connection
     def create
       @out = Out.find_by(nonce: set_params[:nonce])
 
+      unless @out.present?
+        render json: { message: 'Invalid nonce' }, status: :unauthorized
+      end
+
       @set = Set.create(
         domain: @out.domain,
         token: set_params[:token],
       )
+
+      @out.destroy
 
       render json: { message: 'Connection was successfully created.' }, status: :created
     rescue ActiveRecord::RecordNotUnique => e
