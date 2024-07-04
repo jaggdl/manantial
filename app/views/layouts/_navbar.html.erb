@@ -3,8 +3,7 @@
   <%= link_to I18n.t('menu.blog'), posts_path, class: active_class(posts_path) %>
   <% if user_signed_in? %>
     <%= link_to I18n.t('menu.analytics'), analytics_path, class: active_class(analytics_path) %>
-    <%= link_to 'In', connection_in_index_path, class: active_class(connection_in_index_path) %>
-    <%= link_to 'Out', connection_out_index_path, class: active_class(connection_out_index_path) %>
+    <%= link_to 'Connections', connections_path, class: active_class(connections_path) %>
   <% end %>
   <% target_locale = I18n.locale == :en ? :es : :en %>
   <%= link_to I18n.t('menu.language'), url_for(locale: target_locale == :en ? nil : target_locale) %>

@@ -29,5 +29,17 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :connections
+
+  namespace :api do
+    namespace :v1 do
+      resources :connection do
+        member do
+          get 'public_info'
+        end
+      end
+    end
+  end
+
   resources :users, only: [:new, :create]
 end

@@ -9,37 +9,26 @@ module Connection
     end
 
     def create
-      @out = Out.find_or_initialize_by(domain: out_params[:domain])
-
-      if @out.persisted?
-        flash.now[:alert] = "Connect request has already been sent"
-        render :new and return
-      end
-
+      @out = Out.new(out_params)
       @out.nonce = generate_nonce
-      message = out_params[:message] || "Hello, let's connect"
-      origin_url = URI(ENV['DOMAIN'])
+
+      connection_service = Connection::Service.new(@out.domain)
 
       begin
-        connection_service = Connection::HttpService.new(@out.domain)
-        connection_request_response = connection_service.post(
-          connection_in_index_path,
-          body: {
-            domain: origin_url.hostname,
-            message: message,
-            nonce: @out.nonce
-          },
+        message = out_params[:message] || "Hello, let's connect"
+
+        response = connection_service.request_connection(
+          message: message,
+          nonce: @out.nonce,
         )
 
-        unless @out.save
-          flash.now[:alert] = @out.errors.full_messages.join(", ")
-          render :new and return
-        end
+        @out.save!
 
-        redirect_to connection_out_index_url, notice: 'Out was successfully created.'
-      rescue Connection::HttpService::HttpServiceError => e
-        flash.now[:alert] = "Error: #{e.message}"
-        render :new
+        redirect_to connections_url, notice: 'Out was successfully created.'
+      rescue Connection::Service::Error => e
+        redirect_to connections_url, alert: "Error: #{e.message}"
+      rescue => e
+        redirect_to connections_url, alert: "#{e.message}"
       end
     end
 
@@ -47,7 +36,7 @@ module Connection
       @out = Out.find(params[:id])
       @out.destroy
 
-      redirect_to connection_out_index_url, notice: 'Connection was successfully deleted.'
+      redirect_to connections_url, notice: 'Connection was successfully deleted.'
     end
 
 
