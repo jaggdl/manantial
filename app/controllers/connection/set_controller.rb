@@ -18,7 +18,7 @@ module Connection
     private
 
     def set_params
-      params.require(:set).permit(:nonce, :token)
+      params.permit(:nonce, :token)
     end
   end
 end
