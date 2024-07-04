@@ -1,3 +1,5 @@
-class Connection::In < ApplicationRecord
-  include PublicReadable
+module Connection
+  class In < ApplicationRecord
+    include PublicReadable
+  end
 end
