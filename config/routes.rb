@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   root to: 'application#index', as: :unlocalized_root
 
   resource :profile
+  resources :profiles
 
   namespace :connection do
     resources :out

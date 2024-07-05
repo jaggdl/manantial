@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   around_action :switch_locale
   before_action :redirect_to_signup_if_no_users, only: :index
+  before_action :redirect_to_new_profile_if_no_profiles, only: :index
   skip_before_action :track_ahoy_visit, if: :user_signed_in?
 
   def index
@@ -22,6 +23,12 @@ class ApplicationController < ActionController::Base
   def redirect_to_signup_if_no_users
     if User.count.zero?
       redirect_to new_user_registration_path unless request.path == new_user_registration_path
+    end
+  end
+
+  def redirect_to_new_profile_if_no_profiles
+    unless Profile.exists?
+      redirect_to new_profile_path unless request.path == new_profile_path
     end
   end
 end
