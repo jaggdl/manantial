@@ -1,15 +1,14 @@
-class PostImageUploader < CarrierWave::Uploader::Base
+class ProfilePictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file
 
   VERSIONS = {
-    xs: [480, nil],
-    sm: [640, nil],
-    md: [768, nil],
-    lg: [1024, nil],
-    xl: [1280, nil],
-    xxl: [1536, nil]
+    xs: [64, 64],
+    sm: [128, 128],
+    md: [640, 640],
+    lg: [1024, 1024],
+    xl: [1280, 1280],
   }
 
   VERSIONS.each do |version_name, dimensions|
@@ -36,11 +35,18 @@ class PostImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  def filename
-    original_filename
-  end
-
   def extension_allowlist
     %w[jpg jpeg png avif webp]
+  end
+
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+
+  def secure_token
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) || model.instance_variable_set(var, SecureRandom.uuid)
   end
 end

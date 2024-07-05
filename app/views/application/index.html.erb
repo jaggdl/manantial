@@ -2,16 +2,24 @@
   <h1 class="text-3xl font-bold w-full"><%= I18n.t 'full_name' %></h1>
   <div class="">
     <div class="inline w-16 h-16 mr-4 float-left rounded-full overflow-hidden">
-      <%= image_tag("headshot.jpg", class: "w-16 h-16") %>
+      <% if @profile.profile_picture.present? %>
+        <picture>
+          <% if @profile.profile_picture.sm.avif.present? %>
+            <source srcset="<%= @profile.profile_picture.sm.avif.url %>" type="image/avif">
+          <% end %>
+          <% if @profile.profile_picture.sm.webp.present? %>
+            <source srcset="<%= @profile.profile_picture.sm.webp.url %>" type="image/webp">
+          <% end %>
+          <img src="<%= @profile.profile_picture.sm.url %>" fetchpriority="high" class="w-full h-full object-cover transition-transform duration-200 transform group-hover:scale-105" alt="Profile picture>">
+        </picture>
+      <% end %>
     </div>
-    <p class="prose flex-0 inline">
-      <%= raw(I18n.t 'description') %>
-    </p>
+    <div class="prose flex-0 inline">
+      <%= @profile.description_to_html %>
+    </div>
   </div>
   <article class="prose">
-    <p>
-      <%= raw(I18n.t 'contact') %>
-    </p>
+    <%= @profile.info_to_html %>
   </article>
 </div>
 <div class="mt-12 space-y-4">

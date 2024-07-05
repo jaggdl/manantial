@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :track_ahoy_visit, if: :user_signed_in?
 
   def index
+    @profile = Profile.last
     @posts = Post.order(created_at: :desc).select(&:translated?).take(2)
   end
 

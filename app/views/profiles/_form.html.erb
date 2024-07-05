@@ -1,0 +1,35 @@
+<%= form_with(model: profile, local: true) do |form| %>
+  <div class="space-y-4" data-controller="post-form">
+    <div class="space-y-2">
+      <%= form.label :profile_picture, 'Profile pic', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <div class="mt-2">
+        <%= image_tag profile.profile_picture.present? ? profile.profile_picture.xl.url : '', data: { post_form_target: "imagePreview" }, class: 'w-full' %>
+      </div>
+      <%= form.file_field :profile_picture, data: { post_form_target: "fileInput" } %>
+    </div>
+
+    <div class="field">
+      <%= form.label :full_name, 'Full name', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.text_field :full_name, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+    </div>
+
+    <div class="field">
+      <%= form.label :short_name, 'Short name', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.text_field :short_name, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+    </div>
+
+    <div class="field">
+      <%= form.label :description, 'Description', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.text_area :description, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+    </div>
+
+    <div class="field">
+      <%= form.label :info, 'Info', class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.text_area :info, rows: 20, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+    </div>
+
+    <div class="flex justify-end w-full">
+      <%= form.submit 'Submit', class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+    </div>
+  </div>
+<% end %>

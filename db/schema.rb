@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_02_054620) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_05_071838) do
   create_table "action_markdown_markdown_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -134,6 +134,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_02_054620) do
     t.string "og_image"
     t.integer "ahoy_visit_id"
     t.index ["ahoy_visit_id"], name: "index_posts_on_ahoy_visit_id"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "full_name"
+    t.string "short_name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "profile_picture"
+    t.text "info"
   end
 
   create_table "users", force: :cascade do |t|
