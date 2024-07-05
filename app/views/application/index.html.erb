@@ -1,5 +1,7 @@
 <div class="space-y-4">
-  <h1 class="text-3xl font-bold w-full"><%= I18n.t 'full_name' %></h1>
+  <h1 class="text-3xl font-bold w-full">
+    <%= @profile.full_name %>
+  </h1>
   <div class="">
     <div class="inline w-16 h-16 mr-4 float-left rounded-full overflow-hidden">
       <% if @profile.profile_picture.present? %>

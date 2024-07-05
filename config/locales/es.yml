@@ -1,19 +1,4 @@
 es:
-  full_name: José Alfredo García García de León
-  short_name: José Alfredo
-
-  description: |
-    Full-stack <strong>web developer</strong>.
-    Actualmente, trabajo en <a href="https://envato.com">Envato</a>
-    y bootstrapeo <a href="https://cyberhole.io">Cyberhole</a>.
-    Creador de <a href="https://www.youtube.com/@TopsSegunChatGPT">Tops Según ChatGPT</a>
-    (<a href="https://www.youtube.com/@TopPicksbyChatGPT">Tops Picks by ChatGPT</a>).
-
-  contact: |
-    Puedes escribirme un email a <a href="mailto:jose@cyberhole.io">jose@cyberhole.io</a>.
-    También me puedes encontrar <a href="https://x.com/J_A_Garcia">en Twitter</a>
-    y <a href="https://www.linkedin.com/in/jos%C3%A9-alfredo-garc%C3%ADa-2b5640284/">en LinkedIn</a>.
-
   menu:
     about: Acerca de
     blog: Blog

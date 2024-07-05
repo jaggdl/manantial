@@ -1,4 +1,4 @@
-<% content_for :title, "#{@post.title} – #{I18n.t('blog_title', name: I18n.t('short_name'))}" %>
+<% content_for :title, "#{@post.title} – #{I18n.t('blog_title', name: owner_profile.short_name)}" %>
 <% content_for :description, @post.description %>
 
 <% content_for :head do %>
@@ -25,7 +25,7 @@
   <% end %>
 <% end %>
 
-<%= link_to I18n.t('blog_title', name: I18n.t('short_name')), posts_path, class: 'text-2xl font-semibold mb-4 block' %>
+<%= link_to I18n.t('blog_title', name: owner_profile.short_name), posts_path, class: 'text-2xl font-semibold mb-4 block' %>
 
 <div class="relative">
   <%= render partial: 'posts/post_image', locals: { post: @post, classes: 'h-64 mb-4' } %>

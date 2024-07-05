@@ -62,6 +62,10 @@ class PostsController < ApplicationController
     @post = Post.friendly.find(params[:id])
   end
 
+  def set_profile
+    @post = Post.friendly.find(params[:id])
+  end
+
   def post_params
     params.require(:post).permit(:title, :description, :markdown, :image)
   end

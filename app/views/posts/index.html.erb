@@ -1,7 +1,7 @@
-<% content_for :title, I18n.t('blog_title', name: I18n.t('short_name')) %>
+<% content_for :title, I18n.t('blog_title', name: owner_profile.short_name) %>
 
 <div class="flex items-end justify-between mb-6">
-  <h1 class="text-3xl font-bold"><%= I18n.t('blog_title', name: I18n.t('short_name')) %></h1>
+  <h1 class="text-3xl font-bold"><%= I18n.t('blog_title', name: owner_profile.short_name) %></h1>
   <% if user_signed_in? %>
     <%= link_to I18n.t('posts.index.new_post'), new_post_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
   <% end %>

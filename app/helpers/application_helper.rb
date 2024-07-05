@@ -46,4 +46,8 @@ module ApplicationHelper
 
     ""
   end
+
+  def owner_profile
+    @owner_profile ||= Profile.last
+  end
 end

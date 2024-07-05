@@ -13,7 +13,7 @@ class Api::V1::ConnectionController < ActionController::Base
     end
 
     render json: {
-      name: I18n.t('short_name'),
+      name: profile.short_name,
       profile_picture:,
     }
   end
