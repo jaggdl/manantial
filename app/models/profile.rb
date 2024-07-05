@@ -1,4 +1,6 @@
 class Profile < ApplicationRecord
+  require 'redcarpet/render_strip'
+
   mount_uploader :profile_picture, ProfilePictureUploader
 
   validate :only_one_profile, on: :create
@@ -21,6 +23,11 @@ class Profile < ApplicationRecord
       fenced_code_blocks: true
     )
     @description_markdown.render(description).html_safe
+  end
+
+  def plain_description
+    @plain_description ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+    @plain_description.render(description)
   end
 
   private
