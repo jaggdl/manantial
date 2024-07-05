@@ -35,19 +35,19 @@ class MarkdownRendererWithSpecialLinks < Redcarpet::Render::HTML
   end
 
   def hostname_link(hostname)
-
+    domain = "https://#{hostname}"
     connection = Connection::Set.find_by(domain: hostname)
 
     unless connection.present?
-      return render_chip(nil, hostname)
+      return render_chip(nil, hostname, domain)
     end
 
-    response = HTTParty.get("https://#{hostname}/api/v1/connection/public_info")
+    response = HTTParty.get("#{domain}/api/v1/connection/public_info")
     if response.success?
       data = response.parsed_response
       profile_picture = data['profile_picture']
       name = data['name']
-      render_chip(profile_picture, name)
+      render_chip(profile_picture, name, domain)
     else
       "Invalid hostname or failed to fetch data"
     end
@@ -55,8 +55,8 @@ class MarkdownRendererWithSpecialLinks < Redcarpet::Render::HTML
     "Error fetching data: #{e.message}"
   end
 
-  def render_chip(profile_picture, name)
-    render_partial('profiles/chip', profile_picture:, name:)
+  def render_chip(profile_picture, name, domain)
+    render_partial('profiles/chip', profile_picture:, name:, domain:)
   end
 
   def normal_link(link)
