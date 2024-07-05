@@ -1,0 +1,6 @@
+<%= link_to posts_path, class: 'inline-flex items-center px-3 space-x-2 h-10 rounded-md bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' do %>
+  <% if profile_picture.present? %>
+    <img src="<%= profile_picture %>" alt="<%= name %>" class="w-6 h-6 rounded-full">
+  <% end %>
+  <span class="text-sm font-medium"><%= name %></span>
+<% end %>
