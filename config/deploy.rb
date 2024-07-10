@@ -26,12 +26,12 @@ namespace :deploy do
 
   before :starting, :upload_database_yml
 
-  desc 'Upload .env.production'
-  task :upload_env do
-    on roles(:app) do
-      upload! '.env.production', "#{shared_path}/.env.production"
-    end
-  end
+  # desc 'Upload .env.production'
+  # task :upload_env do
+  #   on roles(:app) do
+  #     upload! '.env.production', "#{shared_path}/.env.production"
+  #   end
+  # end
 
   before :starting, :upload_env
 
