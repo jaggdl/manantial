@@ -33,7 +33,7 @@ namespace :deploy do
   #   end
   # end
 
-  before :starting, :upload_env
+  # before :starting, :upload_env
 
   desc 'Persist current DB file'
   task :copy_sqlite do
