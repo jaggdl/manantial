@@ -30,8 +30,6 @@ module Connection
       })
     end
 
-    private
-
     def get(path, options = {})
       options[:headers] = @headers.merge(options[:headers] || {})
       handle_response(self.class.get(path, options), path)
@@ -55,14 +53,18 @@ module Connection
       handle_response(self.class.delete(path, options), path)
     end
 
+    private
 
     def handle_response(response, path)
-      if response.success?
-        puts response
-        response
-      else
+      unless response.success?
         full_url = self.class.base_uri + path
         raise Error, "HTTP request to #{full_url} failed with code #{response.code}: #{response.message}"
+      end
+
+      if response.headers['content-type']&.include?('application/json')
+        response
+      else
+        raise Error, "Unexpected content type: #{response.headers['content-type']}"
       end
     end
   end

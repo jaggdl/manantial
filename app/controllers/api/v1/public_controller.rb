@@ -1,4 +1,4 @@
-class Api::V1::ConnectionController < ActionController::Base
+class Api::V1::PublicController < ActionController::Base
   def show
     profile = Profile.last
 
