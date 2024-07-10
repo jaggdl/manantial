@@ -22,7 +22,7 @@ module Connection
     end
 
     def approve
-      service = ConnectionServiceHandler.new(@in)
+      service = ServiceHandler.new(@in)
       result = service.approve
 
       if result[:success]
