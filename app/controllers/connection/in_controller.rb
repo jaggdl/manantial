@@ -22,28 +22,14 @@ module Connection
     end
 
     def approve
-      token = generate_token
-      connection_service = Connection::Service.new(@in.domain)
+      service = ConnectionServiceHandler.new(@in)
+      result = service.approve
 
-      begin
-        connection_service.set_connection(
-          token:,
-          nonce: @in.nonce,
-        )
-
-        Connection::Set.create(
-          token:,
-          domain: @in.domain,
-        )
-
-        @in.destroy
-
-        redirect_to connections_url, notice: 'Connection was successfully approved.'
-      rescue Connection::Service::Error => e
-        redirect_to connections_url, alert: "Error: #{e.message}"
-      rescue => e
-        redirect_to connections_url, alert: "#{e.message}"
-        raise e
+      if result[:success]
+        redirect_to connections_url, notice: result[:message]
+      else
+        redirect_to connections_url, alert: result[:message]
+        raise result[:raise_error] if result[:raise_error]
       end
     end
 
@@ -56,10 +42,6 @@ module Connection
 
     def set_in
       @in = In.find(params[:id])
-    end
-
-    def generate_token
-      SecureRandom.hex(16)
     end
   end
 end
