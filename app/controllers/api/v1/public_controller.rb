@@ -9,7 +9,7 @@ class Api::V1::PublicController < ActionController::Base
     profile_picture = nil
 
     if profile.profile_picture.present?
-      profile_picture = File.join(ENV['DOMAIN'], profile.profile_picture.sm.avif.url)
+      profile_picture = profile.profile_picture.sm.avif.url
     end
 
     render json: {

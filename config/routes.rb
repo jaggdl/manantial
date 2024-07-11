@@ -41,6 +41,10 @@ Rails.application.routes.draw do
           get 'info'
         end
       end
+
+      resource :private do
+        get 'latest_posts', to: 'private#latest_posts'
+      end
     end
   end
 

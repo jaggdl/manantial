@@ -43,6 +43,10 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
     "#{secure_token}.#{file.extension}" if original_filename.present?
   end
 
+  def asset_host
+    ENV['DOMAIN']
+  end
+
   protected
 
   def secure_token

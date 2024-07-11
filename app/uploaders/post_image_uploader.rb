@@ -43,4 +43,8 @@ class PostImageUploader < CarrierWave::Uploader::Base
   def extension_allowlist
     %w[jpg jpeg png avif webp]
   end
+
+  def asset_host
+    ENV['DOMAIN']
+  end
 end
