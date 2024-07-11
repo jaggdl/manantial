@@ -15,7 +15,7 @@ module Connection::PrivateReadable
   private
 
   def latest_posts_cache_key
-    "public_info/#{self.class.name.downcase}/#{self.id}"
+    "latest_posts/#{self.class.name.downcase}/#{self.id}"
   end
 
   def connection_service
