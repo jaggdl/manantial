@@ -1,4 +1,6 @@
 class Api::V1::PrivateController < ActionController::Base
+  include OriginDomainChecker
+
   def latest_posts
     posts = Post.last(5)
 
