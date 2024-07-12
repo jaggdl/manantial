@@ -50,10 +50,10 @@ class Post < ApplicationRecord
   def preview_image
     img = image.md
 
-    OpenStruct.new({
+    {
       avif: img.avif.url,
       webp: img.webp.url,
       url: img.url,
-    })
+    }
   end
 end

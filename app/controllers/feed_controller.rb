@@ -5,8 +5,9 @@ class FeedController < ApplicationController
     @latest_posts = connection_sets.map(&:latest_posts).flatten
 
     @latest_posts = @latest_posts.map do |post|
-      post[:preview_image] = OpenStruct.new(post[:preview_image])
-      OpenStruct.new(post)
+      struct_post = OpenStruct.new(post)
+      struct_post.preview_image = struct_post.preview_image.deep_symbolize_keys
+      struct_post
     end
 
     @latest_posts.sort_by!(&:created_at).reverse!
