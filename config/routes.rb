@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'feed', to: 'feed#index'
 
   resources :users, only: [:new, :create]
 end

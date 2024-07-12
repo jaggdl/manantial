@@ -1,0 +1,25 @@
+<% content_for :title, 'Feed' %>
+
+<div class="flex items-end justify-between mb-6">
+  <h1 class="text-3xl font-bold"><%= "Feed" %></h1>
+</div>
+
+<% unless @latest_posts.empty? %>
+  <ul class="grid grid-cols-1 gap-6 w-full">
+    <% @latest_posts.each do |post| %>
+      <li class="relative">
+        <%= link_to post, class: 'group hover:no-underline' do %>
+          <%= render partial: 'posts/post_image', locals: { post: post, classes: 'h-48' } %>
+          <div class="mt-2">
+            <span class="inline text-lg font-semibold group-hover:underline"><%= post.title %></span>
+          </div>
+          <span class="block "><%= post.description %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>
+    No posts yet
+  </p>
+<% end %>
