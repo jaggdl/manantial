@@ -9,6 +9,8 @@ module ApplicationHelper
   ].freeze
 
   def time_since_created(created_at)
+    created_at = Time.parse(created_at) if created_at.is_a?(String)
+
     time_difference = Time.now - created_at
 
     I18n.with_locale(I18n.locale) do
