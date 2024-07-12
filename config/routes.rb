@@ -36,7 +36,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :public do
+      resources :public do
         member do
           get 'info'
         end

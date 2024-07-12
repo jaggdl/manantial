@@ -40,7 +40,7 @@ module Connection
 
     def get_public_info
       cache_fetch(:get_public_info, expires_in: 10.minutes) do
-        get(info_api_v1_public_path)
+        get('/api/v1/public/info')
       end
     end
 
