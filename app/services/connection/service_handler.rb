@@ -33,7 +33,7 @@ module Connection
       connection_service = Service.new(@input.domain)
 
       begin
-        response = connection_service.request_connection(
+        connection_service.request_connection(
           message: message,
           nonce: @input.nonce,
         )

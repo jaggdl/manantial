@@ -1,24 +1,16 @@
-module Connection::PrivateReadable
-  def latest_posts
-    Rails.cache.fetch(latest_posts_cache_key, expires_in: 2.minute) do
-      response = connection_service.get("/api/v1/private/latest_posts")
-      response.parsed_response
-    rescue Connection::Service::Error => e
+module Connection
+  module PrivateReadable
+    def latest_posts
+      connection_service.get_latest_posts
+    rescue Service::Error => e
       Rails.logger.error("Connection::Service error: #{e.message}")
-      nil
-    rescue StandardError => e
-      Rails.logger.error("General error: #{e.message}")
-      nil
+      []
     end
-  end
 
-  private
+    private
 
-  def latest_posts_cache_key
-    "latest_posts/#{self.class.name.downcase}/#{self.id}"
-  end
-
-  def connection_service
-    @service ||= Connection::Service.new(self.domain)
+    def connection_service
+      @service ||= Connection::Service.new(self)
+    end
   end
 end
