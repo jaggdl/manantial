@@ -46,4 +46,14 @@ class Post < ApplicationRecord
       properties: { post_id: self.id.to_s }
     ).distinct.count(:visit_id)
   end
+
+  def preview_image
+    img = image.md
+
+    {
+      avif: img.avif.url,
+      webp: img.webp.url,
+      url: img.url,
+    }
+  end
 end

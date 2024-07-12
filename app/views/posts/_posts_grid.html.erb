@@ -2,7 +2,7 @@
   <% @posts.each do |post| %>
     <li class="relative">
       <%= link_to post, class: 'group hover:no-underline' do %>
-        <%= render partial: 'posts/post_image', locals: { post: post, classes: 'h-48' } %>
+        <%= render partial: 'posts/post_preview_image', locals: { post: post, classes: 'h-48' } %>
         <div class="mt-2">
           <span class="inline text-lg font-semibold group-hover:underline"><%= post.title %></span>
         </div>
