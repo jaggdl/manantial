@@ -1,4 +1,7 @@
 class FeedController < ApplicationController
+  before_action :authenticate_user!
+  skip_before_action :track_ahoy_visit
+
   def index
     connection_sets = Connection::Set.all
 
