@@ -6,7 +6,6 @@ module Connection
 
     def approve
       token = generate_token
-      connection_service = Service.new(@input.domain)
 
       begin
         connection_service.set_connection(
@@ -30,7 +29,6 @@ module Connection
 
     def create(message)
       @input.nonce = generate_token
-      connection_service = Service.new(@input.domain)
 
       begin
         connection_service.request_connection(
@@ -51,6 +49,10 @@ module Connection
 
     def generate_token
       SecureRandom.hex(16)
+    end
+
+    def connection_service
+      connection_service ||= Service.new(@input)
     end
   end
 end
