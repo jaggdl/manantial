@@ -11,16 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_07_05_071838) do
-  create_table "action_markdown_markdown_texts", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "body"
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_markdown_markdown_texts_uniqueness", unique: true
-  end
-
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
     t.integer "user_id"
@@ -132,8 +122,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_05_071838) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.string "og_image"
-    t.integer "ahoy_visit_id"
-    t.index ["ahoy_visit_id"], name: "index_posts_on_ahoy_visit_id"
   end
 
   create_table "profiles", force: :cascade do |t|

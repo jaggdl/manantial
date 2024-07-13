@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : owner_profile.full_name %></title>
+    <title><%= content_for?(:title) ? yield(:title) : owner_profile&.full_name %></title>
 
     <% if owner_profile.present? %>
       <meta name="description" content="<%= content_for?(:description) ? yield(:description) : owner_profile.plain_description %>">

@@ -1,6 +1,6 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.18.1"
-
+set :ssh_options, {:forward_agent => true}
 set :application, "portfolio"
 set :repo_url, "https://github.com/jaggdl/portfolio.git"
 

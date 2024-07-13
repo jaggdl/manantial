@@ -1,0 +1,27 @@
+version: '3'
+services:
+  jaggdl:
+    build: .
+    entrypoint: ["./bin/docker-entrypoint"]
+    command: ["./bin/rails", "server", "-p", "4200", "-b", "0.0.0.0","--pid", "tmp/pids/server-jaggdl.pid"]
+    volumes:
+      - .:/rails
+    ports:
+      - "4200:4200"
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_NAME=development.sqlite3
+      - DOMAIN=https://jaggdl.dev
+  chano:
+    build: .
+    entrypoint: ["./bin/docker-entrypoint"]
+    command: ["./bin/rails", "server", "-p", "4201", "-b", "0.0.0.0", "--pid", "tmp/pids/server-chano.pid"]
+    volumes:
+      - .:/rails
+    ports:
+      - "4201:4201"
+    environment:
+      - RAILS_ENV=development
+      - DATABASE_NAME=additional.sqlite3
+      - DOMAIN=https://chano.dev
+      # - SECRET_KEY_BASE=1
