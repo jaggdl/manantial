@@ -5,4 +5,11 @@ if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   ./bin/rails db:prepare
 fi
 
-exec "${@}"
+# Get the Caddy container's IP address
+CADDY_CONTAINER_IP=$(getent hosts caddy | awk '{ print $1 }')
+
+# Add the Caddy container's IP address to /etc/hosts
+echo "$CADDY_CONTAINER_IP jaggdl.dev" >> /etc/hosts
+echo "$CADDY_CONTAINER_IP chano.dev" >> /etc/hosts
+
+exec gosu rails "$@"

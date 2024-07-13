@@ -1,0 +1,9 @@
+https://jaggdl.dev {
+  reverse_proxy jaggdl:4200
+  tls /etc/certificates/jaggdl.dev.crt /etc/certificates/jaggdl.dev.key
+}
+
+https://chano.dev {
+  reverse_proxy chano:4201
+  tls /etc/certificates/chano.dev.crt /etc/certificates/chano.dev.key
+}

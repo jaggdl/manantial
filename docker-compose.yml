@@ -3,7 +3,7 @@ services:
   jaggdl:
     build: .
     entrypoint: ["./bin/docker-entrypoint"]
-    command: ["./bin/rails", "server", "-p", "4200", "-b", "0.0.0.0","--pid", "tmp/pids/server-jaggdl.pid"]
+    command: ["./bin/rails", "server", "-p", "4200", "-b", "0.0.0.0", "--pid", "tmp/pids/server-jaggdl.pid"]
     volumes:
       - .:/rails
     ports:
@@ -12,6 +12,11 @@ services:
       - RAILS_ENV=development
       - DATABASE_NAME=development.sqlite3
       - DOMAIN=https://jaggdl.dev
+    networks:
+      - app_net
+    expose:
+      - "4200"
+
   chano:
     build: .
     entrypoint: ["./bin/docker-entrypoint"]
@@ -24,4 +29,28 @@ services:
       - RAILS_ENV=development
       - DATABASE_NAME=additional.sqlite3
       - DOMAIN=https://chano.dev
-      # - SECRET_KEY_BASE=1
+    networks:
+      - app_net
+    expose:
+      - "4201"
+
+  caddy:
+    image: caddy:latest
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./certificates:/etc/certificates
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
