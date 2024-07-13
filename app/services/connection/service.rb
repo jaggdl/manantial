@@ -3,7 +3,7 @@ module Connection
     include HTTParty
     include Rails.application.routes.url_helpers
 
-    class Error < StandardError; end
+    class Connection::Service::Error < StandardError; end
 
     def initialize(connection)
       @connection = connection
@@ -53,26 +53,39 @@ module Connection
 
     def get(path, options = {})
       options[:headers] = @headers.merge(options[:headers] || {})
-      handle_response(self.class.get(path, options), path)
+      handle_response { self.class.get(path, options) }
     end
 
     def post(path, options = {})
       options[:headers] = @headers.merge(options[:headers] || {})
       options[:body] = options[:body].to_json if options[:body]
-      handle_response(self.class.post(path, options), path)
+      handle_response { self.class.post(path, options) }
     end
 
-    def handle_response(response, path)
-      unless response.success?
-        full_url = self.class.base_uri + path
-        raise Error, "HTTP request to #{full_url} failed with code #{response.code}: #{response.message}"
+    def handle_response
+      response = yield
+      full_url = response.request.last_uri.to_s
+
+      if response.is_a?(HTTParty::Response)
+        unless response.success?
+          raise Error, "HTTP request to #{full_url} failed with code #{response.code}: #{response.message}"
+        end
+
+        if response.headers['content-type']&.include?('application/json')
+          response.parsed_response
+        else
+          raise Error, "Unexpected content type: #{response.headers['content-type']}"
+        end
+      else
+        raise Error, "Network error while accessing #{full_url}: #{response.message}"
       end
 
-      if response.headers['content-type']&.include?('application/json')
-        response.parsed_response
-      else
-        raise Error, "Unexpected content type: #{response.headers['content-type']}"
-      end
+    rescue SocketError => e
+      raise Error, "Failed to open TCP connection to #{full_url} (#{e.message})"
+    rescue Timeout::Error => e
+      raise Error, "Request to #{full_url} timed out (#{e.message})"
+    rescue StandardError => e
+      raise Error, "An error occurred while accessing #{full_url}: #{e.message}"
     end
 
     def connection_id
