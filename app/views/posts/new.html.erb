@@ -1,4 +1,4 @@
-<% content_for :title, "#{I18n.t('posts.new.title')} – #{I18n.t('blog_title', name: @profile.short_name)}" %>
+<% content_for :title, "#{I18n.t('posts.new.title')} – #{I18n.t('blog_title', name: owner_profile.short_name)}" %>
 <div class="flex space-x-3 items-center mb-6">
   <%= link_to posts_path, class: 'inline-flex items-center justify-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' do %>
     <%= heroicon "arrow-uturn-left" %>

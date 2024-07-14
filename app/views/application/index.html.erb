@@ -1,27 +1,27 @@
 <div class="space-y-4">
   <h1 class="text-3xl font-bold w-full">
-    <%= @profile.full_name %>
+    <%= owner_profile.full_name %>
   </h1>
   <div class="">
     <div class="inline w-16 h-16 mr-4 float-left rounded-full overflow-hidden">
-      <% if @profile.profile_picture.present? %>
+      <% if owner_profile.profile_picture.present? %>
         <picture>
-          <% if @profile.profile_picture.sm.avif.present? %>
-            <source srcset="<%= @profile.profile_picture.sm.avif.url %>" type="image/avif">
+          <% if owner_profile.profile_picture.sm.avif.present? %>
+            <source srcset="<%= owner_profile.profile_picture.sm.avif.url %>" type="image/avif">
           <% end %>
-          <% if @profile.profile_picture.sm.webp.present? %>
-            <source srcset="<%= @profile.profile_picture.sm.webp.url %>" type="image/webp">
+          <% if owner_profile.profile_picture.sm.webp.present? %>
+            <source srcset="<%= owner_profile.profile_picture.sm.webp.url %>" type="image/webp">
           <% end %>
-          <img src="<%= @profile.profile_picture.sm.url %>" fetchpriority="high" class="w-full h-full object-cover transition-transform duration-200 transform group-hover:scale-105" alt="Profile picture>">
+          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" class="w-full h-full object-cover transition-transform duration-200 transform group-hover:scale-105" alt="Profile picture>">
         </picture>
       <% end %>
     </div>
     <div class="prose flex-0 inline">
-      <%= @profile.description_to_html %>
+      <%= owner_profile.description_to_html %>
     </div>
   </div>
   <article class="prose">
-    <%= @profile.info_to_html %>
+    <%= owner_profile.info_to_html %>
   </article>
 </div>
 <div class="mt-12 space-y-4">
