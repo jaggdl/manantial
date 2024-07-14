@@ -15,18 +15,20 @@ module OriginDomainChecker
       return unauthorized_response('X-Origin-Domain header is missing')
     end
 
-    begin
-      resolved_ip = Resolv.getaddress(origin_domain)
-    rescue Resolv::ResolvError
-      return unauthorized_response('Domain could not be resolved')
-    end
-
     unless Connection::Set.exists?(domain: origin_domain)
       return unauthorized_response('No connection found for the provided domain')
     end
 
-    unless request_ip == resolved_ip
-      return unauthorized_response('IP address mismatch')
+    unless Rails.env.development?
+      begin
+        resolved_ip = Resolv.getaddress(origin_domain)
+      rescue Resolv::ResolvError
+        return unauthorized_response('Domain could not be resolved')
+      end
+
+      unless request.remote_ip == resolved_ip
+        return unauthorized_response('IP address mismatch')
+      end
     end
   end
 
