@@ -16,6 +16,7 @@ services:
       - app_net
     expose:
       - "4200"
+    tty: true  # Add tty: true for the main service if needed
 
   chano:
     build: .
@@ -33,6 +34,19 @@ services:
       - app_net
     expose:
       - "4201"
+    tty: true  # Add tty: true for the main service if needed
+
+  tailwind:
+    build: .
+    entrypoint: ["./bin/docker-entrypoint"]
+    command: ["./bin/rails", "tailwindcss:watch[always]"]  # Use the always argument
+    volumes:
+      - .:/rails
+    environment:
+      - RAILS_ENV=development
+    networks:
+      - app_net
+    tty: true  # Ensure tty is true for the watch service
 
   caddy:
     image: caddy:latest
