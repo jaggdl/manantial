@@ -1,74 +1,87 @@
 
 <div class="flex justify-between mb-4">
   <h1 class="text-3xl font-bold">Connections</h1>
-  <%= link_to 'Send request', new_connection_out_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+  <% if user_signed_in? %>
+    <%= link_to 'Send request', new_connection_out_path, class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
+  <% end %>
 </div>
 
 <div class="space-y-8">
   <div>
-    <h2 class="text-xl font-semibold">Requests</h2>
-    <ul role="list" class="divide-y divide-gray-100">
-      <% @connections_in.each do |connection| %>
-        <li class="flex gap-x-4 py-5 justify-between items-center">
-          <div class="flex gap-x-4">
-            <% if connection.public_info.present? %>
-              <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
-            <% end %>
-            <div class="min-w-0">
-              <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
-              <p class="mt-1 truncate text-xs leading-5 text-gray-500">"<%= connection.message %>"</p>
+    <% if user_signed_in? && @connections.any? %>
+      <ul role="list" class="divide-y divide-gray-100">
+        <% @connections.each do |connection| %>
+          <li class="flex gap-x-4 py-5 justify-between items-center">
+            <div class="flex gap-x-4">
+              <% if connection.public_info.present? %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+              <% end %>
+              <div class="min-w-0">
+                <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500">Connected <%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+              </div>
             </div>
-          </div>
-          <div class="flex space-x-2">
-            <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to reject the request?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
-            <%= link_to heroicon("check", options: { class: "text-primary-500 h-5 w-5" }), approve_connection_in_path(connection), method: :patch, class: "rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+            <% if user_signed_in? %>
+              <div class="flex space-x-2">
+                <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to remove the connection?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <span class="text-gray-500">
+        No connections made, yet :(
+      </span>
+    <% end %>
   </div>
 
-  <div>
-    <h2 class="text-xl font-semibold">Connections</h2>
-    <ul role="list" class="divide-y divide-gray-100">
-      <% @connections.each do |connection| %>
-        <li class="flex gap-x-4 py-5 justify-between items-center">
-          <div class="flex gap-x-4">
-            <% if connection.public_info.present? %>
-              <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
-            <% end %>
-            <div class="min-w-0">
-              <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
-              <p class="mt-1 truncate text-xs leading-5 text-gray-500">Connected <%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+  <% if user_signed_in? && @connections_in.any? %>
+    <div>
+      <h2 class="text-xl font-semibold">Requests</h2>
+      <ul role="list" class="divide-y divide-gray-100">
+        <% @connections_in.each do |connection| %>
+          <li class="flex gap-x-4 py-5 justify-between items-center">
+            <div class="flex gap-x-4">
+              <% if connection.public_info.present? %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+              <% end %>
+              <div class="min-w-0">
+                <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500">"<%= connection.message %>"</p>
+              </div>
             </div>
-          </div>
-          <div class="flex space-x-2">
-            <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to remove the connection?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+            <div class="flex space-x-2">
+              <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to reject the request?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+              <%= link_to heroicon("check", options: { class: "text-primary-500 h-5 w-5" }), approve_connection_in_path(connection), method: :patch, class: "rounded-full bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-  <div>
-    <ul role="list" class="divide-y divide-gray-100">
-      <h2 class="text-xl font-semibold">Sent</h2>
-      <% @connections_out.each do |connection| %>
-        <li class="flex gap-x-4 py-5 justify-between items-center">
-          <div class="flex gap-x-4">
-            <% if connection.public_info.present? %>
-              <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
-            <% end %>
-            <div class="min-w-0">
-              <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
-              <p class="mt-1 truncate text-xs leading-5 text-gray-500"><%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+  <% if user_signed_in? && @connections_out.any? %>
+    <div>
+      <ul role="list" class="divide-y divide-gray-100">
+        <h2 class="text-xl font-semibold">Sent</h2>
+        <% @connections_out.each do |connection| %>
+          <li class="flex gap-x-4 py-5 justify-between items-center">
+            <div class="flex gap-x-4">
+              <% if connection.public_info.present? %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+              <% end %>
+              <div class="min-w-0">
+                <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500"><%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+              </div>
             </div>
-          </div>
-          <div class="flex space-x-2">
-            <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to cancel the request?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+            <div class="flex space-x-2">
+              <%= link_to heroicon("x-mark", options: { class: "text-primary-500 h-5 w-5" }), connection, method: :delete, data: { confirm: 'Do you want to cancel the request?' }, class: "rounded-full bg-red-600 p-2 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 </div>

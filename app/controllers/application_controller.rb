@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   def index
     @posts = Post.order(created_at: :desc).select(&:translated?).take(2)
+    @connections_count = Connection::Set.count
   end
 
   private

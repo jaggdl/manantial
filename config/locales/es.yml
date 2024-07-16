@@ -62,6 +62,10 @@ es:
   recent_posts: "Posts recientes"
   show_all: "Mostrar todo"
 
+  connections:
+    one: "%{count} conexión"
+    other: "%{count} conexiones"
+
   countries:
     AF: Afganistán
     AL: Albania
