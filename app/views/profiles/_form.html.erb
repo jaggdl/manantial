@@ -4,15 +4,7 @@
       <%= form.label :profile_picture, t('profile.form.profile_picture'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <div class="w-16 h-16 mr-4 rounded-full overflow-hidden">
         <% if owner_profile.profile_picture.present? %>
-          <picture>
-            <% if owner_profile.profile_picture.sm.avif.present? %>
-              <source srcset="<%= owner_profile.profile_picture.sm.avif.url %>" type="image/avif">
-            <% end %>
-            <% if owner_profile.profile_picture.sm.webp.present? %>
-              <source srcset="<%= owner_profile.profile_picture.sm.webp.url %>" type="image/webp">
-            <% end %>
-            <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" alt="Profile picture" class="w-full h-full">
-          </picture>
+          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" alt="Profile picture" class="w-full h-full" data-post-form-target="imagePreview">
         <% end %>
       </div>
       <%= form.file_field :profile_picture, data: { post_form_target: "fileInput" } %>
