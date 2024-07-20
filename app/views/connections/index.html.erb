@@ -18,7 +18,7 @@
               <% end %>
               <div class="min-w-0">
                 <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
-                <p class="mt-1 truncate text-xs leading-5 text-gray-500">Connected <%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500">Connected <%= time_since_created(connection.created_at) %></p>
               </div>
             </div>
             <% if user_signed_in? %>
@@ -73,7 +73,7 @@
               <% end %>
               <div class="min-w-0">
                 <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
-                <p class="mt-1 truncate text-xs leading-5 text-gray-500"><%= distance_of_time_in_words(Time.now, connection.created_at) %> ago</p>
+                <p class="mt-1 truncate text-xs leading-5 text-gray-500"><%= time_since_created(connection.created_at) %></p>
               </div>
             </div>
             <div class="flex space-x-2">

@@ -20,6 +20,7 @@ es:
     minutes: "minutos"
     second: "segundo"
     seconds: "segundos"
+
   time_since:
     just_now: "ahora mismo"
     ago: "hace %{value} %{unit}"
@@ -32,6 +33,17 @@ es:
     messages:
       error: "error"
       prohibited_this_post: "prohibió que esta publicación se guardara"
+
+  profile:
+    edit:
+      heading: "Editar Perfil"
+    form:
+      profile_picture: "Foto de perfil"
+      full_name: "Nombre completo"
+      short_name: "Nombre corto"
+      description: "Descripción"
+      info: "Información"
+      submit: "Enviar"
 
   posts:
     index:

@@ -34,6 +34,17 @@ en:
       error: "error"
       prohibited_this_post: "prohibited this post from being saved"
 
+  profile:
+    edit:
+      heading: "Edit Profile"
+    form:
+      profile_picture: "Profile pic"
+      full_name: "Full name"
+      short_name: "Short name"
+      description: "Description"
+      info: "Info"
+      submit: "Submit"
+
   posts:
     index:
       new_post: "New Post"

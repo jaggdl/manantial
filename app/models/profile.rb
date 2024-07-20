@@ -1,6 +1,10 @@
 class Profile < ApplicationRecord
   require 'redcarpet/render_strip'
 
+  extend Mobility
+  translates :description, type: :text
+  translates :info, type: :text
+
   mount_uploader :profile_picture, ProfilePictureUploader
 
   validate :only_one_profile, on: :create
@@ -12,6 +16,9 @@ class Profile < ApplicationRecord
       space_after_headers: true,
       fenced_code_blocks: true
     )
+
+    return nil if info.nil?
+
     @info_markdown.render(info).html_safe
   end
 
@@ -22,11 +29,17 @@ class Profile < ApplicationRecord
       space_after_headers: true,
       fenced_code_blocks: true
     )
+
+    return nil if description.nil?
+
     @description_markdown.render(description).html_safe
   end
 
   def plain_description
     @plain_description ||= Redcarpet::Markdown.new(Redcarpet::Render::StripDown)
+
+    return nil if description.nil?
+
     @plain_description.render(description)
   end
 

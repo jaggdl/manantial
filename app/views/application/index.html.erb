@@ -18,10 +18,16 @@
         </picture>
       <% end %>
     </div>
-    <%= link_to connections_path, class: 'mb-3 inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>
-      <%= heroicon("globe-alt", options: { class: "text-primary-500 h-5 w-5" }) %>
-      <span class="whitespace-nowrap"><%= t('connections', count: @connections_count) %></span>
-    <% end %>
+    <div class="mb-3 inline-flex space-x-2 items-start">
+      <%= link_to connections_path, class: 'inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>
+        <%= heroicon("globe-alt", options: { class: "h-5 w-5" }) %>
+        <span class="whitespace-nowrap"><%= t('connections', count: @connections_count) %></span>
+      <% end %>
+      <%= link_to edit_profile_path, class: 'rounded-full bg-gray-100 hover:bg-gray-200 p-2 text-gray-600' do %>
+        <%= heroicon("pencil", options: { class: "h-4 w-4" }) %>
+      <% end %>
+
+    </div>
     <div class="prose flex-0 inline">
       <%= owner_profile.description_to_html %>
     </div>

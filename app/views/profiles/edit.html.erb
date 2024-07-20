@@ -1,5 +1,10 @@
-<h1><%= action_name.capitalize %> Profile</h1>
+<div class="flex items-center justify-between mb-6">
+  <div class="flex space-x-3 items-center">
+    <%= link_to root_path, class: 'inline-flex items-center justify-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' do %>
+      <%= heroicon "arrow-uturn-left" %>
+    <% end %>
+    <h1 class="text-3xl font-bold"><%= t('profile.edit.heading') %></h1>
+  </div>
+</div>
 
-<%= render 'form', profile: owner_profile %>
-
-<%= link_to 'Back', profile_path %>
+<%= render 'form', profile: @profile %>
