@@ -19,12 +19,16 @@
       <% end %>
     </div>
     <div class="mb-3 inline-flex space-x-2 items-start">
-      <%= link_to connections_path, class: 'inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>
+
+      <%= link_to connections_path, class: 'shadow-sm inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>
         <%= heroicon("globe-alt", options: { class: "h-5 w-5" }) %>
         <span class="whitespace-nowrap"><%= t('connections', count: @connections_count) %></span>
       <% end %>
-      <%= link_to edit_profile_path, class: 'rounded-full bg-gray-100 hover:bg-gray-200 p-2 text-gray-600' do %>
-        <%= heroicon("pencil", options: { class: "h-4 w-4" }) %>
+
+      <% if user_signed_in? %>
+        <%= link_to edit_profile_path, class: 'shadow-sm rounded-full p-2 bg-white font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' do %>
+          <%= heroicon("pencil", options: { class: "h-4 w-4" }) %>
+        <% end %>
       <% end %>
 
     </div>
