@@ -14,7 +14,7 @@
           <% if owner_profile.profile_picture.sm.webp.present? %>
             <source srcset="<%= owner_profile.profile_picture.sm.webp.url %>" type="image/webp">
           <% end %>
-          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" class="w-full h-full object-cover transition-transform duration-200 transform group-hover:scale-105" alt="Profile picture>">
+          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" alt="<%= t('profile_picture_alt', name: owner_profile.short_name) %>" class="w-full h-full">
         </picture>
       <% end %>
     </div>

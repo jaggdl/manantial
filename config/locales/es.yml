@@ -45,6 +45,8 @@ es:
       info: "Información"
       submit: "Enviar"
 
+  profile_picture_alt: "Foto de perfil de %{name}"
+
   posts:
     index:
       new_post: "Nuevo Post"

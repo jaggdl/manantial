@@ -38,12 +38,14 @@ en:
     edit:
       heading: "Edit Profile"
     form:
-      profile_picture: "Profile pic"
+      profile_picture: "Profile picture"
       full_name: "Full name"
       short_name: "Short name"
       description: "Description"
       info: "Info"
       submit: "Submit"
+
+  profile_picture_alt: "%{name} profile picture"
 
   posts:
     index:
