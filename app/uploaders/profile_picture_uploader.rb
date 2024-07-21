@@ -8,8 +8,8 @@ class ProfilePictureUploader < CarrierWave::Uploader::Base
     sm: [128, 128],
     md: [640, 640],
     lg: [1024, 1024],
-    xl: [1280, 1280],
-  }
+    xl: [1280, 1280]
+  }.freeze
 
   VERSIONS.each do |version_name, dimensions|
     version version_name do

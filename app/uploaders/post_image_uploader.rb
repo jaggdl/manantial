@@ -10,7 +10,7 @@ class PostImageUploader < CarrierWave::Uploader::Base
     lg: [1024, nil],
     xl: [1280, nil],
     xxl: [1536, nil]
-  }
+  }.freeze
 
   VERSIONS.each do |version_name, dimensions|
     version version_name do

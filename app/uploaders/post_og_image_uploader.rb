@@ -4,14 +4,14 @@ class PostOgImageUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{I18n.locale.to_s}"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}/#{I18n.locale}"
   end
 
   def extension_whitelist
-    %w(png)
+    ['png']
   end
 
   def filename
-    "og_image.png" if original_filename
+    'og_image.png' if original_filename
   end
 end
