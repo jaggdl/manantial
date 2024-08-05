@@ -5,19 +5,10 @@ FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
 WORKDIR /rails
 
-ENV RAILS_ENV="development" \
+ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle"
-
-# Install gosu and CA certificates
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y gosu ca-certificates
-
-# Copy the CA certificate into the container
-COPY certificates/rootCA.pem /usr/local/share/ca-certificates/rootCA.crt
-
-# Update the CA trust store
-RUN update-ca-certificates
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development"
 
 FROM base as build
 
@@ -32,7 +23,7 @@ RUN bundle install && \
 COPY . .
 
 RUN bundle exec bootsnap precompile app/ lib/
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=1 ./bin/rails assets:precompile --trace
 
 FROM base
 
@@ -43,13 +34,13 @@ RUN apt-get update -qq && \
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
+# Ensure the application runs with the right permissions
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 
-# Start as root to modify /etc/hosts, then switch to rails user
-USER root
+USER rails:rails
 
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
+ENTRYPOINT ["/rails/bin/docker-entrypoint.prod"]
 
 EXPOSE 3000
 CMD ["./bin/rails", "server"]
