@@ -28,10 +28,16 @@
     <%= owner_profile.info_to_html %>
   </article>
 </div>
+
 <div class="mt-12 space-y-4">
   <h2 class="text-xl font-bold"><%= t('recent_posts') %></h2>
-  <%= render 'posts/posts_grid' %>
-  <div class="w-full flex justify-end">
-    <%= link_to t('show_all'), posts_path, class: active_class(posts_path) %>
-  </div>
+
+  <% if @posts.present? %>
+    <%= render 'posts/posts_grid' %>
+    <div class="w-full flex justify-end">
+      <%= link_to t('show_all'), posts_path, class: active_class(posts_path) %>
+    </div>
+  <% else %>
+    <p><%= t('no_posts') %></p>
+  <% end %>
 </div>

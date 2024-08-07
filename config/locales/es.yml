@@ -79,6 +79,7 @@ es:
       hidden: "Oculto"
 
   recent_posts: "Posts recientes"
+  no_posts: "No hay posts públicos"
   show_all: "Mostrar todo"
 
   connections:

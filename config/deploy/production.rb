@@ -7,7 +7,7 @@
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
 server 'manantial.jaggdl.com', user: 'deploy', roles: %w{production app db web}
-server 'jaggdl.com', user: 'deploy', roles: %w{production app db web}
+# server 'jaggdl.com', user: 'deploy', roles: %w{production app db web}
 
 
 
