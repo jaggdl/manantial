@@ -4,11 +4,17 @@ class PostsController < ApplicationController
   skip_before_action :track_ahoy_visit, only: [:og_image]
 
   def index
-    @posts = Post.order(created_at: :desc).select(&:translated?)
+    if user_signed_in?
+      @posts = Post.order(created_at: :desc).select(&:translated?)
+    else
+      @posts = Post.public_posts.order(created_at: :desc).select(&:translated?)
+    end
   end
 
   def show
-    unless @post.translated?
+    if !@post.public? && !user_signed_in?
+      raise ActiveRecord::RecordNotFound
+    elsif !@post.translated?
       if user_signed_in?
         redirect_to edit_post_path(@post), alert: I18n.t('posts.alerts.translate_before_viewing')
       else
@@ -67,6 +73,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :description, :markdown, :image)
+    params.require(:post).permit(:title, :description, :markdown, :image, :visibility)
   end
 end

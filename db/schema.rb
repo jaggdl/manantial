@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_05_071838) do
+ActiveRecord::Schema[7.0].define(version: 2024_08_07_044224) do
   create_table "ahoy_events", force: :cascade do |t|
     t.integer "visit_id"
     t.integer "user_id"
@@ -122,6 +122,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_05_071838) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.string "og_image"
+    t.boolean "private", default: false
+    t.boolean "visible", default: true
+    t.index ["private"], name: "index_posts_on_private"
+    t.index ["visible"], name: "index_posts_on_visible"
   end
 
   create_table "profiles", force: :cascade do |t|

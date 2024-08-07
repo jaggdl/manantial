@@ -59,6 +59,7 @@ es:
       delete: "Eliminar"
       confirm_delete: "¿Estás seguro de que quieres eliminar este post?"
     form:
+      visibility: "Visibilidad"
       cover_image: "Imagen de portada"
       title: "Título"
       description: "Descripción"
@@ -72,6 +73,10 @@ es:
       created: "La publicación se creó con éxito."
       updated: "La publicación se actualizó con éxito."
       destroyed: "La publicación se eliminó con éxito."
+    visibility_options:
+      public: "Público"
+      connections: "Conexiones"
+      hidden: "Oculto"
 
   recent_posts: "Posts recientes"
   show_all: "Mostrar todo"

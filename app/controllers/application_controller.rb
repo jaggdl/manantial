@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :track_ahoy_visit, if: :user_signed_in?
 
   def index
-    @posts = Post.order(created_at: :desc).select(&:translated?).take(2)
+    @posts = Post.public_posts.order(created_at: :desc).select(&:translated?).take(2)
     @connections_count = Connection::Set.count
   end
 

@@ -5,23 +5,11 @@
     </h1>
   </div>
   <div>
-    <div class="inline w-16 h-16 mr-4 float-left rounded-full overflow-hidden">
-      <% if owner_profile.profile_picture.present? %>
-        <picture>
-          <% if owner_profile.profile_picture.sm.avif.present? %>
-            <source srcset="<%= owner_profile.profile_picture.sm.avif.url %>" type="image/avif">
-          <% end %>
-          <% if owner_profile.profile_picture.sm.webp.present? %>
-            <source srcset="<%= owner_profile.profile_picture.sm.webp.url %>" type="image/webp">
-          <% end %>
-          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" alt="<%= t('profile_picture_alt', name: owner_profile.short_name) %>" class="w-full h-full">
-        </picture>
-      <% end %>
-    </div>
+    <%= render 'shared/profile_picture', class: 'inline' %>
     <div class="mb-3 inline-flex space-x-2 items-start">
 
       <%= link_to connections_path, class: 'shadow-sm inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>
-        <%= heroicon("globe-alt", options: { class: "h-5 w-5" }) %>
+        <%= heroicon("link", options: { class: "h-5 w-5" }) %>
         <span class="whitespace-nowrap"><%= t('connections', count: @connections_count) %></span>
       <% end %>
 

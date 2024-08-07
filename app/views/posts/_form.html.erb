@@ -12,6 +12,16 @@
   <% end %>
 
   <div class="space-y-4" data-controller="post-form">
+    <div class="field">
+      <%= form.label :visibility, t('posts.form.visibility'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
+      <%= form.select :visibility, options_for_select([
+            [t('posts.visibility_options.public'), 'public'],
+            [t('posts.visibility_options.connections'), 'connections'],
+            [t('posts.visibility_options.hidden'), 'hidden']
+          ], selected: @post.visibility), {},
+          { class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' } %>
+    </div>
+
     <div class="space-y-2">
       <%= form.label :image, t('posts.form.cover_image'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <div class="mt-2">

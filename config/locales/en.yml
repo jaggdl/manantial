@@ -59,6 +59,7 @@ en:
       delete: "Delete"
       confirm_delete: "Are you sure you want to delete this post?"
     form:
+      visibility: "Visibility"
       cover_image: "Cover image"
       title: "Title"
       description: "Description"
@@ -72,6 +73,10 @@ en:
       created: "Post was successfully created."
       updated: "Post was successfully updated."
       destroyed: "Post was successfully deleted."
+    visibility_options:
+      public: "Public"
+      connections: "Connections"
+      hidden: "Hidden"
 
   recent_posts: "Recent posts"
   show_all: "Show all"

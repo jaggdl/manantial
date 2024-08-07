@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include Visibility
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 

@@ -28,7 +28,7 @@
 <%= link_to I18n.t('blog_title', name: owner_profile.short_name), posts_path, class: 'text-2xl font-semibold mb-4 block' %>
 
 <div class="relative">
-  <%= render partial: 'posts/post_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
+  <%= render partial: 'posts/post_preview_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
   <% if user_signed_in? %>
     <div class="absolute top-3 right-2">
       <%= render partial: 'edit_link', locals: { post: @post } %>
