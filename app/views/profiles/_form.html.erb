@@ -3,9 +3,7 @@
     <div class="space-y-2">
       <%= form.label :profile_picture, t('profile.form.profile_picture'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <div class="w-16 h-16 mr-4 rounded-full overflow-hidden">
-        <% if owner_profile.profile_picture.present? %>
-          <img src="<%= owner_profile.profile_picture.sm.url %>" fetchpriority="high" alt="Profile picture" class="w-full h-full" data-post-form-target="imagePreview">
-        <% end %>
+        <img src="<%= profile.profile_picture&.sm.url %>" fetchpriority="high" alt="Profile picture" class="w-full h-full object-cover" data-post-form-target="imagePreview">
       </div>
       <%= form.file_field :profile_picture, data: { post_form_target: "fileInput" } %>
       <% if profile.errors[:profile_picture].any? %>

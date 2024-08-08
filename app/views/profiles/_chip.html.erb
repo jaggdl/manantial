@@ -1,6 +1,6 @@
 <%= link_to domain, class: "inline-flex items-center px-1.5 space-x-1 h-8 rounded-md bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 #{'translate-y-1' if profile_picture.present?}" do %>
   <% if profile_picture.present? %>
-    <%= image_tag profile_picture, class: "w-5 h-5 rounded-full", alt: t('profile_picture_alt', name: name) %>
+    <%= image_tag profile_picture, class: "w-5 h-5 rounded-full object-cover", alt: t('profile_picture_alt', name: name) %>
   <% end %>
   <span class="text-sm font-medium"><%= name %></span>
 <% end %>

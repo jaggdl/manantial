@@ -14,7 +14,7 @@
           <li class="flex gap-x-4 py-5 justify-between items-center">
             <div class="flex gap-x-4">
               <% if connection.public_info.present? %>
-                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50 object-cover") %>
               <% end %>
               <div class="min-w-0">
                 <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
@@ -30,7 +30,7 @@
         <% end %>
       </ul>
     <% else %>
-      <span class="text-gray-500">
+      <span class="text-gray-600">
         No connections made, yet :(
       </span>
     <% end %>
@@ -44,7 +44,7 @@
           <li class="flex gap-x-4 py-5 justify-between items-center">
             <div class="flex gap-x-4">
               <% if connection.public_info.present? %>
-                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50 object-cover") %>
               <% end %>
               <div class="min-w-0">
                 <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
@@ -69,7 +69,7 @@
           <li class="flex gap-x-4 py-5 justify-between items-center">
             <div class="flex gap-x-4">
               <% if connection.public_info.present? %>
-                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50") %>
+                <%= image_tag(connection.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50 object-cover") %>
               <% end %>
               <div class="min-w-0">
                 <%= link_to connection_card_title(connection), "https://#{connection.domain}", target: '_blank' %>
