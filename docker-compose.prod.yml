@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  manantial:
     build:
       context: .
       dockerfile: Dockerfile.prod
@@ -12,8 +12,7 @@ services:
       - "3000:3000"
     environment:
       - RAILS_ENV=production
-      - DATABASE_NAME=production.sqlite3
-      - DOMAIN=https://jaggdl.dev
+      - DOMAIN="http://localhost:3000"
       - SECRET_KEY_BASE=1
       - RAILS_LOG_TO_STDOUT=1
       - RAILS_SERVE_STATIC_FILES=1

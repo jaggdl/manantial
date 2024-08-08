@@ -40,6 +40,8 @@ RUN useradd rails --create-home --shell /bin/bash && \
 
 USER rails:rails
 
+RUN ./bin/rails db:setup
+
 ENTRYPOINT ["/rails/bin/docker-entrypoint.prod"]
 
 EXPOSE 3000
