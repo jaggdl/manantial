@@ -33,9 +33,7 @@ module Connection
     end
 
     def get_latest_posts
-      cache_fetch(:get_latest_posts, expires_in: 2.minutes) do
-        get(latest_posts_api_v1_private_path)
-      end
+      get(latest_posts_api_v1_private_path)
     end
 
     def get_public_info
