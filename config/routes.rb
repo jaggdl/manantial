@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     resources :connections
 
     get 'feed', to: 'feed#index'
+    get 'feed/:connection_id/:post_id', to: 'feed#show', as: 'feed_post'
+
     get 'analytics', to: 'analytics#index'
   end
 
@@ -42,6 +44,8 @@ Rails.application.routes.draw do
       resource :private do
         get 'latest_posts', to: 'private#latest_posts'
       end
+
+      resources :posts
     end
   end
 

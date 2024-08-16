@@ -1,5 +1,7 @@
 module Connection
   module PrivateReadable
+    delegate :get_post, to: :connection_service
+
     def latest_posts
       connection_service.get_latest_posts
     rescue Service::Error => e

@@ -1,0 +1,18 @@
+<% content_for :title, "#{@post.title} – #{I18n.t('blog_title', name: 'chetos')}" %>
+<% content_for :description, @post.description %>
+
+<%= link_to @post.author.domain_url, class: 'text-2xl font-semibold block flex items-center space-x-3 mb-4' do %>
+  <%= image_tag(@post.author.public_info['profile_picture'], class: "h-12 w-12 flex-none rounded-full bg-gray-50 object-cover") %>
+  <span><%= @post.author.public_info['name'] %></span>
+<% end %>
+
+<div class="relative">
+  <%= render partial: 'posts/post_preview_image', locals: { post: @post, classes: 'h-64 mb-4' } %>
+</div>
+
+<div class="lg:space-y-4 space-y-3 mb-8">
+  <h1 class="text-4xl lg:text-6xl font-bold"><%= @post.title %></h1>
+  <p class="text-lg"><%= @post.description %></p>
+</div>
+
+<div class="prose"><%= raw @post.markdown_to_html %></div>

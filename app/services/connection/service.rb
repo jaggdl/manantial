@@ -44,6 +44,12 @@ module Connection
       end
     end
 
+    def get_post(post_id)
+      cache_fetch(:get_post, expires_in: 10.minutes) do
+        get("/api/v1/posts/#{post_id}")
+      end
+    end
+
     private
 
     def cache_fetch(method, expires_in:, &block)
