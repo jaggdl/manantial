@@ -34,7 +34,25 @@ services:
       - app_net
     expose:
       - "4201"
-    tty: true  # Add tty: true for the main service if needed
+    tty: true
+
+  memo:
+      build: .
+      entrypoint: ["./bin/docker-entrypoint"]
+      command: ["./bin/rails", "server", "-p", "4202", "-b", "0.0.0.0", "--pid", "tmp/pids/server-memo.pid"]
+      volumes:
+        - .:/rails
+      ports:
+        - "4202:4202"
+      environment:
+        - RAILS_ENV=development
+        - DATABASE_NAME=additional_memo.sqlite3
+        - DOMAIN=https://memo.dev
+      networks:
+        - app_net
+      expose:
+        - "4202"
+      tty: true
 
   tailwind:
     build: .

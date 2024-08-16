@@ -7,3 +7,8 @@ https://chano.dev {
   reverse_proxy chano:4201
   tls /etc/certificates/chano.dev.crt /etc/certificates/chano.dev.key
 }
+
+https://memo.dev {
+  reverse_proxy memo:4202
+  tls /etc/certificates/memo.dev.crt /etc/certificates/memo.dev.key
+}

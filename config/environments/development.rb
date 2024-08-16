@@ -72,5 +72,5 @@ Rails.application.configure do
 
   config.active_job.queue_adapter = :async
 
-  config.hosts = ['jaggdl.dev', 'localhost:4201', 'chano.dev']
+  config.hosts = ['jaggdl.dev', 'localhost:4201', 'chano.dev', 'localhost:4202', 'memo.dev']
 end
