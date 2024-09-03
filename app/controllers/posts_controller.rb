@@ -65,20 +65,39 @@ class PostsController < ApplicationController
   def upload_image
     uploaded_file = params[:image]
 
-    if uploaded_file
-      filename = "#{SecureRandom.uuid}-#{uploaded_file.original_filename}"
+    unless uploaded_file
+      render json: { error: 'No file uploaded' }, status: :unprocessable_entity
+      return
+    end
 
+    begin
+      temp_file = Tempfile.new(['temp', File.extname(uploaded_file.original_filename)])
+      temp_file.binmode
+      temp_file.write(uploaded_file.read)
+      temp_file.rewind
+
+      image = MiniMagick::Image.new(temp_file.path)
+
+      max_dimension = 3840 # 4K is 3840x2160
+      image.resize "#{max_dimension}x#{max_dimension}>"
+
+      filename = "#{SecureRandom.uuid}.webp"
       filepath = Rails.root.join('public', 'uploads', filename)
 
-      File.open(filepath, 'wb') do |file|
-        file.write(uploaded_file.read)
+      image.format 'webp' do |webp|
+        webp.quality 85
       end
+      image.write filepath
 
       image_url = "/uploads/#{filename}"
 
       render json: { url: image_url }, status: :ok
-    else
-      render json: { error: 'No file uploaded' }, status: :unprocessable_entity
+    rescue StandardError => e
+      Rails.logger.error "Image processing error: #{e.message}"
+      render json: { error: 'Error processing image' }, status: :unprocessable_entity
+    ensure
+      temp_file.close
+      temp_file.unlink
     end
   end
 
