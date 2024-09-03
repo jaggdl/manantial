@@ -62,6 +62,26 @@ class PostsController < ApplicationController
     )
   end
 
+  def upload_image
+    uploaded_file = params[:image]
+
+    if uploaded_file
+      filename = "#{SecureRandom.uuid}-#{uploaded_file.original_filename}"
+
+      filepath = Rails.root.join('public', 'uploads', filename)
+
+      File.open(filepath, 'wb') do |file|
+        file.write(uploaded_file.read)
+      end
+
+      image_url = "/uploads/#{filename}"
+
+      render json: { url: image_url }, status: :ok
+    else
+      render json: { error: 'No file uploaded' }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_post

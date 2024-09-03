@@ -50,4 +50,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: [:new, :create]
+
+  post 'upload_image', to: 'posts#upload_image'
 end

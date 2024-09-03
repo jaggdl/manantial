@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <div class="space-y-4" data-controller="post-form">
+  <div class="space-y-4" data-controller="post-form image-upload">
     <div class="field">
       <%= form.label :visibility, t('posts.form.visibility'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
       <%= form.select :visibility, options_for_select([
@@ -42,8 +42,15 @@
 
     <div class="field">
       <%= form.label :markdown, t('posts.form.markdown'), class: 'block text-sm font-medium leading-6 text-gray-900' %>
-      <%= form.text_area :markdown, rows: 20, class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6' %>
+      <%= form.text_area :markdown, rows: 20,
+          class: 'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6',
+          data: {
+            image_upload_target: "textarea",
+            action: "dragover->image-upload#preventDefault dragenter->image-upload#preventDefault drop->image-upload#handleDrop"
+          } %>
     </div>
+
+    <%= form.file_field :uploaded_image, accept: 'image/*', class: 'hidden', data: { image_upload_target: "fileInput" } %>
 
     <div class="flex justify-end w-full">
       <%= form.submit t('posts.form.submit'), class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
