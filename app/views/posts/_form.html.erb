@@ -27,7 +27,7 @@
       <div class="mt-2">
         <%= image_tag post.image.present? ? @post.image.xs.url : '', data: { post_form_target: "imagePreview" }, class: 'w-full' %>
       </div>
-      <%= form.file_field :image, data: { post_form_target: "fileInput" } %>
+      <%= form.file_field :image, accept: 'image/*', data: { post_form_target: "fileInput" } %>
     </div>
 
     <div class="field">
