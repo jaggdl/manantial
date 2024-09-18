@@ -4,6 +4,14 @@ class MarkdownRendererWithSpecialLinks < Redcarpet::Render::HTML
       prefix, hostname, suffix = $1, $2, $3
       "#{prefix}#{hostname_link(hostname)}#{suffix}"
     end
+
+    # Preprocess images to prepend the hostname
+    updated_document = updated_document.gsub(/!\[(.+?)\]\((.+?)\)/) do |match|
+      alt_text, image_url = $1, $2
+      full_url = image_url.start_with?('/') ? "#{ENV['DOMAIN']}#{image_url}" : image_url
+      "![#{alt_text}](#{full_url})"
+    end
+
     updated_document
   end
 
