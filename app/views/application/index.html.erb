@@ -5,7 +5,9 @@
     </h1>
   </div>
   <div>
-    <%= render 'shared/profile_picture', class: 'inline' %>
+    <div class="mr-4 float-left">
+      <%= render 'shared/profile_picture', size: 'xl' %>
+    </div>
     <div class="mb-3 inline-flex space-x-2 items-start">
 
       <%= link_to connections_path, class: 'shadow-sm inline-flex items-center gap-x-1 rounded-full bg-blue-50 px-2 pr-3 py-1.5 text-xs font-medium text-blue-700' do %>

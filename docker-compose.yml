@@ -57,7 +57,7 @@ services:
   tailwind:
     build: .
     entrypoint: ["./bin/docker-entrypoint"]
-    command: ["./bin/rails", "tailwindcss:watch[always]"]  # Use the always argument
+    command: ["./bin/rails", "tailwindcss:watch[always,debug]"]  # Use the always argument
     volumes:
       - .:/rails
     environment:
