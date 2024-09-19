@@ -15,7 +15,7 @@
 
   <% if @post.og_image.present? %>
     <meta property="og:image" itemprop="image" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
-    <meta name="twitter:image" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
+    <meta name="twitter:image:src" content="<%= File.join(ENV['DOMAIN'], @post.og_image.url) %>">
   <% end %>
 
   <meta name="post-id" content="<%= @post.id %>">
