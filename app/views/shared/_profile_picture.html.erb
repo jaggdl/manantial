@@ -1,17 +1,8 @@
 <%
-  size_classes = {
-    "xs" => "w-4 h-4",
-    "sm" => "w-8 h-8",
-    "md" => "w-16 h-16",
-    "lg" => "w-24 h-24",
-    "xl" => "w-32 h-32"
-  }
-  size = local_assigns[:size] || "lg"
-  classes = size_classes[size]
-
+  classes_with_size = local_assigns[:classes].present? && local_assigns[:classes].include?('w-') && local_assigns[:classes].include?('h-') ? local_assigns[:classes] : "#{local_assigns[:classes]} w-16 h-16"
   profile_picture = owner_profile.profile_picture&.public_send(size)
 %>
-<div class="<%= classes %> rounded-full overflow-hidden">
+<div class="<%= classes_with_size %> rounded-full overflow-hidden">
   <% if profile_picture %>
     <picture>
       <% if profile_picture.webp.present? %>
