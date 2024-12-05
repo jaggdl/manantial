@@ -35,7 +35,7 @@ mkcert -CAROOT
 
 ### Build and run Docker
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Restart nginx with passenger instalation
