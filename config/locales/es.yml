@@ -1,9 +1,10 @@
 es:
   menu:
-    about: Acerca de
-    posts: Publicaciones
+    about: Perfil
+    posts: Posts
     analytics: Analíticas
     language: EN
+    connections: Conexiones
 
   blog_title: "Blog de %{name}"
 

@@ -1,7 +1,7 @@
 <nav class="flex justify-end space-x-4 p-5 max-w-2xl mx-auto">
   <%= link_to I18n.t('menu.about'), root_path, class: active_class(root_path) %>
   <%= link_to I18n.t('menu.posts'), posts_path, class: active_class(posts_path) %>
-  <%= link_to 'Connections', connections_path, class: active_class(connections_path) %>
+  <%= link_to I18n.t('menu.connections'), connections_path, class: active_class(connections_path) %>
   <span class="opacity-30">|</span>
   <% if user_signed_in? %>
     <%= link_to 'Feed', feed_path, class: active_class(feed_path) %>

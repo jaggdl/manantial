@@ -1,9 +1,10 @@
 en:
   menu:
-    about: About
+    about: Profile
     posts: Posts
     analytics: Analytics
     language: ES
+    connections: Connections
 
   blog_title: "%{name}'s Blog"
 
