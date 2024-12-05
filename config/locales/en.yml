@@ -3,7 +3,7 @@ en:
     about: About
     posts: Posts
     analytics: Analytics
-    language: En español
+    language: ES
 
   blog_title: "%{name}'s Blog"
 
