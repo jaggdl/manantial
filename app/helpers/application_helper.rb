@@ -15,12 +15,12 @@ module ApplicationHelper
 
     I18n.with_locale(I18n.locale) do
       TIME_PERIODS.each do |period|
-        if time_difference >= period[:seconds]
-          value = (time_difference / period[:seconds]).to_i
-          unit_key = value == 1 ? period[:unit] : "#{period[:unit]}s".to_sym
-          unit = I18n.t("time_periods.#{unit_key}")
-          return I18n.t('time_since.ago', value: value, unit: unit)
-        end
+        next unless time_difference >= period[:seconds]
+
+        value = (time_difference / period[:seconds]).to_i
+        unit_key = value == 1 ? period[:unit] : "#{period[:unit]}s".to_sym
+        unit = I18n.t("time_periods.#{unit_key}")
+        return I18n.t('time_since.ago', value:, unit:)
       end
 
       I18n.t('time_since.just_now')
@@ -28,8 +28,8 @@ module ApplicationHelper
   end
 
   LOCALES_WITH_TERRITORY = {
-    :en => 'en_US',
-    :es => 'es_MX',
+    en: 'en_US',
+    es: 'es_MX'
   }.freeze
 
   def locale_with_territory(locale = nil)
@@ -38,15 +38,15 @@ module ApplicationHelper
 
   def active_class(path)
     current_path = request.path
-    is_root = current_path == root_path || current_path == "/es"
+    is_root = current_path == root_path || current_path == '/es'
 
     if path == root_path
-      return "font-semibold" if is_root
-    else
-      return "font-semibold" if current_path.start_with?(path)
+      return 'font-semibold' if is_root
+    elsif current_path.start_with?(path)
+      return 'font-semibold'
     end
 
-    ""
+    ''
   end
 
   def owner_profile

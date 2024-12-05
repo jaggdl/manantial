@@ -10,6 +10,11 @@ module Connection::PublicReadable
     "https://#{domain}"
   end
 
+  def localized_domain_url
+    localized_path = I18n.locale == I18n.default_locale ? '' : I18n.locale.to_s
+    "https://#{domain}/#{localized_path}"
+  end
+
   private
 
   def connection_service
