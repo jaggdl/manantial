@@ -50,8 +50,6 @@
           } %>
     </div>
 
-    <%= form.file_field :uploaded_image, accept: 'image/*', class: 'hidden', data: { image_upload_target: "fileInput" } %>
-
     <div class="flex justify-end w-full">
       <%= form.submit t('posts.form.submit'), class: 'rounded-md bg-indigo-50 px-2.5 py-1.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-100' %>
     </div>
