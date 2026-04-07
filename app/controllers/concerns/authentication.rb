@@ -2,6 +2,7 @@ module Authentication
   extend ActiveSupport::Concern
 
   included do
+    before_action :require_user
     before_action :require_authentication
     helper_method :authenticated?
   end
@@ -9,6 +10,7 @@ module Authentication
   class_methods do
     def allow_unauthenticated_access(**options)
       skip_before_action :require_authentication, **options
+      skip_before_action :require_user
     end
   end
 
@@ -19,6 +21,12 @@ module Authentication
 
     def require_authentication
       resume_session || request_authentication
+    end
+
+    def require_user
+      return if authenticated? || User.exists?
+
+      redirect_to new_onboarding_path
     end
 
     def resume_session
