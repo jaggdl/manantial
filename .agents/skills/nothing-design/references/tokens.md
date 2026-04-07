@@ -1,14 +1,16 @@
 # Nothing Design System — Tokens
 
+> **ℹ️ Implementation Status:** Tokens are already configured in `app/assets/stylesheets/application.css`. Use Tailwind classes directly without modifying the token definitions.
+
 ## 1. TYPOGRAPHY
 
 ### Font Stack
 
-| Role | Font | Fallback | Weight |
-|------|------|----------|--------|
-| **Display** | `"Doto"` | `"Space Mono", monospace` | 400–700, variable dot-size |
-| **Body / UI** | `"Space Grotesk"` | `"DM Sans", system-ui, sans-serif` | Light 300, Regular 400, Medium 500, Bold 700 |
-| **Data / Labels** | `"Space Mono"` | `"JetBrains Mono", "SF Mono", monospace` | Regular 400, Bold 700 |
+| Role | Font | Tailwind Class | Fallback | Weight |
+|------|------|----------------|----------|--------|
+| **Display** | `"Doto"` | `font-display` | `"Space Mono", monospace` | 400–700, variable dot-size |
+| **Body / UI** | `"Space Grotesk"` | `font-sans` | `"DM Sans", system-ui, sans-serif` | Light 300, Regular 400, Medium 500, Bold 700 |
+| **Data / Labels** | `"Space Mono"` | `font-mono` | `"JetBrains Mono", "SF Mono", monospace` | Regular 400, Bold 700 |
 
 **Why these fonts:** Doto = variable dot-matrix (closest to NDot 57). Space Grotesk + Space Mono by Colophon Foundry — same foundry as Nothing's actual typefaces. Shared design DNA.
 

@@ -1,10 +1,54 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
+@import "tailwindcss";
+
+@theme {
+  /* Fonts — override Tailwind defaults with Nothing typefaces */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "Space Mono", "JetBrains Mono", monospace;
+  --font-display: "Doto", monospace;
+
+  /* Colors — override Tailwind defaults with Nothing values */
+  /* Dark mode palette (default) */
+  --color-black: #000000;      /* Page background */
+  --color-zinc-950: #111111;   /* Card surfaces */
+  --color-zinc-900: #1A1A1A;   /* Raised surfaces */
+  --color-zinc-800: #222222;   /* Borders */
+  --color-zinc-700: #333333;   /* Visible borders */
+  --color-zinc-600: #666666;   /* Disabled/muted */
+  --color-zinc-500: #999999;   /* Secondary text */
+  --color-zinc-200: #E8E8E8;   /* Primary text */
+  --color-white: #FFFFFF;      /* Display text, inverted buttons */
+
+  /* Semantic colors */
+  --color-red-600: #D71921;    /* Accent, errors */
+  --color-green-600: #4A9E5C;  /* Success */
+  --color-amber-500: #D4A843;  /* Warning */
+  --color-blue-500: #5B9BF6;   /* Interactive (dark) */
+}
+
+/* Dark mode (default) — Nothing Design System */
+:root {
+  color-scheme: dark;
+}
+
+/* Light mode — toggle via .light class */
+.light {
+  color-scheme: light;
+  --color-black: #F5F5F5;
+  --color-zinc-950: #FFFFFF;
+  --color-zinc-900: #F0F0F0;
+  --color-zinc-800: #E8E8E8;
+  --color-zinc-700: #CCCCCC;
+  --color-zinc-600: #999999;
+  --color-zinc-500: #666666;
+  --color-zinc-200: #1A1A1A;
+  --color-white: #000000;
+  --color-blue-500: #007AFF;
+}
+
+/* Base body styling for Nothing Design */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-black);
+  color: var(--color-zinc-200);
+  line-height: 1.5;
+}

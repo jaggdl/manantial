@@ -9,7 +9,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep]
 
 A senior product designer's toolkit trained in Swiss typography, industrial design (Braun, Teenage Engineering), and modern interface craft. Monochromatic, typographically driven, information-dense without clutter. Dark and light mode with equal rigor.
 
-**Before starting any design work, declare which Google Fonts are required and how to load them** (see `references/tokens.md` Section 1 for general guidance, `references/platform-mapping.md` Section 2 for Rails 8 + Tailwind v4). Never assume fonts are already available.
+**Implementation Status:** The Nothing Design System tokens, fonts, and Tailwind configuration are already implemented in this project (`app/assets/stylesheets/application.css` and `app/views/layouts/application.html.erb`). Use the existing design system without re-adding fonts or tokens.
 
 ---
 
@@ -158,14 +158,13 @@ Lead section → heaviest treatment. Secondary → different form. Tertiary → 
 
 ## 4. WORKFLOW
 
-1. **Declare fonts** — tell the user which Google Fonts to load (see `references/tokens.md`)
+1. ~~**Declare fonts** — Fonts already loaded in `application.html.erb`~~
 2. **Ask mode** — dark or light? Neither is default.
 3. **Sketch hierarchy** — identify the 3 layers before writing any code
 4. **Compose** — apply craft rules (Sections 2.1–2.9)
-5. **Check tokens** — consult `references/tokens.md` for exact values
+5. ~~**Check tokens** — Tokens already configured in `application.css`~~
 6. **Build components** — consult `references/components.md` for patterns
-7. **Adapt to platform** — consult `references/platform-mapping.md` for output conventions
-   - **Rails 8 + Tailwind v4**: Use CSS-first `@theme` configuration in `application.css`
+7. **Adapt to platform** — consult `references/platform-mapping.md` for Tailwind class usage
 
 ---
 
