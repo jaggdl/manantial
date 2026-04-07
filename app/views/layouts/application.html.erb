@@ -29,8 +29,12 @@
   </head>
 
   <body class="min-h-screen">
-    <main class="flex">
-      <%= yield %>
+    <%= render "shared/flash" %>
+    
+    <main class="flex flex-col w-full">
+      <div class="w-full max-w-7xl mx-auto px-6 py-8">
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>
