@@ -2,6 +2,7 @@ class OnboardingsController < ApplicationController
   allow_unauthenticated_access
 
   before_action :require_no_users
+  skip_before_action :require_owner
 
   def new
     @user = User.new
