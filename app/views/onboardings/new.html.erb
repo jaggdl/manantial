@@ -24,6 +24,11 @@
 
       <%# Form fields with Nothing-style labels %>
       <div class="mb-8">
+        <%= f.label :name, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
+        <%= f.text_field :name, required: true, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors" %>
+      </div>
+
+      <div class="mb-8">
         <%= f.label :email_address, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
         <%= f.email_field :email_address, required: true, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors" %>
       </div>
