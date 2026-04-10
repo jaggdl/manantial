@@ -24,6 +24,19 @@
 
       <%# Form fields with Nothing-style labels %>
       <div class="mb-8">
+        <div class="flex flex-col items-center" data-controller="avatar-preview">
+          <%= f.label :avatar, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
+          <div class="relative group">
+            <div data-avatar-preview-target="preview" class="w-24 h-24 rounded-full border-2 border-zinc-700 flex items-center justify-center overflow-hidden bg-zinc-900 mb-4">
+              <span class="font-mono text-xs text-zinc-600 uppercase">No Image</span>
+              <img data-avatar-preview-target="img" class="hidden w-full h-full object-cover" />
+            </div>
+            <%= f.file_field :avatar, class: "absolute inset-0 opacity-0 cursor-pointer w-full h-full", data: { action: "change->avatar-preview#preview" } %>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-8">
         <%= f.label :name, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
         <%= f.text_field :name, required: true, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors" %>
       </div>
