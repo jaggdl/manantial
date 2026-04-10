@@ -66,3 +66,5 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 4.4"
+
+gem "redcarpet", "~> 3.6"

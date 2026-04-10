@@ -1,0 +1,46 @@
+<div class="min-h-screen">
+  <div class="flex items-center justify-between py-6 border-b border-zinc-800 mb-12">
+    <%= link_to posts_path, class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
+      <span class="mr-1">←</span> BACK
+    <% end %>
+
+    <% if Current.user == @post.user %>
+      <div class="flex items-center gap-4">
+        <%= link_to edit_post_path(@post), class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
+          EDIT
+        <% end %>
+        <%= button_to post_path(@post), method: :delete, class: "font-mono text-[11px] tracking-widest text-red-600 uppercase hover:text-red-500 transition-colors bg-transparent border-none cursor-pointer", data: { turbo_confirm: "Delete this post?" } do %>
+          DELETE
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <article class="max-w-3xl mx-auto px-6">
+    <% if @post.title.present? %>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl tracking-tight text-white mb-6 leading-tight">
+        <%= @post.title %>
+      </h1>
+    <% end %>
+
+    <div class="flex items-center gap-4 mb-12 pb-8 border-b border-zinc-800">
+      <span class="font-mono text-[11px] tracking-widest text-zinc-500 uppercase">
+        <%= @post.user.name %>
+      </span>
+      <span class="text-zinc-700">·</span>
+      <span class="font-mono text-[11px] tracking-widest text-zinc-600 uppercase">
+        <%= @post.created_at.strftime("%Y.%m.%d") %>
+      </span>
+      <% if @post.article? %>
+        <span class="text-zinc-700">·</span>
+        <span class="font-mono text-[11px] tracking-widest text-zinc-600 uppercase border border-zinc-700 px-2 py-1 rounded-full">
+          ARTICLE
+        </span>
+      <% end %>
+    </div>
+
+    <div class="prose prose-invert prose-zinc max-w-none">
+      <%= markdown(@post.body) %>
+    </div>
+  </article>
+</div>

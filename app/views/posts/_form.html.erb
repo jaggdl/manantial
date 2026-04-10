@@ -1,0 +1,37 @@
+<%= form_with model: post, class: "w-full max-w-2xl" do |f| %>
+  <% if post.errors.any? %>
+    <div class="mb-8 border border-red-600 p-4">
+      <span class="font-mono text-xs tracking-wide text-red-600 uppercase">
+        [ ERROR ]
+      </span>
+      <ul class="mt-2 space-y-1">
+        <% post.errors.full_messages.each do |message| %>
+          <li class="font-sans text-sm text-zinc-200">
+            <%= message %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="space-y-8">
+    <div>
+      <%= f.label :title, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
+      <%= f.text_field :title, 
+          class: "w-full bg-transparent border-b border-zinc-700 focus:border-zinc-200 text-zinc-200 font-sans text-lg py-2 outline-none transition-colors placeholder:text-zinc-600",
+          placeholder: "Optional title for articles" %>
+    </div>
+
+    <div>
+      <%= f.label :body, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
+      <%= f.text_area :body, 
+          rows: 12,
+          class: "w-full bg-zinc-950 border border-zinc-800 rounded-lg focus:border-zinc-500 text-zinc-200 font-sans text-base p-4 outline-none transition-colors placeholder:text-zinc-600 resize-none",
+          placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post" %>
+    </div>
+
+    <div class="pt-4">
+      <%= f.submit class: "bg-white text-black font-mono text-[13px] uppercase tracking-widest px-8 py-3 rounded-full min-h-11 cursor-pointer hover:bg-zinc-200 transition-colors" %>
+    </div>
+  </div>
+<% end %>
