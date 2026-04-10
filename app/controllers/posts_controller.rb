@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by!(slug: params[:slug])
   end
 
   def new
@@ -23,11 +23,11 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Current.user.posts.find(params[:id])
+    @post = Current.user.posts.find_by!(slug: params[:slug])
   end
 
   def update
-    @post = Current.user.posts.find(params[:id])
+    @post = Current.user.posts.find_by!(slug: params[:slug])
     if @post.update(post_params)
       redirect_to @post, notice: "Post was successfully updated."
     else
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Current.user.posts.find(params[:id])
+    @post = Current.user.posts.find_by!(slug: params[:slug])
     @post.destroy
     redirect_to posts_path, notice: "Post was successfully deleted."
   end

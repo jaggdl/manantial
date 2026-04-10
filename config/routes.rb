@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  resources :posts, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  resources :posts, param: :slug
 
   get "up" => "rails/health#show", as: :rails_health_check
 
