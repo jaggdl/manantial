@@ -11,6 +11,16 @@ class Post < ApplicationRecord
   scope :articles, -> { where.not(title: nil) }
   scope :regular_posts, -> { where(title: nil) }
 
+  PREVIEW_LENGTH = 160
+
+  def preview
+    body_text = body&.to_plain_text&.strip || ""
+    return "" if body_text.blank?
+
+    preview_text = body_text.truncate(PREVIEW_LENGTH, separator: /\s/, omission: "...")
+    preview_text
+  end
+
   def article?
     title.present? || (body&.to_plain_text&.length || 0) > 280 || @had_h1
   end

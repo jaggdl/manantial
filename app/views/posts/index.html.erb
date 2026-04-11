@@ -1,2 +1,24 @@
-<h1>Posts</h1>
-<p>User: <%= Current.owner.email_address %></p>
+<div class="min-h-screen">
+  <% content_for(:header_actions) do %>
+    <%= link_to new_post_path, class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
+      NEW POST
+    <% end %>
+  <% end %>
+
+  <div class="max-w-3xl mx-auto">
+    <% if Current.owner.posts.any? %>
+      <div class="divide-y divide-zinc-800">
+        <%= render Current.owner.posts.order(created_at: :desc) %>
+      </div>
+    <% else %>
+      <div class="py-24 text-center">
+        <p class="font-mono text-sm tracking-widest text-zinc-600 uppercase">
+          NO POSTS YET
+        </p>
+        <p class="font-sans text-base text-zinc-500 mt-2">
+          Create your first post to get started
+        </p>
+      </div>
+    <% end %>
+  </div>
+</div>
