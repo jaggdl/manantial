@@ -77,7 +77,7 @@
     </main>
 
     <%# Fixed new post button (bottom right) - only for authenticated users, hide on new/edit %>
-    <% if Current.owner && !(controller_name == "posts" && %w[new edit].include?(action_name)) %>
+    <% if authenticated? && !(controller_name == "posts" && %w[new edit].include?(action_name)) %>
       <%= link_to new_post_path, class: "fixed bottom-8 right-8 w-14 h-14 bg-zinc-100 hover:bg-zinc-200 transition-colors flex items-center justify-center border border-zinc-300" do %>
         <span class="font-mono text-2xl text-zinc-900">+</span>
       <% end %>
