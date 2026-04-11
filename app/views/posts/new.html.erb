@@ -1,9 +1,9 @@
 <div class="min-h-screen flex flex-col">
-  <div class="flex items-center justify-between py-6 border-b border-zinc-800 mb-12">
+  <% content_for(:header_back) do %>
     <%= link_to posts_path, class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
       <span class="mr-1">←</span> BACK
     <% end %>
-  </div>
+  <% end %>
 
   <div class="flex-1 flex flex-col items-center px-6">
     <div class="w-full max-w-2xl">

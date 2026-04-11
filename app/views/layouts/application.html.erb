@@ -30,7 +30,46 @@
 
   <body class="min-h-screen">
     <%= render "shared/flash" %>
-    
+
+    <% if Current.owner %>
+      <header class="w-full border-b border-zinc-800">
+        <div class="w-full max-w-7xl mx-auto px-6 py-6 space-y-4">
+          <%# Top row: Back button (yielded from views) %>
+          <% if content_for?(:header_back) %>
+            <div class="flex items-center">
+              <%= yield(:header_back) %>
+            </div>
+          <% end %>
+
+          <%# Bottom row: Owner avatar/name (left) | Action buttons (right) %>
+          <div class="flex items-center justify-between">
+            <%# Left side: Owner avatar and name %>
+            <div class="flex items-center gap-4">
+              <% if Current.owner.avatar.attached? %>
+                <%= image_tag Current.owner.avatar, class: "w-10 h-10 rounded-full object-cover border border-zinc-700" %>
+              <% else %>
+                <div class="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
+                  <span class="font-mono text-sm text-zinc-500 uppercase">
+                    <%= Current.owner.name.first.upcase %>
+                  </span>
+                </div>
+              <% end %>
+              <span class="font-mono text-sm tracking-widest text-zinc-400 uppercase">
+                <%= Current.owner.name %>
+              </span>
+            </div>
+
+            <%# Right side: Action buttons yielded from views %>
+            <% if content_for?(:header_actions) %>
+              <div class="flex items-center gap-4">
+                <%= yield(:header_actions) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </header>
+    <% end %>
+
     <main class="flex flex-col w-full">
       <div class="w-full max-w-7xl mx-auto px-6 py-8">
         <%= yield %>

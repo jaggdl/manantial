@@ -1,9 +1,11 @@
 <div class="min-h-screen">
-  <div class="flex items-center justify-between py-6 border-b border-zinc-800 mb-12">
+  <% content_for(:header_back) do %>
     <%= link_to posts_path, class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
       <span class="mr-1">←</span> BACK
     <% end %>
+  <% end %>
 
+  <% content_for(:header_actions) do %>
     <% if Current.user == @post.user %>
       <div class="flex items-center gap-4">
         <%= link_to edit_post_path(@post), class: "font-mono text-[11px] tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
@@ -14,7 +16,7 @@
         <% end %>
       </div>
     <% end %>
-  </div>
+  <% end %>
 
   <article class="max-w-3xl mx-auto px-6">
     <% if @post.title.present? %>
