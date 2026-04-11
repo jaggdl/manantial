@@ -67,4 +67,4 @@ end
 
 gem "tailwindcss-rails", "~> 4.4"
 
-gem "redcarpet", "~> 3.6"
+gem "lexxy", "~> 0.1.26.beta" # Need to specify the version since it's a pre-release

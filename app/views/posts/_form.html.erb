@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "lexxy" %>
+<% end %>
+
 <%= form_with model: post, class: "w-full max-w-2xl" do |f| %>
   <% if post.errors.any? %>
     <div class="mb-8 border border-red-600 p-4">
@@ -24,9 +28,7 @@
 
     <div>
       <%= f.label :body, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
-      <%= f.text_area :body, 
-          rows: 12,
-          class: "w-full bg-zinc-950 border border-zinc-800 rounded-lg focus:border-zinc-500 text-zinc-200 font-sans text-base p-4 outline-none transition-colors placeholder:text-zinc-600 resize-none",
+      <%= f.rich_text_area :body, 
           placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post" %>
     </div>
 
