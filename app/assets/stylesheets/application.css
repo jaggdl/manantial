@@ -28,6 +28,60 @@
 /* Dark mode (default) — Nothing Design System */
 :root {
   color-scheme: dark;
+
+  /* Colors for inline styles and non-Tailwind usage */
+  --color-black: #000000;
+  --color-zinc-950: #111111;
+  --color-zinc-900: #1A1A1A;
+  --color-zinc-800: #222222;
+  --color-zinc-700: #333333;
+  --color-zinc-600: #666666;
+  --color-zinc-500: #999999;
+  --color-zinc-200: #E8E8E8;
+  --color-white: #FFFFFF;
+  --color-red-600: #D71921;
+  --color-green-600: #4A9E5C;
+  --color-amber-500: #D4A843;
+  --color-blue-500: #5B9BF6;
+
+  /* Lexxy Editor - Nothing Design System Colors */
+  /* Ink colors (text hierarchy) */
+  --lexxy-color-ink: #FFFFFF;           /* Display text - primary */
+  --lexxy-color-ink-medium: #E8E8E8;    /* Body text */
+  --lexxy-color-ink-light: #999999;     /* Secondary text */
+  --lexxy-color-ink-lighter: #666666;   /* Disabled/muted */
+  --lexxy-color-ink-lightest: #333333;  /* Borders, dividers */
+  --lexxy-color-ink-inverted: #000000;  /* Inverted text on light backgrounds */
+  --lexxy-color-canvas: #111111;        /* Editor canvas background */
+  --lexxy-color-canvas-inset: #000000;  /* Inset/panel background */
+
+  /* Accent colors (Nothing red as primary accent) */
+  --lexxy-color-accent-dark: #D71921;
+  --lexxy-color-accent-medium: #5B9BF6;  /* Interactive blue */
+  --lexxy-color-accent-light: rgba(91, 155, 246, 0.15);
+  --lexxy-color-accent-lightest: rgba(91, 155, 246, 0.08);
+
+  /* Semantic colors */
+  --lexxy-color-red: #D71921;
+  --lexxy-color-green: #4A9E5C;
+  --lexxy-color-blue: #5B9BF6;
+  --lexxy-color-purple: #D4A843;  /* Using warning amber as purple alternative */
+
+  /* Focus ring */
+  --lexxy-focus-ring-color: rgba(91, 155, 246, 0.5);
+
+  /* Shadow */
+  --lexxy-shadow: 0 0 0 1px #222222;
+
+  /* Syntax highlighting - Dark mode (GitHub dark inspired) */
+  --lexxy-color-code-token-att: #ff7b72;
+  --lexxy-color-code-token-comment: #8b949e;
+  --lexxy-color-code-token-function: #d2a8ff;
+  --lexxy-color-code-token-operator: #ff7b72;
+  --lexxy-color-code-token-property: #79c0ff;
+  --lexxy-color-code-token-punctuation: #c9d1d9;
+  --lexxy-color-code-token-selector: #7ee787;
+  --lexxy-color-code-token-variable: #ffa657;
 }
 
 /* Light mode — toggle via .light class */
@@ -43,6 +97,45 @@
   --color-zinc-200: #1A1A1A;
   --color-white: #000000;
   --color-blue-500: #007AFF;
+
+  /* Lexxy Editor - Light Mode */
+  /* Ink colors inverted for light mode */
+  --lexxy-color-ink: #000000;           /* Display text - primary */
+  --lexxy-color-ink-medium: #1A1A1A;    /* Body text */
+  --lexxy-color-ink-light: #666666;     /* Secondary text */
+  --lexxy-color-ink-lighter: #999999;   /* Disabled/muted */
+  --lexxy-color-ink-lightest: #E8E8E8;  /* Borders, dividers */
+  --lexxy-color-ink-inverted: #FFFFFF;  /* Inverted text on dark backgrounds */
+  --lexxy-color-canvas: #FFFFFF;        /* Editor canvas background */
+  --lexxy-color-canvas-inset: #F5F5F5;  /* Inset/panel background */
+
+  /* Accent colors (Nothing red as primary accent) */
+  --lexxy-color-accent-dark: #D71921;
+  --lexxy-color-accent-medium: #007AFF;  /* Interactive blue (light mode) */
+  --lexxy-color-accent-light: rgba(0, 122, 255, 0.12);
+  --lexxy-color-accent-lightest: rgba(0, 122, 255, 0.06);
+
+  /* Semantic colors (same across modes) */
+  --lexxy-color-red: #D71921;
+  --lexxy-color-green: #4A9E5C;
+  --lexxy-color-blue: #007AFF;
+  --lexxy-color-purple: #D4A843;
+
+  /* Focus ring */
+  --lexxy-focus-ring-color: rgba(0, 122, 255, 0.4);
+
+  /* Shadow */
+  --lexxy-shadow: 0 0 0 1px #E8E8E8;
+
+  /* Syntax highlighting - Light mode (GitHub light inspired) */
+  --lexxy-color-code-token-att: #d1242f;
+  --lexxy-color-code-token-comment: #6e7781;
+  --lexxy-color-code-token-function: #8250df;
+  --lexxy-color-code-token-operator: #d1242f;
+  --lexxy-color-code-token-property: #0550ae;
+  --lexxy-color-code-token-punctuation: #24292f;
+  --lexxy-color-code-token-selector: #116329;
+  --lexxy-color-code-token-variable: #953800;
 }
 
 /* Base body styling for Nothing Design */
@@ -163,4 +256,16 @@ body {
 
 .prose em {
   color: var(--color-zinc-500);
+}
+
+/* Floating Action Button - Theme Aware */
+.fab {
+  background-color: var(--color-zinc-200);
+  border: 1px solid var(--color-zinc-700);
+  color: var(--color-black);
+}
+
+.fab:hover {
+  background-color: var(--color-white);
+  border-color: var(--color-zinc-600);
 }

@@ -1,7 +1,3 @@
-<% content_for :head do %>
-  <%= stylesheet_link_tag "lexxy" %>
-<% end %>
-
 <%= form_with model: post, class: "w-full max-w-2xl" do |f| %>
   <% if post.errors.any? %>
     <div class="mb-8 border border-red-600 p-4">
