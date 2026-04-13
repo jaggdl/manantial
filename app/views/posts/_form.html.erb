@@ -1,4 +1,4 @@
-<%= form_with model: post, class: "w-full max-w-2xl" do |f| %>
+<%= form_with model: post, class: "w-full max-w-2xl group", data: { controller: "post-form", post_form_type_value: (post.article? ? "article" : "post"), post_type: (post.article? ? "article" : "post") } do |f| %>
   <% if post.errors.any? %>
     <div class="mb-8 border border-red-600 p-4">
       <span class="font-mono text-xs tracking-wide text-red-600 uppercase">
@@ -16,16 +16,36 @@
 
   <div class="space-y-8">
     <div>
+      <span class="block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2">Type</span>
+      <div class="flex border-b border-zinc-700">
+        <button type="button"
+                class="group-data-[post-type=post]:text-zinc-200 group-data-[post-type=article]:text-zinc-600 font-sans text-base py-2 px-4 transition-colors hover:text-zinc-300"
+                data-action="click->post-form#selectPost"
+                data-post-form-target="postTab">
+          Post
+        </button>
+        <button type="button"
+                class="group-data-[post-type=article]:text-zinc-200 group-data-[post-type=post]:text-zinc-600 font-sans text-base py-2 px-4 transition-colors hover:text-zinc-300"
+                data-action="click->post-form#selectArticle"
+                data-post-form-target="articleTab">
+          Article
+        </button>
+      </div>
+    </div>
+
+    <div class="group-data-[post-type=article]:block group-data-[post-type=post]:hidden">
       <%= f.label :title, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
-      <%= f.text_field :title, 
+      <%= f.text_field :title,
           class: "w-full bg-transparent border-b border-zinc-700 focus:border-zinc-200 text-zinc-200 font-sans text-lg py-2 outline-none transition-colors placeholder:text-zinc-600",
           placeholder: "Optional title for articles" %>
     </div>
 
     <div>
       <%= f.label :body, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
-      <%= f.rich_text_area :body, 
-          placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post" %>
+      <%= f.rich_text_area :body,
+          placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post",
+          toolbar: (post.article? ? nil : "false"),
+          data: { post_form_target: "editor" } %>
     </div>
 
     <div class="pt-4">
