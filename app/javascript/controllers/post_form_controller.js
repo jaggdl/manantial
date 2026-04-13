@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="post-form"
 export default class extends Controller {
-  static targets = ["postTab", "articleTab", "editor"]
+  static targets = ["editor"]
   static values = {
     type: String
   }
@@ -12,12 +12,8 @@ export default class extends Controller {
     this.toggleToolbar()
   }
 
-  selectPost() {
-    this.typeValue = "post"
-  }
-
-  selectArticle() {
-    this.typeValue = "article"
+  selectType(event) {
+    this.typeValue = event.params.type
   }
 
   toggleToolbar() {
