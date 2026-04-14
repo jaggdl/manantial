@@ -26,7 +26,7 @@
 | `--body` | 16px | 1.5 | 0 | Body text |
 | `--body-sm` | 14px | 1.5 | 0.01em | Secondary body |
 | `--caption` | 12px | 1.4 | 0.04em | Timestamps, footnotes |
-| `--label` | 11px | 1.2 | 0.08em | ALL CAPS monospace labels |
+| `--label` | 12px | 1.2 | 0.08em | ALL CAPS monospace labels |
 
 ### Typographic Rules
 

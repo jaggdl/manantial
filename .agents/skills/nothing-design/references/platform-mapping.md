@@ -92,7 +92,7 @@ Tokens are pre-configured in `app/assets/stylesheets/application.css`. Use stand
 
 ```erb
 <div class="bg-zinc-950 border border-zinc-800 rounded-xl p-4 md:p-6">
-  <span class="font-mono text-[11px] tracking-widest text-zinc-500 uppercase">
+  <span class="font-mono text-sm tracking-widest text-zinc-500 uppercase">
     System Status
   </span>
   <h2 class="font-sans text-4xl tracking-tight text-white mt-2">
@@ -140,10 +140,10 @@ Tokens are pre-configured in `app/assets/stylesheets/application.css`. Use stand
 
 ```erb
 <nav class="flex items-center gap-6">
-  <a href="#" class="font-mono text-[11px] tracking-widest uppercase text-white">
+  <a href="#" class="font-mono text-sm tracking-widest uppercase text-white">
     [ HOME ]
   </a>
-  <a href="#" class="font-mono text-[11px] tracking-widest uppercase text-zinc-600 hover:text-zinc-200 transition-colors">
+  <a href="#" class="font-mono text-sm tracking-widest uppercase text-zinc-600 hover:text-zinc-200 transition-colors">
     GALLERY
   </a>
 </nav>

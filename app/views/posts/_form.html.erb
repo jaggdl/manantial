@@ -16,7 +16,7 @@
 
   <div class="space-y-8">
     <div>
-      <span class="block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2">Type</span>
+      <span class="block font-mono text-sm tracking-widest text-zinc-500 uppercase mb-2">Type</span>
       <div class="flex border-b border-zinc-700">
         <% %w[post article].each do |type| %>
           <button type="button"
@@ -30,14 +30,14 @@
     </div>
 
     <div class="group-data-[post-type=article]:block group-data-[post-type=post]:hidden">
-      <%= f.label :title, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
+      <%= f.label :title, class: "block font-mono text-sm tracking-widest text-zinc-500 uppercase mb-2" %>
       <%= f.text_field :title,
           class: "w-full bg-transparent border-b border-zinc-700 focus:border-zinc-200 text-zinc-200 font-sans text-lg py-2 outline-none transition-colors placeholder:text-zinc-600",
           placeholder: "Optional title for articles" %>
     </div>
 
     <div>
-      <%= f.label :body, class: "block font-mono text-[11px] tracking-widest text-zinc-500 uppercase mb-2" %>
+      <%= f.label :body, class: "block font-mono text-sm tracking-widest text-zinc-500 uppercase mb-2" %>
       <%= f.rich_text_area :body,
           placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post",
           toolbar: (post.article? ? nil : "false"),
