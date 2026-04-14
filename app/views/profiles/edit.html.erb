@@ -9,61 +9,6 @@
       Update your account information.
     </p>
 
-    <%= form_with model: @user, url: profile_path, method: :patch, local: true do |f| %>
-      <% if @user.errors.any? %>
-        <div class="mb-6" role="alert">
-          <span class="font-mono text-xs tracking-wide text-red-600 uppercase">[ ERROR ]</span>
-          <ul class="mt-2 space-y-1">
-            <% @user.errors.full_messages.each do |message| %>
-              <li class="font-mono text-sm text-red-600"><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%# Avatar field %>
-      <div class="mb-8">
-        <div class="flex flex-col items-center" data-controller="avatar-preview">
-          <%= f.label :avatar, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
-          <div class="relative group">
-            <div data-avatar-preview-target="preview" class="w-24 h-24 rounded-full border-2 border-zinc-700 flex items-center justify-center overflow-hidden bg-zinc-900 mb-4">
-              <% if @user.avatar.attached? %>
-                <%= image_tag @user.avatar, class: "w-full h-full object-cover", data: { avatar_preview_target: "img" } %>
-              <% else %>
-                <span class="font-mono text-xs text-zinc-600 uppercase">No Image</span>
-                <img data-avatar-preview-target="img" class="hidden w-full h-full object-cover" />
-              <% end %>
-            </div>
-            <%= f.file_field :avatar, class: "absolute inset-0 opacity-0 cursor-pointer w-full h-full", data: { action: "change->avatar-preview#preview" } %>
-          </div>
-        </div>
-      </div>
-
-      <div class="mb-8">
-        <%= f.label :name, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
-        <%= f.text_field :name, required: true, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors" %>
-      </div>
-
-      <div class="mb-8">
-        <%= f.label :email_address, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
-        <%= f.email_field :email_address, required: true, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors" %>
-      </div>
-
-      <div class="mb-8">
-        <%= f.label :password, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
-        <%= f.password_field :password, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors", placeholder: "Leave blank to keep current password" %>
-      </div>
-
-      <div class="mb-10">
-        <%= f.label :password_confirmation, class: "block font-mono text-xs tracking-widest text-zinc-500 uppercase mb-2" %>
-        <%= f.password_field :password_confirmation, class: "w-full bg-transparent border-b border-zinc-700 focus:border-white font-mono text-base text-zinc-200 py-2 outline-none transition-colors", placeholder: "Leave blank to keep current password" %>
-      </div>
-
-      <%# Actions %>
-      <div class="flex items-center justify-between">
-        <%= link_to "Cancel", root_path, class: "font-mono text-sm text-zinc-500 hover:text-zinc-300 transition-colors" %>
-        <%= f.submit "UPDATE PROFILE", class: "bg-white text-black font-mono text-sm uppercase tracking-wider py-3 px-6 rounded-full min-h-11 cursor-pointer hover:bg-zinc-200 transition-colors" %>
-      </div>
-    <% end %>
+    <%= render "form", user: @user, url: profile_path, method: :patch, submit_text: "UPDATE PROFILE", password_required: false, password_placeholder: "Leave blank to keep current password", show_cancel: true %>
   </div>
 </div>
