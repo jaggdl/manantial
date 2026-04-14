@@ -3,22 +3,16 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="post-form"
 export default class extends Controller {
   static targets = ["editor"]
-  static values = {
-    type: String
-  }
-
-  typeValueChanged() {
-    this.element.dataset.postType = this.typeValue
-    this.toggleToolbar()
-  }
 
   selectType(event) {
-    this.typeValue = event.params.type
+    const type = event.params.type
+    this.element.dataset.postType = type
+    this.toggleToolbar(type)
   }
 
-  toggleToolbar() {
+  toggleToolbar(type) {
     if (this.hasEditorTarget) {
-      if (this.typeValue === "post") {
+      if (type === "post") {
         this.editorTarget.setAttribute("toolbar", "false")
       } else {
         this.editorTarget.removeAttribute("toolbar")

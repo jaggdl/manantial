@@ -1,4 +1,4 @@
-<%= form_with model: post, class: "w-full max-w-2xl group", data: { controller: "post-form", post_form_type_value: (post.article? ? "article" : "post"), post_type: (post.article? ? "article" : "post") } do |f| %>
+<%= form_with model: post, class: "w-full max-w-2xl group", data: { controller: "post-form", post_type: (post.article? ? "article" : "post") } do |f| %>
   <% if post.errors.any? %>
     <div class="mb-8 border border-red-600 p-4">
       <span class="font-mono text-xs tracking-wide text-red-600 uppercase">
