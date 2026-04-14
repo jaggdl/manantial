@@ -25,13 +25,19 @@
       </h1>
     <% end %>
 
+    <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-800">
+        <span class="font-display text-xl md:text-2xl tracking-tight text-white">
+          <%= @post.article? ? "ARTICLE" : "POST" %>
+        </span>
+    </div>
+
+    <div class="prose prose-invert prose-zinc max-w-none">
+      <%= @post.body %>
+    </div>
+
     <div class="flex items-center gap-4 mb-12 pb-8 border-b border-zinc-800">
-      <span class="font-mono text-sm tracking-widest text-zinc-500 uppercase">
-        <%= @post.user.name %>
-      </span>
-      <span class="text-zinc-700">·</span>
       <span class="font-mono text-sm tracking-widest text-zinc-600 uppercase">
-        <%= @post.created_at.strftime("%Y.%m.%d") %>
+        <%= @post.formatted_date %>
       </span>
       <% if @post.article? %>
         <span class="text-zinc-700">·</span>
@@ -39,10 +45,6 @@
           ARTICLE
         </span>
       <% end %>
-    </div>
-
-    <div class="prose prose-invert prose-zinc max-w-none">
-      <%= @post.body %>
     </div>
   </article>
 </div>

@@ -25,6 +25,10 @@ class Post < ApplicationRecord
     title.present? || (body&.to_plain_text&.length || 0) > 280 || @had_h1
   end
 
+  def formatted_date
+    created_at.strftime("%Y.%m.%d · %H:%M")
+  end
+
   def to_param
     slug
   end
