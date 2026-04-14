@@ -26,8 +26,8 @@
     <% end %>
 
     <div class="flex items-center gap-4 mb-8 pb-8 border-b border-zinc-800">
-        <span class="font-display text-xl md:text-2xl tracking-tight text-white">
-          <%= @post.article? ? "ARTICLE" : "POST" %>
+        <span class="font-display text-xl md:text-2xl tracking-tight text-white uppercase">
+          <%= @post.post_type %>
         </span>
     </div>
 
@@ -42,7 +42,7 @@
       <% if @post.article? %>
         <span class="text-zinc-700">·</span>
         <span class="font-mono text-sm tracking-widest text-zinc-600 uppercase border border-zinc-700 px-2 py-1 rounded-full">
-          ARTICLE
+          <%= @post.post_type %>
         </span>
       <% end %>
     </div>

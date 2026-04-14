@@ -29,6 +29,10 @@ class Post < ApplicationRecord
     created_at.strftime("%Y.%m.%d · %H:%M")
   end
 
+  def post_type
+    article? ? "article" : "post"
+  end
+
   def to_param
     slug
   end
