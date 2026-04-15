@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   # API Keys
   resources :api_keys, only: [ :create, :destroy ]
 
+  # API
+  namespace :api do
+    resources :posts, only: [ :index, :show ]
+  end
+
   resource :session
   resources :passwords, param: :token
 
