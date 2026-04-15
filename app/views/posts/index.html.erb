@@ -9,9 +9,11 @@
         <p class="font-mono text-sm tracking-widest text-zinc-600 uppercase">
           NO POSTS YET
         </p>
-        <p class="font-sans text-base text-zinc-500 mt-2">
-          Create your first post to get started
-        </p>
+        <% if authenticated? %>
+          <p class="font-sans text-base text-zinc-500 mt-2">
+            Create your first post to get started
+          </p>
+        <% end %>
       </div>
     <% end %>
   </div>
