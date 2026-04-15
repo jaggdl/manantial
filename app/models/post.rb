@@ -14,11 +14,7 @@ class Post < ApplicationRecord
   PREVIEW_LENGTH = 160
 
   def preview
-    body_text = body&.to_plain_text&.strip || ""
-    return "" if body_text.blank?
-
-    preview_text = body_text.truncate(PREVIEW_LENGTH, separator: /\s/, omission: "...")
-    preview_text
+    body
   end
 
   def article?
