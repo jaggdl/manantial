@@ -40,7 +40,6 @@
       <%= f.label :body, class: "block font-mono text-sm tracking-widest text-zinc-500 uppercase mb-2" %>
       <%= f.rich_text_area :body,
           placeholder: "Write your post here...\n\nUse # Heading for articles\nOr just write a quick post",
-          toolbar: (post.article? ? nil : "false"),
           data: { post_form_target: "editor" } %>
     </div>
 
