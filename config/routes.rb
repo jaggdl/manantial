@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "/onboarding", to: "profiles#create", as: :onboarding
 
   # Profile management
-  resource :profile, only: [ :edit, :update ]
+  resource :profile, only: [ :show, :update ]
 
   resource :session
   resources :passwords, param: :token

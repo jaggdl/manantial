@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-  def edit
+  def show
     @user = Current.owner
   end
 
@@ -29,7 +29,7 @@ class ProfilesController < ApplicationController
     if @user.update(user_params)
       redirect_to root_path, notice: "Profile updated successfully."
     else
-      render :edit, status: :unprocessable_entity
+      render :show, status: :unprocessable_entity
     end
   end
 
