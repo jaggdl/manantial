@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   # Profile management
   resource :profile, only: [ :show, :update ]
 
+  # API Keys
+  resources :api_keys, only: [ :create, :destroy ]
+
   resource :session
   resources :passwords, param: :token
 

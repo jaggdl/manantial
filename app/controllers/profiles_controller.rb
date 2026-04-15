@@ -21,6 +21,7 @@ class ProfilesController < ApplicationController
 
   def show
     @user = Current.owner
+    @api_keys = Current.user.api_keys.order(created_at: :desc) if Current.user
   end
 
   def update

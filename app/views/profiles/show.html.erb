@@ -1,14 +1,68 @@
 <div class="w-full flex items-center justify-center p-6">
-  <div class="w-full max-w-md">
-    <%# Header %>
-    <h1 class="font-display text-5xl text-white tracking-tight mb-2">
-      Edit Profile
-    </h1>
+  <div class="w-full max-w-md space-y-12">
+    <%# Profile Section %>
+    <div>
+      <%# Header %>
+      <h1 class="font-display text-5xl text-white tracking-tight mb-2">
+        Edit Profile
+      </h1>
 
-    <p class="font-sans text-base text-zinc-500 mb-12">
-      Update your account information.
-    </p>
+      <p class="font-sans text-base text-zinc-500 mb-12">
+        Update your account information.
+      </p>
 
-    <%= render "form", user: @user, url: profile_path, method: :patch, submit_text: "UPDATE PROFILE", password_required: false, password_placeholder: "Leave blank to keep current password", show_cancel: true %>
+      <%= render "form", user: @user, url: profile_path, method: :patch, submit_text: "UPDATE PROFILE", password_required: false, password_placeholder: "Leave blank to keep current password", show_cancel: true %>
+    </div>
+
+    <%# API Keys Section %>
+    <% if Current.user %>
+      <div class="border-t border-zinc-800 pt-12">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="font-display text-2xl text-white tracking-tight">API Keys</h2>
+        </div>
+
+        <% if flash[:new_api_key] %>
+          <div class="border border-green-500/30 bg-green-500/10 p-4 mb-6">
+            <p class="font-mono text-xs text-green-400 uppercase tracking-widest mb-2">New API key created:</p>
+            <code class="block bg-zinc-900 p-3 font-mono text-sm text-green-300 break-all"><%= flash[:new_api_key] %></code>
+          </div>
+        <% end %>
+
+        <div class="border border-zinc-800 p-6">
+          <% if @api_keys&.any? %>
+            <div class="space-y-4 mb-6">
+              <% @api_keys.each do |api_key| %>
+                <div class="flex items-center justify-between py-3 border-b border-zinc-800 last:border-0">
+                  <div class="flex-1 min-w-0">
+                    <p class="font-mono text-sm text-zinc-300"><%= api_key.name %></p>
+                    <code class="text-xs text-zinc-500 font-mono break-all"><%= api_key.key %></code>
+                    <p class="text-xs text-zinc-600 mt-1 font-mono">
+                      Created <%= api_key.created_at.strftime("%b %d, %Y") %>
+                      <% if api_key.last_used_at %>
+                        &bull; Last used <%= time_ago_in_words(api_key.last_used_at) %> ago
+                      <% else %>
+                        &bull; Never used
+                      <% end %>
+                    </p>
+                  </div>
+                  <%= link_to api_key_path(api_key), class: "text-zinc-500 hover:text-red-400 ml-4 transition-colors", data: { turbo_method: "delete", turbo_confirm: "Are you sure? This will permanently delete this API key." } do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% else %>
+            <p class="text-zinc-500 font-mono text-xs uppercase tracking-widest mb-6">You don't have any API keys yet.</p>
+          <% end %>
+
+          <%= form_with model: ApiKey.new, url: api_keys_path, class: "space-y-4" do |f| %>
+            <div>
+              <%= f.text_field :name, autocomplete: "off", required: true, placeholder: "Key name (e.g., 'Mobile App')", class: "w-full bg-transparent border-b border-zinc-700 pb-2 font-mono text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors" %>
+            </div>
+            <%= f.submit "CREATE KEY", class: "w-full py-3 bg-zinc-100 hover:bg-zinc-200 transition-colors font-mono text-sm tracking-widest text-zinc-900 cursor-pointer" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
