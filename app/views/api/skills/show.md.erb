@@ -1,0 +1,63 @@
+---
+name: manantial-api
+description: API documentation for Manantial blog application. Provides endpoints for managing blog posts. Use when working with blog content, creating posts, retrieving posts, or managing the blog in the Manantial application.
+license: MIT
+metadata:
+  version: "1.0"
+  author: manantial-team
+---
+
+# Manantial API
+
+## Prerequisites
+
+Set the following environment variables:
+
+```bash
+export MANANTIAL_API_TOKEN="your_api_key_here"
+```
+
+Generate your API key from the [/profile](<%= base_url %>/profile) page in the Manantial web application.
+
+## Available Scripts
+
+- **`scripts/manantial-api.sh`** — CLI tool for interacting with the Manantial API
+
+## Setup
+
+1. Download the script to your skill's `scripts/` directory:
+
+```bash
+curl -o scripts/manantial-api.sh "<%= base_url %>/api/skills/manantial-api.sh" && chmod +x scripts/manantial-api.sh
+```
+
+2. Set your API token:
+
+```bash
+export MANANTIAL_API_TOKEN="your_api_key_here"
+```
+
+Generate your API key from the [/profile](<%= base_url %>/profile) page.
+
+## Usage
+
+Run the script using relative paths from the skill directory root:
+
+```bash
+# List all posts
+bash scripts/manantial-api.sh posts
+
+# Get a specific post by slug
+bash scripts/manantial-api.sh post my-post-slug
+
+# Create a new post
+bash scripts/manantial-api.sh create '{"title": "My New Post", "body": "Post content here"}'
+
+# Update an existing post
+bash scripts/manantial-api.sh update my-post-slug '{"title": "Updated Title"}'
+
+# Delete a post
+bash scripts/manantial-api.sh delete my-post-slug
+```
+
+Run `bash scripts/manantial-api.sh --help` for full usage information.

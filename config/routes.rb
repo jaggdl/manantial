@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     resources :posts, only: [ :index, :show, :create, :update, :destroy ]
   end
 
+  # API Skill documentation for AI agents
+  get "/SKILL" => "api/skills#show"
+  get "/api/skills/manantial-api.sh" => "api/skills#script"
+
   resource :session
   resources :passwords, param: :token
 

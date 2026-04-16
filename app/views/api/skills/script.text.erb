@@ -1,0 +1,114 @@
+#!/bin/bash
+
+# Manantial API CLI Script
+# This script provides convenient commands for interacting with the Manantial API
+
+set -e
+
+BASE_URL="${MANANTIAL_BASE_URL:-<%= base_url %>}"
+API_TOKEN="${MANANTIAL_API_TOKEN:-}"
+
+if [ -z "$API_TOKEN" ]; then
+  echo "Error: MANANTIAL_API_TOKEN environment variable is required"
+  echo "Set it with: export MANANTIAL_API_TOKEN='your_api_key_here'"
+  exit 1
+fi
+
+# Helper function for making API requests
+api_call() {
+  local method="$1"
+  local endpoint="$2"
+  local data="${3:-}"
+  
+  if [ -n "$data" ]; then
+    curl -s -X "$method" \
+      -H "Authorization: Bearer $API_TOKEN" \
+      -H "Content-Type: application/json" \
+      -d "$data" \
+      "$BASE_URL$endpoint"
+  else
+    curl -s -X "$method" \
+      -H "Authorization: Bearer $API_TOKEN" \
+      "$BASE_URL$endpoint"
+  fi
+}
+
+# Display usage information
+usage() {
+  cat << EOF
+Usage: manantial-api <command> [options]
+
+Commands:
+  posts                     List all posts
+  post <slug>               Get a specific post by slug
+  create <json>             Create a new post with JSON data
+  update <slug> <json>      Update an existing post
+  delete <slug>             Delete a post
+
+Environment Variables:
+  MANANTIAL_API_TOKEN       Your API authentication token (required)
+  MANANTIAL_BASE_URL        API base URL (default: <%= base_url %>)
+
+Examples:
+  manantial-api posts
+  manantial-api post my-post-slug
+  manantial-api create '{"title": "My Post", "body": "Content here"}'
+  manantial-api update my-post-slug '{"title": "New Title"}'
+  manantial-api delete my-post-slug
+
+Generate your API key at: $BASE_URL/profile
+EOF
+}
+
+# Main command handler
+case "${1:-}" in
+  posts)
+    api_call "GET" "/api/posts"
+    ;;
+
+  post)
+    if [ -z "${2:-}" ]; then
+      echo "Error: Post slug required"
+      echo "Usage: manantial-api post <slug>"
+      exit 1
+    fi
+    api_call "GET" "/api/posts/$2"
+    ;;
+
+  create)
+    if [ -z "${2:-}" ]; then
+      echo "Error: JSON data required"
+      echo "Usage: manantial-api create '{\"title\": \"My Post\", \"body\": \"Content\"}'"
+      exit 1
+    fi
+    api_call "POST" "/api/posts" "$2"
+    ;;
+    
+  update)
+    if [ -z "${2:-}" ] || [ -z "${3:-}" ]; then
+      echo "Error: Post slug and JSON data required"
+      echo "Usage: manantial-api update <slug> '{\"title\": \"New Title\"}'"
+      exit 1
+    fi
+    api_call "PATCH" "/api/posts/$2" "$3"
+    ;;
+    
+  delete)
+    if [ -z "${2:-}" ]; then
+      echo "Error: Post slug required"
+      echo "Usage: manantial-api delete <slug>"
+      exit 1
+    fi
+    api_call "DELETE" "/api/posts/$2"
+    ;;
+    
+  --help|-h|help)
+    usage
+    ;;
+    
+  *)
+    echo "Error: Unknown command '${1:-}'"
+    usage
+    exit 1
+    ;;
+esac
