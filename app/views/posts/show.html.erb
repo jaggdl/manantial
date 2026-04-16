@@ -2,6 +2,9 @@
   <% post_title = @post.title&.strip || @post.body.to_plain_text.truncate(100) %>
   <% post_description = @post.body.to_plain_text.truncate(280) %>
 
+  <% og_title = post_title.truncate(55) %>
+  <% og_description = post_description.truncate(140) %>
+
   <% content_for(:title) do %>
     <%= post_title %> - <%= Current.owner.name %>
   <% end %>
@@ -11,14 +14,14 @@
     <link rel="canonical" href="<%= post_url(@post) %>">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="<%= post_title %>">
-    <meta property="og:description" content="<%= post_description %>">
+    <meta property="og:title" content="<%= og_title %>">
+    <meta property="og:description" content="<%= og_description %>">
     <meta property="og:url" content="<%= post_url(@post) %>">
     <meta property="article:published_time" content="<%= @post.created_at.iso8601 %>">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="<%= post_title %>">
-    <meta name="twitter:description" content="<%= post_description %>">
+    <meta name="twitter:title" content="<%= og_title %>">
+    <meta name="twitter:description" content="<%= og_description %>">
   <% end %>
 
   <% content_for(:header_back) do %>
