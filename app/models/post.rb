@@ -31,7 +31,7 @@ class Post < ApplicationRecord
   end
 
   def preview
-    body
+    body.to_plain_text.truncate(PREVIEW_LENGTH)
   end
 
   def article?
