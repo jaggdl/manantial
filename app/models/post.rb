@@ -13,6 +13,22 @@ class Post < ApplicationRecord
 
   PREVIEW_LENGTH = 160
 
+  # Create a new post from markdown content
+  def self.create_from_markdown!(user:, title: nil, body_markdown:)
+    html_body = markdown_to_html(body_markdown)
+    user.posts.create!(title: title, body: html_body)
+  end
+
+  # Update post from markdown content
+  def update_from_markdown!(title: nil, body_markdown: nil)
+    attributes = {}
+    attributes[:title] = title if title
+    if body_markdown
+      attributes[:body] = self.class.markdown_to_html(body_markdown)
+    end
+    update!(attributes)
+  end
+
   def preview
     body
   end
@@ -31,6 +47,10 @@ class Post < ApplicationRecord
 
   def to_param
     slug
+  end
+
+  def self.markdown_to_html(markdown)
+    Commonmarker.to_html(markdown)
   end
 
   private
