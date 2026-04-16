@@ -13,11 +13,7 @@ module Api
     end
 
     def create
-      @post = Post.create_from_markdown!(
-        user: Current.user,
-        title: params[:title],
-        body: params[:body]
-      )
+      @post = Current.user.posts.create_from_markdown!(params)
       render json: PostSerializer.new(@post), status: :created
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
@@ -25,10 +21,7 @@ module Api
 
     def update
       @post = Current.user.posts.find_by!(slug: params[:id])
-      @post.update_from_markdown!(
-        title: params[:title],
-        body: params[:body]
-      )
+      @post.update_from_markdown!(params)
       render json: PostSerializer.new(@post)
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Post not found" }, status: :not_found
