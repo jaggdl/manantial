@@ -11,8 +11,8 @@ module Api
         "id" => nil,
         "title" => nil,
         "slug" => nil,
-        "content" => nil,
-        "html_content" => nil,
+        "body" => nil,
+        "body_html" => nil,
         "created_at" => nil,
         "updated_at" => nil
       }
@@ -30,11 +30,11 @@ module Api
       @post.slug
     end
 
-    def content
+    def body
       @post.body.to_plain_text
     end
 
-    def html_content
+    def body_html
       @post.body.to_s
     end
 
