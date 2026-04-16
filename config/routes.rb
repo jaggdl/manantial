@@ -18,6 +18,14 @@ Rails.application.routes.draw do
   get "/SKILL" => "api/skills#show"
   get "/api/skills/manantial-api.sh" => "api/skills#script"
 
+  # Peer connections (federation)
+  scope "/peers", module: "peers" do
+    resource :connection, only: [ :create, :destroy ] do
+      post "confirm", to: "connections#confirm"
+      post "verify", to: "connections#verify"
+    end
+  end
+
   resource :session
   resources :passwords, param: :token
 

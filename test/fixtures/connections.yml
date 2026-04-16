@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hostname: MyString
+  status: MyString
+  access_key: MyString
+  peer_access_key: MyString
+  error_message: MyText
+
+two:
+  hostname: MyString
+  status: MyString
+  access_key: MyString
+  peer_access_key: MyString
+  error_message: MyText

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_15_174855) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_16_225436) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -57,6 +57,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_15_174855) do
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
+
+  create_table "connections", force: :cascade do |t|
+    t.string "access_key"
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.string "hostname", null: false
+    t.string "peer_access_key"
+    t.string "status", default: "pending", null: false
+    t.datetime "updated_at", null: false
+    t.index ["hostname"], name: "index_connections_on_hostname", unique: true
   end
 
   create_table "posts", force: :cascade do |t|
