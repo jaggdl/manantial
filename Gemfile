@@ -68,3 +68,8 @@ end
 gem "tailwindcss-rails", "~> 4.4"
 
 gem "lexxy", "~> 0.1.26.beta" # Need to specify the version since it's a pre-release
+
+# Markdown to HTML conversion for API
+# Needed to convert markdown body to HTML for Action Text
+# in create and update endpoints.
+gem "commonmarker"

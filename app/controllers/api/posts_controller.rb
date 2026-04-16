@@ -13,7 +13,7 @@ module Api
     end
 
     def create
-      @post = Current.user.posts.build(post_params)
+      @post = Current.user.posts.build(post_params_with_converted_body)
 
       if @post.save
         render json: PostSerializer.new(@post), status: :created
@@ -25,7 +25,7 @@ module Api
     def update
       @post = Current.user.posts.find_by!(slug: params[:id])
 
-      if @post.update(post_params)
+      if @post.update(post_params_with_converted_body)
         render json: PostSerializer.new(@post)
       else
         render json: { errors: @post.errors.full_messages }, status: :unprocessable_entity
@@ -46,6 +46,18 @@ module Api
 
     def post_params
       params.permit(:title, :body)
+    end
+
+    def post_params_with_converted_body
+      permitted = post_params.to_h
+      if permitted[:body].present?
+        permitted[:body] = markdown_to_html(permitted[:body])
+      end
+      permitted
+    end
+
+    def markdown_to_html(markdown)
+      Commonmarker.to_html(markdown)
     end
   end
 end

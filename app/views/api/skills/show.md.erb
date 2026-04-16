@@ -63,6 +63,15 @@ bash scripts/manantial-api.sh update my-post-slug '{"title": "Updated Title", "b
 bash scripts/manantial-api.sh delete my-post-slug
 ```
 
+## Creating/Updating Posts
+
+When creating or updating posts via the API, the `body` field should be provided as **Markdown**. The API will automatically convert it to HTML for storage.
+
+```bash
+# Create a post with Markdown formatting
+bash scripts/manantial-api.sh create '{"title": "My Post", "body": "# Heading\n\nSome **bold** text and a [link](https://example.com)"}'
+```
+
 ## API Response Format
 
 Posts are returned with the following fields:
