@@ -15,8 +15,8 @@ module Api
     def create
       @post = Post.create_from_markdown!(
         user: Current.user,
-        title: post_params[:title],
-        body_markdown: post_params[:body]
+        title: params[:title],
+        body: params[:body]
       )
       render json: PostSerializer.new(@post), status: :created
     rescue ActiveRecord::RecordInvalid => e
@@ -26,8 +26,8 @@ module Api
     def update
       @post = Current.user.posts.find_by!(slug: params[:id])
       @post.update_from_markdown!(
-        title: post_params[:title],
-        body_markdown: post_params[:body]
+        title: params[:title],
+        body: params[:body]
       )
       render json: PostSerializer.new(@post)
     rescue ActiveRecord::RecordNotFound
@@ -42,12 +42,6 @@ module Api
       head :no_content
     rescue ActiveRecord::RecordNotFound
       render json: { error: "Post not found" }, status: :not_found
-    end
-
-    private
-
-    def post_params
-      params.permit(:title, :body)
     end
   end
 end

@@ -14,17 +14,17 @@ class Post < ApplicationRecord
   PREVIEW_LENGTH = 160
 
   # Create a new post from markdown content
-  def self.create_from_markdown!(user:, title: nil, body_markdown:)
-    html_body = markdown_to_html(body_markdown)
+  def self.create_from_markdown!(user:, title: nil, body:)
+    html_body = markdown_to_html(body)
     user.posts.create!(title: title, body: html_body)
   end
 
   # Update post from markdown content
-  def update_from_markdown!(title: nil, body_markdown: nil)
+  def update_from_markdown!(title: nil, body: nil)
     attributes = {}
     attributes[:title] = title if title
-    if body_markdown
-      attributes[:body] = self.class.markdown_to_html(body_markdown)
+    if body
+      attributes[:body] = self.class.markdown_to_html(body)
     end
     update!(attributes)
   end
