@@ -50,14 +50,29 @@ bash scripts/manantial-api.sh posts
 # Get a specific post by slug
 bash scripts/manantial-api.sh post my-post-slug
 
-# Create a new post
+# Create a new post (title is optional)
 bash scripts/manantial-api.sh create '{"title": "My New Post", "body": "Post content here"}'
 
+# Create a post without title (note-style)
+bash scripts/manantial-api.sh create '{"body": "Just some quick thoughts..."}'
+
 # Update an existing post
-bash scripts/manantial-api.sh update my-post-slug '{"title": "Updated Title"}'
+bash scripts/manantial-api.sh update my-post-slug '{"title": "Updated Title", "body": "Updated content"}'
 
 # Delete a post
 bash scripts/manantial-api.sh delete my-post-slug
 ```
+
+## API Response Format
+
+Posts are returned with the following fields:
+
+- `id` - Post ID
+- `title` - Post title (null for notes)
+- `slug` - Unique post slug for URLs
+- `body` - Plain text content
+- `body_html` - HTML rendered content
+- `created_at` - ISO 8601 timestamp
+- `updated_at` - ISO 8601 timestamp
 
 Run `bash scripts/manantial-api.sh --help` for full usage information.
