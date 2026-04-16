@@ -13,7 +13,7 @@ module Api
     end
 
     def create
-      @post = Post.create_from_markdown!(user: Current.user, **post_params)
+      @post = Current.user.posts.create_from_markdown!(post_params)
       render json: PostSerializer.new(@post), status: :created
     rescue ActiveRecord::RecordInvalid => e
       render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
