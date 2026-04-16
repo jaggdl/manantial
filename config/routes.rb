@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   # API
   namespace :api do
     resources :posts, only: [ :index, :show, :create, :update, :destroy ]
-    resource :profile, only: [ :show, :update ], controller: "profile"
   end
 
   resource :session
