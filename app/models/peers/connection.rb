@@ -1,5 +1,7 @@
-module Peer
+module Peers
   class Connection < ApplicationRecord
+    self.table_name = "connections"
+
     validates :hostname, presence: true, uniqueness: true, format: { with: /\A[a-zA-Z0-9][a-zA-Z0-9\-]*\.[a-zA-Z]{2,}\z/, message: "must be a valid hostname" }
 
     before_validation :generate_tokens, on: :create
@@ -7,16 +9,16 @@ module Peer
 
     enum :status, { pending: "pending", active: "active", rejected: "rejected" }, validate: true
 
-    def accept!(their_access_key)
-      self.peer_access_key = their_access_key
+    def accept!(peer_access_key)
+      self.peer_access_key = peer_access_key
       self.status = :active
       save!
     end
 
     def reject!
       self.status = :rejected
-      access_key = nil
-      peer_access_key = nil
+      self.access_key = nil
+      self.peer_access_key = nil
       save!
     end
 

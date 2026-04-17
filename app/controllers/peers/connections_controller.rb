@@ -3,7 +3,7 @@ module Peers
     skip_before_action :verify_authenticity_token
 
     def create
-      @connection = Peer::Connection.new(hostname: connection_params[:hostname])
+      @connection = Connection.new(hostname: connection_params[:hostname])
 
       if @connection.persisted?
         render json: { access_key: @connection.access_key }, status: :created
@@ -26,7 +26,7 @@ module Peers
         return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
       end
 
-      @connection = Peer::Connection.find_or_initialize_by(hostname: hostname)
+      @connection = Connection.find_or_initialize_by(hostname: hostname)
 
       if @connection.persisted? && @connection.active?
         render json: { error: "Connection already active" }, status: :conflict
@@ -34,7 +34,7 @@ module Peers
         @connection.accept!(their_access_key)
         render json: { message: "Connection accepted" }, status: :ok
       else
-        @connection = Peer::Connection.create!(hostname: hostname, peer_access_key: their_access_key, access_key: SecureRandom.hex(32))
+        @connection = Connection.create!(hostname: hostname, peer_access_key: their_access_key, access_key: SecureRandom.hex(32))
         render json: { message: "Connection created and accepted", access_key: @connection.access_key }, status: :created
       end
     rescue ActiveRecord::RecordInvalid => e
@@ -42,7 +42,7 @@ module Peers
     end
 
     def destroy
-      @connection = Peer::Connection.find_by(hostname: params[:hostname])
+      @connection = Connection.find_by(hostname: params[:hostname])
 
       unless @connection
         return render json: { error: "Connection not found" }, status: :not_found
