@@ -30,8 +30,15 @@ class Post < ApplicationRecord
     update!(updates)
   end
 
-  def preview
-    body.to_plain_text.truncate(PREVIEW_LENGTH)
+  def preview_text(length = 200)
+    body.to_plain_text
+        .gsub(/\[[^\]]+\]/, "")   # remove [FILENAME.EXT] placeholders
+        .squish
+        .truncate(length)
+  end
+
+  def preview_images
+    body.embeds.map(&:blob).select(&:image?)
   end
 
   def article?

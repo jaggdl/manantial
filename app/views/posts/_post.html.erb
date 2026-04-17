@@ -28,8 +28,10 @@
     <% end %>
 
     <p class="font-sans text-base text-white leading-relaxed">
-      <%= post.preview %>
+      <%= post.preview_text(250) %>
     </p>
+
+    <%= render 'posts/image_grid', images: post.preview_images if post.preview_images.any? %>
 
     <% if post.article? %>
       <div class="mt-4">
