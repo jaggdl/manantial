@@ -2,11 +2,7 @@ class PostsController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
   def index
-    if authenticated?
-      @post_previews = build_post_previews
-    else
-      @post_previews = Current.owner.posts.order(created_at: :desc).map { |post| PostPreview.from_post(post, self) }
-    end
+    @post_previews = authenticated? ? PostPreview.federated(Current.owner, self) : PostPreview.for_owner(Current.owner, self)
   end
 
   def show
@@ -46,12 +42,6 @@ class PostsController < ApplicationController
   end
 
   private
-
-  def build_post_previews
-    local = Current.owner.posts.order(created_at: :desc).map { |post| PostPreview.from_post(post, self) }
-    remote = Peers::Connection.active.flat_map(&:fetch_posts).map { |remote| PostPreview.from_remote(remote) }
-    (local + remote).sort_by(&:created_at).reverse
-  end
 
   def post_params
     params.require(:post).permit(:title, :body)

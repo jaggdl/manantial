@@ -1,6 +1,16 @@
 class PostPreview
   attr_reader :title, :preview_text, :created_at, :user_name, :user_avatar_url, :preview_image_urls, :url, :local
 
+  def self.for_owner(owner, context)
+    owner.posts.order(created_at: :desc).map { |post| from_post(post, context) }
+  end
+
+  def self.federated(owner, context)
+    local = for_owner(owner, context)
+    remote = Peers::Connection.active.flat_map(&:fetch_posts).map { |remote| from_remote(remote) }
+    (local + remote).sort_by(&:created_at).reverse
+  end
+
   def self.from_post(post, context)
     new(
       title: post.title,
