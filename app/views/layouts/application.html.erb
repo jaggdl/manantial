@@ -46,12 +46,20 @@
           <%# Bottom row: Owner avatar/name (left) | Action buttons (right) %>
           <div class="flex items-center justify-between">
             <%# Left side: Owner avatar and name %>
-            <%= link_to root_path, class: "flex items-center gap-4" do %>
-              <%= render "shared/avatar", user: Current.owner, size: "w-10 h-10", text_size: "text-sm" %>
-              <span class="font-mono text-sm tracking-widest text-white uppercase">
-                <%= Current.owner.name %>
-              </span>
-            <% end %>
+            <div class="flex items-center gap-4">
+              <%= link_to root_path do %>
+                <%= render "shared/avatar", user: Current.owner, size: "w-10 h-10", text_size: "text-sm" %>
+              <% end %>
+              <div class="flex flex-col">
+                <%= link_to root_path, class: "font-mono text-sm tracking-widest text-white uppercase" do %>
+                  <%= Current.owner.name %>
+                <% end %>
+                <% connection_count = Peers::Connection.active.count %>
+                <%= link_to connections_path, class: "font-mono text-xs text-zinc-500 hover:text-zinc-300 transition-colors" do %>
+                  <%= connection_count %> <%= "connection".pluralize(connection_count) %>
+                <% end %>
+              </div>
+            </div>
 
             <%# Right side: Action buttons yielded from views %>
             <div class="flex items-center gap-4">
