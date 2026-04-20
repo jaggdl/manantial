@@ -2,7 +2,7 @@
 <% text_class = local_assigns[:text_size] || "text-xs" %>
 
 <% if user.avatar.attached? %>
-  <%= image_tag user.avatar, class: "#{size_class} rounded-full object-cover border border-zinc-700" %>
+  <%= image_tag user.avatar.variant(resize_to_limit: [128, 128]), class: "#{size_class} rounded-full object-cover border border-zinc-700" %>
 <% else %>
   <div class="<%= size_class %> rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
     <span class="font-mono <%= text_class %> text-zinc-500 uppercase">
