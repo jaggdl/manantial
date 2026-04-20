@@ -1,14 +1,8 @@
 <div class="">
   <div class="max-w-3xl mx-auto">
-    <% if @posts.any? %>
+    <% if @post_previews.any? %>
       <div class="divide-y divide-zinc-800">
-        <% @posts.each do |post| %>
-          <% if post.is_a?(Post) %>
-            <%= render post %>
-          <% else %>
-            <%= render "posts/remote_post", post: post %>
-          <% end %>
-        <% end %>
+        <%= render @post_previews %>
       </div>
     <% else %>
       <div class="py-24 text-center">

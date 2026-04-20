@@ -3,9 +3,9 @@ class PostsController < ApplicationController
 
   def index
     if authenticated?
-      @posts = build_federated_feed
+      @post_previews = build_post_previews
     else
-      @posts = Current.owner.posts.order(created_at: :desc)
+      @post_previews = Current.owner.posts.order(created_at: :desc).map { |post| PostPreview.from_post(post, self) }
     end
   end
 
@@ -47,13 +47,10 @@ class PostsController < ApplicationController
 
   private
 
-  def build_federated_feed
-    local_posts = Current.owner.posts.order(created_at: :desc).to_a
-    remote_posts = Peers::Connection.active.flat_map(&:fetch_posts)
-
-    (local_posts + remote_posts).sort_by do |post|
-      post.respond_to?(:created_at) ? post.created_at : Time.current
-    end.reverse
+  def build_post_previews
+    local = Current.owner.posts.order(created_at: :desc).map { |post| PostPreview.from_post(post, self) }
+    remote = Peers::Connection.active.flat_map(&:fetch_posts).map { |remote| PostPreview.from_remote(remote) }
+    (local + remote).sort_by(&:created_at).reverse
   end
 
   def post_params
