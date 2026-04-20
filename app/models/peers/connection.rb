@@ -119,7 +119,46 @@ module Peers
       self.access_key = SecureRandom.hex(32) if access_key.blank?
     end
 
+    def peer_profile
+      @peer_profile ||= fetch_peer_profile
+    end
+
     private
+
+    def fetch_peer_profile
+      Rails.cache.fetch("peer_profile/#{hostname}", expires_in: 30.minutes) do
+        response = self.class.get_from_peer(hostname, "/peers/profile")
+        next nil unless response[:success]
+
+        data = response[:data]
+        PeerUser.new(
+          hostname: hostname,
+          name: data["name"],
+          avatar_url: data["avatar_url"]
+        )
+      end
+    rescue StandardError
+      nil
+    end
+
+    def self.get_from_peer(hostname, path)
+      uri = URI("https://#{hostname}#{path}")
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      http.open_timeout = 2
+      http.read_timeout = 3
+
+      request = Net::HTTP::Get.new(uri.path, { "Accept" => "application/json" })
+      response = http.request(request)
+
+      if response.code.to_i >= 200 && response.code.to_i < 300
+        { success: true, data: JSON.parse(response.body) }
+      else
+        { success: false, error: "HTTP #{response.code}" }
+      end
+    rescue StandardError => e
+      { success: false, error: e.message }
+    end
 
     def self.post_to_peer(hostname, path, payload)
       uri = URI("https://#{hostname}#{path}")

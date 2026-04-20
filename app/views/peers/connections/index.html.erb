@@ -31,10 +31,7 @@
         <div class="border border-zinc-800 divide-y divide-zinc-800">
           <% @connections.active.each do |connection| %>
             <div class="flex items-center justify-between p-4">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-                <span class="font-mono text-sm text-zinc-300"><%= connection.hostname %></span>
-              </div>
+              <%= render "peers/connections/peer_info", connection: connection, status_color: "bg-green-500" %>
               <% if authenticated? %>
                 <%= button_to connection_path(connection.hostname), method: :delete,
                       class: "text-zinc-500 hover:text-red-400 transition-colors",
@@ -57,10 +54,7 @@
         <div class="border border-zinc-800 divide-y divide-zinc-800">
           <% @connections.incoming.each do |connection| %>
             <div class="flex items-center justify-between p-4">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                <span class="font-mono text-sm text-zinc-300"><%= connection.hostname %></span>
-              </div>
+              <%= render "peers/connections/peer_info", connection: connection, status_color: "bg-blue-500" %>
               <% if authenticated? %>
                 <div class="flex items-center gap-2">
                   <%= button_to accept_connection_path(connection.hostname), method: :post,
@@ -88,14 +82,11 @@
         <div class="border border-zinc-800 divide-y divide-zinc-800">
           <% @connections.outgoing.each do |connection| %>
             <div class="flex items-center justify-between p-4">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
-                <div>
-                  <span class="font-mono text-sm text-zinc-300 block"><%= connection.hostname %></span>
-                  <% if connection.error_message.present? %>
-                    <span class="font-mono text-xs text-red-400"><%= connection.error_message %></span>
-                  <% end %>
-                </div>
+              <div>
+                <%= render "peers/connections/peer_info", connection: connection, status_color: "bg-yellow-500" %>
+                <% if connection.error_message.present? %>
+                  <span class="font-mono text-xs text-red-400"><%= connection.error_message %></span>
+                <% end %>
               </div>
               <% if authenticated? %>
                 <%= button_to connection_path(connection.hostname), method: :delete,
@@ -117,10 +108,7 @@
         <div class="border border-zinc-800 divide-y divide-zinc-800">
           <% @connections.rejected.each do |connection| %>
             <div class="flex items-center justify-between p-4">
-              <div class="flex items-center gap-3">
-                <span class="w-2 h-2 bg-red-500 rounded-full"></span>
-                <span class="font-mono text-sm text-zinc-500"><%= connection.hostname %></span>
-              </div>
+              <%= render "peers/connections/peer_info", connection: connection, status_color: "bg-red-500", text_color: "text-zinc-500" %>
               <% if authenticated? %>
                 <%= button_to connection_path(connection.hostname), method: :delete,
                       class: "text-zinc-500 hover:text-red-400 transition-colors",
