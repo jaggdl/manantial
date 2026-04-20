@@ -123,6 +123,17 @@ module Peers
       @peer_profile ||= fetch_peer_profile
     end
 
+    def fetch_posts
+      return [] unless active? && peer_access_key.present?
+
+      response = self.class.get_from_peer(hostname, "/peers/posts", headers: { "Authorization" => "Bearer #{peer_access_key}" })
+      return [] unless response[:success]
+
+      response[:data].map { |attrs| RemotePost.new(attrs.merge("hostname" => hostname)) }
+    rescue StandardError
+      []
+    end
+
     private
 
     def fetch_peer_profile
@@ -141,14 +152,14 @@ module Peers
       nil
     end
 
-    def self.get_from_peer(hostname, path)
+    def self.get_from_peer(hostname, path, headers: {})
       uri = URI("https://#{hostname}#{path}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.open_timeout = 2
       http.read_timeout = 3
 
-      request = Net::HTTP::Get.new(uri.path, { "Accept" => "application/json" })
+      request = Net::HTTP::Get.new(uri.path, { "Accept" => "application/json" }.merge(headers))
       response = http.request(request)
 
       if response.code.to_i >= 200 && response.code.to_i < 300

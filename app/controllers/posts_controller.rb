@@ -2,7 +2,11 @@ class PostsController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
   def index
-    @posts = Post.all.order(created_at: :desc)
+    if authenticated?
+      @posts = build_federated_feed
+    else
+      @posts = Current.owner.posts.order(created_at: :desc)
+    end
   end
 
   def show
@@ -42,6 +46,15 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def build_federated_feed
+    local_posts = Current.owner.posts.order(created_at: :desc).to_a
+    remote_posts = Peers::Connection.active.flat_map(&:fetch_posts)
+
+    (local_posts + remote_posts).sort_by do |post|
+      post.respond_to?(:created_at) ? post.created_at : Time.current
+    end.reverse
+  end
 
   def post_params
     params.require(:post).permit(:title, :body)

@@ -1,8 +1,14 @@
 <div class="">
   <div class="max-w-3xl mx-auto">
-    <% if Current.owner.posts.any? %>
+    <% if @posts.any? %>
       <div class="divide-y divide-zinc-800">
-        <%= render Current.owner.posts.order(created_at: :desc) %>
+        <% @posts.each do |post| %>
+          <% if post.is_a?(Post) %>
+            <%= render post %>
+          <% else %>
+            <%= render "posts/remote_post", post: post %>
+          <% end %>
+        <% end %>
       </div>
     <% else %>
       <div class="py-24 text-center">
