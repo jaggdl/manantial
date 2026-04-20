@@ -20,20 +20,18 @@ Rails.application.routes.draw do
 
   # Peer connections — federation API (other instances call these)
   scope "/peers", module: "peers" do
-    post "connection", to: "connections#create"
-    post "connection/confirm", to: "connections#confirm"
-    post "connection/verify", to: "connections#verify"
-    post "connection/revoke", to: "connections#revoke"
-    delete "connection/:hostname", to: "connections#destroy", constraints: { hostname: /[^\/]+/ }
+    post "connection", to: "connection_requests#create"
+    post "connection/confirm", to: "connection_requests#confirm"
+    post "connection/verify", to: "connection_requests#verify"
+    post "connection/revoke", to: "connection_requests#revoke"
+    delete "connection/:hostname", to: "connection_requests#destroy", constraints: { hostname: /[^\/]+/ }
   end
 
   # Peer connections — user management UI
-  namespace :peers do
-    resources :connections, only: [ :index, :create, :destroy ], param: :hostname, constraints: { hostname: /[^\/]+/ }, controller: "connections_management" do
-      member do
-        post :accept
-        post :reject
-      end
+  resources :connections, only: [ :index, :create, :destroy ], param: :hostname, constraints: { hostname: /[^\/]+/ }, module: "peers" do
+    member do
+      post :accept
+      post :reject
     end
   end
 
