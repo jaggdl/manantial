@@ -47,15 +47,7 @@
           <div class="flex items-center justify-between">
             <%# Left side: Owner avatar and name %>
             <%= link_to root_path, class: "flex items-center gap-4" do %>
-              <% if Current.owner.avatar.attached? %>
-                <%= image_tag Current.owner.avatar, class: "w-10 h-10 rounded-full object-cover border border-zinc-700" %>
-              <% else %>
-                <div class="w-10 h-10 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center">
-                  <span class="font-mono text-sm text-zinc-500 uppercase">
-                    <%= Current.owner.name.first.upcase %>
-                  </span>
-                </div>
-              <% end %>
+              <%= render "shared/avatar", user: Current.owner, size: "w-10 h-10", text_size: "text-sm" %>
               <span class="font-mono text-sm tracking-widest text-white uppercase">
                 <%= Current.owner.name %>
               </span>
