@@ -15,7 +15,7 @@ module Peers
 
       render json: {
         name: owner.name,
-        avatar_url: owner.avatar.attached? ? url_for(owner.avatar) : nil
+        avatar_url: owner.avatar.attached? ? url_for(owner.avatar.variant(resize_to_limit: [128, 128])) : nil
       }
     end
   end
