@@ -1,5 +1,5 @@
 module Peers
-  class ConnectionRequestsController < ApplicationController
+  class ConnectionRequestsController < BaseController
     allow_unauthenticated_access
     skip_before_action :verify_authenticity_token
 
@@ -8,7 +8,7 @@ module Peers
     # Body: { hostname: "sender.com", access_key: "their-token-for-us" }
     # Returns: { nonce: "..." }
     def create
-      hostname = Connection.normalize_hostname(connection_params[:hostname])
+      hostname = normalized_hostname
       their_access_key = connection_params[:access_key]
 
       if hostname.blank? || their_access_key.blank?
@@ -39,7 +39,7 @@ module Peers
     # Body: { access_key: "their-token", nonce: "...", hostname: "their-domain" }
     def confirm
       their_access_key = connection_params[:access_key]
-      hostname = Connection.normalize_hostname(connection_params[:hostname])
+      hostname = normalized_hostname
       nonce = connection_params[:nonce]
 
       if their_access_key.blank? || hostname.blank? || nonce.blank?
@@ -69,7 +69,7 @@ module Peers
     # DELETE /peers/connection/:hostname
     # Receives a disconnection request from a peer.
     def destroy
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
       @connection = Connection.find_by(hostname: hostname)
 
       unless @connection
@@ -97,7 +97,7 @@ module Peers
     # POST /peers/connection/revoke
     # Peer notifies us they have disconnected.
     def revoke
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
       @connection = Connection.find_by(hostname: hostname)
 
       unless @connection

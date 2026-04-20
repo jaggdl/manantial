@@ -1,5 +1,5 @@
 module Peers
-  class ConnectionsController < ApplicationController
+  class ConnectionsController < BaseController
     allow_unauthenticated_access only: [ :index ]
 
     def index
@@ -7,7 +7,7 @@ module Peers
     end
 
     def create
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
 
       if hostname.blank?
         return redirect_to connections_path, alert: "Hostname is required"
@@ -29,7 +29,7 @@ module Peers
     end
 
     def accept
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
       connection = Connection.find_by(hostname: hostname)
 
       unless connection
@@ -52,7 +52,7 @@ module Peers
     end
 
     def reject
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
       connection = Connection.find_by(hostname: hostname)
 
       unless connection
@@ -64,7 +64,7 @@ module Peers
     end
 
     def destroy
-      hostname = Connection.normalize_hostname(params[:hostname])
+      hostname = normalized_hostname
       connection = Connection.find_by(hostname: hostname)
 
       if connection
