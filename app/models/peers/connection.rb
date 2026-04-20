@@ -1,3 +1,5 @@
+require "net/http"
+
 module Peers
   class Connection < ApplicationRecord
     self.table_name = "connections"
@@ -109,7 +111,7 @@ module Peers
 
       response = http.request(request)
 
-      if response.code == "200"
+      if response.code.to_i >= 200 && response.code.to_i < 300
         { success: true, data: JSON.parse(response.body) }
       else
         { success: false, error: "HTTP #{response.code}" }

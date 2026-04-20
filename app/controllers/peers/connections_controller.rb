@@ -117,6 +117,7 @@ module Peers
       end
 
       @connection = Connection.new(hostname: hostname)
+      @connection.validate # trigger before_validation callbacks to generate nonce
 
       unless Connection.verify_peer(hostname, @connection.nonce)
         return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
