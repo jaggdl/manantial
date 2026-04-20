@@ -1,9 +1,13 @@
 <div class="w-full flex items-center justify-center p-6">
   <div class="w-full max-w-md">
-    <%# Primary: Hero headline %>
-    <h1 class="font-display text-5xl text-white tracking-tight mb-2">
-      Sign in
-    </h1>
+    <%# Owner avatar and welcome %>
+    <div class="flex items-center gap-4 mb-8">
+      <%= render "shared/avatar", user: Current.owner, size: "w-16 h-16", text_size: "text-lg" %>
+      <div class="flex flex-col">
+        <span class="font-mono text-xs tracking-widest text-zinc-500 uppercase">Welcome back</span>
+        <span class="font-mono text-xl tracking-widest text-white uppercase"><%= Current.owner.name %></span>
+      </div>
+    </div>
 
     <%# Secondary: Description %>
     <p class="font-sans text-base text-zinc-500 mb-12">
