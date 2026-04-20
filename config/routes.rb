@@ -18,13 +18,21 @@ Rails.application.routes.draw do
   get "/SKILL" => "api/skills#show"
   get "/api/skills/manantial-api.sh" => "api/skills#script"
 
-  # Peer connections (federation)
+  # Peer connections — federation API (other instances call these)
   scope "/peers", module: "peers" do
-    resources :connections, path: "connection", only: [ :index, :create, :destroy ], param: :hostname do
-      collection do
-        post :confirm
-        post :verify
-        post :revoke
+    post "connection", to: "connections#create"
+    post "connection/confirm", to: "connections#confirm"
+    post "connection/verify", to: "connections#verify"
+    post "connection/revoke", to: "connections#revoke"
+    delete "connection/:hostname", to: "connections#destroy", constraints: { hostname: /[^\/]+/ }
+  end
+
+  # Peer connections — user management UI
+  namespace :peers do
+    resources :connections, only: [ :index, :create, :destroy ], param: :hostname, constraints: { hostname: /[^\/]+/ }, controller: "connections_management" do
+      member do
+        post :accept
+        post :reject
       end
     end
   end

@@ -1,19 +1,42 @@
 module Peers
   class ConnectionsController < ApplicationController
-    allow_unauthenticated_access only: [ :create, :confirm, :verify, :revoke ]
-    skip_before_action :verify_authenticity_token, only: [ :create, :confirm, :verify, :revoke, :destroy ]
+    allow_unauthenticated_access
+    skip_before_action :verify_authenticity_token
 
-    def index
-      @connections = Connection.ordered
-    end
-
+    # POST /peers/connection
+    # Receives an incoming connection request from a peer.
+    # Body: { hostname: "sender.com", access_key: "their-token-for-us" }
+    # Returns: { nonce: "..." }
     def create
-      respond_to do |format|
-        format.json { handle_peer_create }
-        format.html { handle_user_create }
+      hostname = Connection.normalize_hostname(connection_params[:hostname])
+      their_access_key = connection_params[:access_key]
+
+      if hostname.blank? || their_access_key.blank?
+        return render json: { error: "Hostname and access_key are required" }, status: :unprocessable_entity
+      end
+
+      existing = Connection.find_by(hostname: hostname)
+      if existing
+        return render json: { error: "Connection already exists" }, status: :conflict
+      end
+
+      @connection = Connection.new(hostname: hostname, peer_access_key: their_access_key)
+      @connection.validate # trigger nonce generation
+
+      unless Connection.verify_peer(hostname, @connection.nonce)
+        return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
+      end
+
+      if @connection.save
+        render json: { nonce: @connection.nonce }, status: :created
+      else
+        render json: { error: @connection.errors.full_messages.first }, status: :unprocessable_entity
       end
     end
 
+    # POST /peers/connection/confirm
+    # Receives confirmation from a peer that accepted our request.
+    # Body: { access_key: "their-token", nonce: "...", hostname: "their-domain" }
     def confirm
       their_access_key = connection_params[:access_key]
       hostname = Connection.normalize_hostname(connection_params[:hostname])
@@ -43,41 +66,24 @@ module Peers
       render json: { error: e.message }, status: :unprocessable_entity
     end
 
+    # DELETE /peers/connection/:hostname
+    # Receives a disconnection request from a peer.
     def destroy
-      respond_to do |format|
-        format.json do
-          hostname = Connection.normalize_hostname(params[:hostname])
-          @connection = Connection.find_by(hostname: hostname)
+      hostname = Connection.normalize_hostname(params[:hostname])
+      @connection = Connection.find_by(hostname: hostname)
 
-          unless @connection
-            return render json: { error: "Connection not found" }, status: :not_found
-          end
-
-          @connection.destroy!
-          render json: { message: "Connection revoked" }, status: :ok
-        rescue ActiveRecord::RecordNotDestroyed => e
-          render json: { error: e.message }, status: :unprocessable_entity
-        end
-
-        format.html do
-          unless authenticated?
-            return redirect_to new_session_path
-          end
-
-          hostname = Connection.normalize_hostname(params[:hostname])
-          @connection = Connection.find_by(hostname: hostname)
-
-          if @connection
-            @connection.notify_revoke!(request.host)
-            @connection.destroy!
-            redirect_to connections_path, notice: "Connection removed"
-          else
-            redirect_to connections_path, alert: "Connection not found"
-          end
-        end
+      unless @connection
+        return render json: { error: "Connection not found" }, status: :not_found
       end
+
+      @connection.destroy!
+      render json: { message: "Connection revoked" }, status: :ok
+    rescue ActiveRecord::RecordNotDestroyed => e
+      render json: { error: e.message }, status: :unprocessable_entity
     end
 
+    # POST /peers/connection/verify
+    # Proof-of-ownership: peer calls this to verify we control our domain.
     def verify
       nonce = params[:nonce]
 
@@ -88,6 +94,8 @@ module Peers
       render json: { verified: true, hostname: request.host }
     end
 
+    # POST /peers/connection/revoke
+    # Peer notifies us they have disconnected.
     def revoke
       hostname = Connection.normalize_hostname(params[:hostname])
       @connection = Connection.find_by(hostname: hostname)
@@ -103,58 +111,6 @@ module Peers
     end
 
     private
-
-    def handle_peer_create
-      hostname = Connection.normalize_hostname(connection_params[:hostname])
-
-      if hostname.blank?
-        return render json: { error: "Hostname is required" }, status: :unprocessable_entity
-      end
-
-      existing = Connection.find_by(hostname: hostname)
-      if existing
-        return render json: { error: "Connection already exists" }, status: :conflict
-      end
-
-      @connection = Connection.new(hostname: hostname)
-      @connection.validate # trigger before_validation callbacks to generate nonce
-
-      unless Connection.verify_peer(hostname, @connection.nonce)
-        return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
-      end
-
-      if @connection.save
-        render json: { token: @connection.access_key, nonce: @connection.nonce }, status: :created
-      else
-        render json: { error: @connection.errors.full_messages.first }, status: :unprocessable_entity
-      end
-    end
-
-    def handle_user_create
-      unless authenticated?
-        return redirect_to new_session_path
-      end
-
-      hostname = Connection.normalize_hostname(params[:hostname])
-
-      if hostname.blank?
-        return redirect_to connections_path, alert: "Hostname is required"
-      end
-
-      if Connection.exists?(hostname: hostname)
-        return redirect_to connections_path, alert: "Connection already exists"
-      end
-
-      connection = Connection.initiate_outgoing!(hostname, request.host)
-
-      if connection.active?
-        redirect_to connections_path, notice: "Connected to #{connection.hostname}"
-      else
-        redirect_to connections_path, alert: "Could not connect: #{connection.error_message || 'Unknown error'}"
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      redirect_to connections_path, alert: e.message
-    end
 
     def connection_params
       params.permit(:hostname, :access_key, :nonce)

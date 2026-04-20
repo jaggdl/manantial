@@ -14,7 +14,7 @@
     <% if authenticated? %>
       <div class="border border-zinc-800 p-6">
         <h2 class="font-display text-xl text-white tracking-tight mb-4">Add Connection</h2>
-        <%= form_with url: connections_path, method: :post, class: "flex items-end gap-4" do |f| %>
+        <%= form_with url: peers_connections_path, method: :post, class: "flex items-end gap-4" do |f| %>
           <div class="flex-1">
             <%= f.text_field :hostname, required: true, placeholder: "example.com", autocomplete: "off",
                   class: "w-full bg-transparent border-b border-zinc-700 pb-2 font-mono text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-zinc-500 transition-colors" %>
@@ -36,7 +36,7 @@
                 <span class="font-mono text-sm text-zinc-300"><%= connection.hostname %></span>
               </div>
               <% if authenticated? %>
-                <%= button_to connection_path(connection.hostname), method: :delete,
+                <%= button_to peers_connection_path(connection.hostname), method: :delete,
                       class: "text-zinc-500 hover:text-red-400 transition-colors",
                       data: { turbo_confirm: "Disconnect from #{connection.hostname}?" } do %>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
@@ -50,12 +50,43 @@
       <% end %>
     </div>
 
-    <%# Pending Connections %>
-    <% if @connections.pending.any? %>
+    <%# Incoming Requests %>
+    <% if @connections.incoming.any? %>
       <div>
-        <h2 class="font-display text-2xl text-white tracking-tight mb-6">Pending</h2>
+        <h2 class="font-display text-2xl text-white tracking-tight mb-6">Incoming Requests</h2>
         <div class="border border-zinc-800 divide-y divide-zinc-800">
-          <% @connections.pending.each do |connection| %>
+          <% @connections.incoming.each do |connection| %>
+            <div class="flex items-center justify-between p-4">
+              <div class="flex items-center gap-3">
+                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                <span class="font-mono text-sm text-zinc-300"><%= connection.hostname %></span>
+              </div>
+              <% if authenticated? %>
+                <div class="flex items-center gap-2">
+                  <%= button_to accept_peers_connection_path(connection.hostname), method: :post,
+                        class: "text-zinc-300 hover:text-green-400 transition-colors",
+                        data: { turbo_confirm: "Accept connection from #{connection.hostname}?" } do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  <% end %>
+                  <%= button_to reject_peers_connection_path(connection.hostname), method: :post,
+                        class: "text-zinc-500 hover:text-red-400 transition-colors",
+                        data: { turbo_confirm: "Reject connection from #{connection.hostname}?" } do %>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <%# Outgoing Requests %>
+    <% if @connections.outgoing.any? %>
+      <div>
+        <h2 class="font-display text-2xl text-white tracking-tight mb-6">Outgoing Requests</h2>
+        <div class="border border-zinc-800 divide-y divide-zinc-800">
+          <% @connections.outgoing.each do |connection| %>
             <div class="flex items-center justify-between p-4">
               <div class="flex items-center gap-3">
                 <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
@@ -67,9 +98,9 @@
                 </div>
               </div>
               <% if authenticated? %>
-                <%= button_to connection_path(connection.hostname), method: :delete,
+                <%= button_to peers_connection_path(connection.hostname), method: :delete,
                       class: "text-zinc-500 hover:text-red-400 transition-colors",
-                      data: { turbo_confirm: "Cancel connection to #{connection.hostname}?" } do %>
+                      data: { turbo_confirm: "Cancel request to #{connection.hostname}?" } do %>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 <% end %>
               <% end %>
@@ -91,7 +122,7 @@
                 <span class="font-mono text-sm text-zinc-500"><%= connection.hostname %></span>
               </div>
               <% if authenticated? %>
-                <%= button_to connection_path(connection.hostname), method: :delete,
+                <%= button_to peers_connection_path(connection.hostname), method: :delete,
                       class: "text-zinc-500 hover:text-red-400 transition-colors",
                       data: { turbo_confirm: "Remove #{connection.hostname} from the list?" } do %>
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>

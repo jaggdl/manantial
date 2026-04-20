@@ -6,15 +6,18 @@ module Peers
 
     validates :hostname, presence: true, uniqueness: true, format: { with: /\A([a-z0-9]([a-z0-9\-]{0,61}[a-z0-9])?\.)+[a-z]{2,}\z/i, message: "must be a valid hostname" }
 
-    before_validation :generate_tokens, on: :create
+    before_validation :generate_nonce, on: :create
     before_validation :normalize_hostname
 
     enum :status, { pending: "pending", active: "active", rejected: "rejected" }, validate: true
 
     scope :ordered, -> { order(created_at: :desc) }
+    scope :incoming, -> { pending.where.not(peer_access_key: nil).where(access_key: nil) }
+    scope :outgoing, -> { pending.where.not(access_key: nil).where(peer_access_key: nil) }
 
-    def accept!(peer_access_key)
-      self.peer_access_key = peer_access_key
+    def accept!(peer_access_key = nil)
+      generate_access_key if access_key.blank?
+      self.peer_access_key = peer_access_key if peer_access_key.present?
       self.status = :active
       save!
     end
@@ -40,41 +43,56 @@ module Peers
     end
 
     def self.initiate_outgoing!(hostname, origin_host)
-      connection = create!(hostname: hostname)
+      connection = new(hostname: hostname)
+      connection.generate_access_key
+      connection.save!
 
-      # Step 1: Call peer's create endpoint
-      peer_response = post_to_peer(hostname, "/peers/connection", { hostname: origin_host })
+      # Call peer's create endpoint with our token
+      peer_response = post_to_peer(hostname, "/peers/connection", {
+        hostname: origin_host,
+        access_key: connection.access_key
+      })
 
       unless peer_response[:success]
         connection.update!(error_message: "Peer did not respond to connection request")
         return connection
       end
 
-      peer_token = peer_response[:data]["token"]
       peer_nonce = peer_response[:data]["nonce"]
 
-      unless peer_token.present? && peer_nonce.present?
+      unless peer_nonce.present?
         connection.update!(error_message: "Peer returned an invalid response")
         return connection
       end
 
-      # Step 2: Store peer token
-      connection.peer_access_key = peer_token
+      connection.nonce = peer_nonce
+      connection.save!
+      connection
+    end
 
-      # Step 3: Call peer's confirm endpoint
+    def self.complete_acceptance!(hostname, origin_host)
+      connection = find_by!(hostname: hostname)
+
+      unless connection.pending?
+        raise "Connection is not pending"
+      end
+
+      connection.generate_access_key if connection.access_key.blank?
+
       confirm_response = post_to_peer(hostname, "/peers/connection/confirm", {
         access_key: connection.access_key,
-        nonce: peer_nonce,
+        nonce: connection.nonce,
         hostname: origin_host
       })
 
       if confirm_response[:success]
         connection.status = :active
+        connection.save!
       else
-        connection.error_message = "Peer could not confirm connection"
+        connection.error_message = "Peer could not confirm: #{confirm_response[:error]}"
+        connection.save!
       end
 
-      connection.save!
       connection
     end
 
@@ -95,6 +113,10 @@ module Peers
       else
         false
       end
+    end
+
+    def generate_access_key
+      self.access_key = SecureRandom.hex(32) if access_key.blank?
     end
 
     private
@@ -120,8 +142,7 @@ module Peers
       { success: false, error: e.message }
     end
 
-    def generate_tokens
-      self.access_key = SecureRandom.hex(32) if access_key.blank?
+    def generate_nonce
       self.nonce = SecureRandom.hex(16) if nonce.blank?
     end
 
