@@ -20,9 +20,12 @@ Rails.application.routes.draw do
 
   # Peer connections (federation)
   scope "/peers", module: "peers" do
-    resource :connection, only: [ :create, :destroy ] do
-      post "confirm", to: "connections#confirm"
-      post "verify", to: "connections#verify"
+    resources :connections, path: "connection", only: [ :create, :destroy ], param: :hostname do
+      collection do
+        post :confirm
+        post :verify
+        post :revoke
+      end
     end
   end
 

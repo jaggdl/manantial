@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_16_225436) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_20_132513) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
@@ -64,10 +64,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_16_225436) do
     t.datetime "created_at", null: false
     t.text "error_message"
     t.string "hostname", null: false
+    t.string "nonce"
     t.string "peer_access_key"
     t.string "status", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.index ["hostname"], name: "index_connections_on_hostname", unique: true
+    t.index ["nonce"], name: "index_connections_on_nonce", unique: true
   end
 
   create_table "posts", force: :cascade do |t|

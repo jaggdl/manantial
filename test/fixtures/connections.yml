@@ -1,15 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  hostname: MyString
-  status: MyString
-  access_key: MyString
-  peer_access_key: MyString
-  error_message: MyText
+  hostname: peer-one.example.com
+  status: pending
+  access_key: <%= SecureRandom.hex(32) %>
+  peer_access_key:
+  nonce: <%= SecureRandom.hex(16) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 two:
-  hostname: MyString
-  status: MyString
-  access_key: MyString
-  peer_access_key: MyString
-  error_message: MyText
+  hostname: peer-two.example.com
+  status: active
+  access_key: <%= SecureRandom.hex(32) %>
+  peer_access_key: <%= SecureRandom.hex(32) %>
+  nonce: <%= SecureRandom.hex(16) %>
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>

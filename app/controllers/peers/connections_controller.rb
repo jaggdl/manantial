@@ -1,12 +1,28 @@
 module Peers
   class ConnectionsController < ApplicationController
+    allow_unauthenticated_access
     skip_before_action :verify_authenticity_token
 
     def create
-      @connection = Connection.new(hostname: connection_params[:hostname])
+      hostname = Connection.normalize_hostname(connection_params[:hostname])
 
-      if @connection.persisted?
-        render json: { access_key: @connection.access_key }, status: :created
+      if hostname.blank?
+        return render json: { error: "Hostname is required" }, status: :unprocessable_entity
+      end
+
+      existing = Connection.find_by(hostname: hostname)
+      if existing
+        return render json: { error: "Connection already exists" }, status: :conflict
+      end
+
+      @connection = Connection.new(hostname: hostname)
+
+      unless Connection.verify_peer(hostname, @connection.nonce)
+        return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
+      end
+
+      if @connection.save
+        render json: { token: @connection.access_key, nonce: @connection.nonce }, status: :created
       else
         render json: { error: @connection.errors.full_messages.first }, status: :unprocessable_entity
       end
@@ -14,65 +30,76 @@ module Peers
 
     def confirm
       their_access_key = connection_params[:access_key]
-      hostname = connection_params[:hostname]
+      hostname = Connection.normalize_hostname(connection_params[:hostname])
+      nonce = connection_params[:nonce]
 
-      if their_access_key.blank? || hostname.blank?
-        return render json: { error: "Access key and hostname are required" }, status: :unprocessable_entity
+      if their_access_key.blank? || hostname.blank? || nonce.blank?
+        return render json: { error: "Access key, hostname, and nonce are required" }, status: :unprocessable_entity
       end
 
-      verified = verify_peer(hostname)
-
-      unless verified
-        return render json: { error: "Verification failed. Could not reach the peer instance." }, status: :unauthorized
-      end
-
-      @connection = Connection.find_or_initialize_by(hostname: hostname)
-
-      if @connection.persisted? && @connection.active?
-        render json: { error: "Connection already active" }, status: :conflict
-      elsif @connection.persisted? && @connection.pending?
-        @connection.accept!(their_access_key)
-        render json: { message: "Connection accepted" }, status: :ok
-      else
-        @connection = Connection.create!(hostname: hostname, peer_access_key: their_access_key, access_key: SecureRandom.hex(32))
-        render json: { message: "Connection created and accepted", access_key: @connection.access_key }, status: :created
-      end
-    rescue ActiveRecord::RecordInvalid => e
-      render json: { error: e.message }, status: :unprocessable_entity
-    end
-
-    def destroy
-      @connection = Connection.find_by(hostname: params[:hostname])
+      @connection = Connection.find_by(hostname: hostname)
 
       unless @connection
         return render json: { error: "Connection not found" }, status: :not_found
       end
 
-      @connection.reject!
+      unless @connection.pending?
+        return render json: { error: "Connection is not pending" }, status: :conflict
+      end
+
+      unless @connection.nonce == nonce
+        return render json: { error: "Invalid nonce" }, status: :unauthorized
+      end
+
+      @connection.accept!(their_access_key)
+      render json: { message: "Connection accepted" }, status: :ok
+    rescue ActiveRecord::RecordInvalid => e
+      render json: { error: e.message }, status: :unprocessable_entity
+    end
+
+    def destroy
+      hostname = Connection.normalize_hostname(params[:hostname])
+      @connection = Connection.find_by(hostname: hostname)
+
+      unless @connection
+        return render json: { error: "Connection not found" }, status: :not_found
+      end
+
+      @connection.notify_revoke!(request.host)
+      @connection.destroy!
       render json: { message: "Connection revoked" }, status: :ok
+    rescue ActiveRecord::RecordNotDestroyed => e
+      render json: { error: e.message }, status: :unprocessable_entity
     end
 
     def verify
+      nonce = params[:nonce]
+
+      if nonce.blank?
+        return render json: { error: "Nonce is required" }, status: :unprocessable_entity
+      end
+
       render json: { verified: true, hostname: request.host }
+    end
+
+    def revoke
+      hostname = Connection.normalize_hostname(params[:hostname])
+      @connection = Connection.find_by(hostname: hostname)
+
+      unless @connection
+        return render json: { error: "Connection not found" }, status: :not_found
+      end
+
+      @connection.destroy!
+      render json: { message: "Connection revoked" }, status: :ok
+    rescue ActiveRecord::RecordNotDestroyed => e
+      render json: { error: e.message }, status: :unprocessable_entity
     end
 
     private
 
     def connection_params
-      params.require(:peer).permit(:hostname, :access_key)
-    end
-
-    def verify_peer(hostname)
-      uri = URI("https://#{hostname}/peers/connection/verify")
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      http.open_timeout = 3
-      http.read_timeout = 5
-
-      response = http.get(uri.path)
-      response.code == "200"
-    rescue StandardError => e
-      false
+      params.permit(:hostname, :access_key, :nonce)
     end
   end
 end
