@@ -70,9 +70,9 @@ module Peers
           if @connection
             @connection.notify_revoke!(request.host)
             @connection.destroy!
-            redirect_to peers_connections_path, notice: "Connection removed"
+            redirect_to connections_path, notice: "Connection removed"
           else
-            redirect_to peers_connections_path, alert: "Connection not found"
+            redirect_to connections_path, alert: "Connection not found"
           end
         end
       end
@@ -137,22 +137,22 @@ module Peers
       hostname = Connection.normalize_hostname(params[:hostname])
 
       if hostname.blank?
-        return redirect_to peers_connections_path, alert: "Hostname is required"
+        return redirect_to connections_path, alert: "Hostname is required"
       end
 
       if Connection.exists?(hostname: hostname)
-        return redirect_to peers_connections_path, alert: "Connection already exists"
+        return redirect_to connections_path, alert: "Connection already exists"
       end
 
       connection = Connection.initiate_outgoing!(hostname, request.host)
 
       if connection.active?
-        redirect_to peers_connections_path, notice: "Connected to #{connection.hostname}"
+        redirect_to connections_path, notice: "Connected to #{connection.hostname}"
       else
-        redirect_to peers_connections_path, alert: "Could not connect: #{connection.error_message || 'Unknown error'}"
+        redirect_to connections_path, alert: "Could not connect: #{connection.error_message || 'Unknown error'}"
       end
     rescue ActiveRecord::RecordInvalid => e
-      redirect_to peers_connections_path, alert: e.message
+      redirect_to connections_path, alert: e.message
     end
 
     def connection_params
