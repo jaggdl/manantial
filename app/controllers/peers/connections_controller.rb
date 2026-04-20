@@ -1,14 +1,12 @@
 module Peers
   class ConnectionsController < ApplicationController
+    allow_unauthenticated_access only: [ :index ]
+
     def index
       @connections = Connection.ordered
     end
 
     def create
-      unless authenticated?
-        return redirect_to new_session_path
-      end
-
       hostname = Connection.normalize_hostname(params[:hostname])
 
       if hostname.blank?
@@ -31,10 +29,6 @@ module Peers
     end
 
     def accept
-      unless authenticated?
-        return redirect_to new_session_path
-      end
-
       hostname = Connection.normalize_hostname(params[:hostname])
       connection = Connection.find_by(hostname: hostname)
 
@@ -58,10 +52,6 @@ module Peers
     end
 
     def reject
-      unless authenticated?
-        return redirect_to new_session_path
-      end
-
       hostname = Connection.normalize_hostname(params[:hostname])
       connection = Connection.find_by(hostname: hostname)
 
@@ -74,10 +64,6 @@ module Peers
     end
 
     def destroy
-      unless authenticated?
-        return redirect_to new_session_path
-      end
-
       hostname = Connection.normalize_hostname(params[:hostname])
       connection = Connection.find_by(hostname: hostname)
 
