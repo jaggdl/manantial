@@ -17,7 +17,8 @@ module Peers
         return redirect_to connections_path, alert: "Connection already exists"
       end
 
-      connection = Connection.initiate_outgoing!(hostname, request.host)
+      connection = Connection.new(hostname: hostname)
+      connection.initiate_outgoing!(request.host)
 
       if connection.persisted? && connection.pending?
         redirect_to connections_path, notice: "Connection request sent to #{connection.hostname}"
@@ -40,7 +41,7 @@ module Peers
         return redirect_to connections_path, alert: "Connection is not pending"
       end
 
-      connection = Connection.complete_acceptance!(hostname, request.host)
+      connection.complete_acceptance!(request.host)
 
       if connection.active?
         redirect_to connections_path, notice: "Connected to #{connection.hostname}"
