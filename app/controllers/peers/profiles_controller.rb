@@ -13,10 +13,7 @@ module Peers
         return render json: { error: "No owner configured" }, status: :not_found
       end
 
-      render json: {
-        name: owner.name,
-        avatar_url: owner.avatar.attached? ? url_for(owner.avatar.variant(resize_to_limit: [128, 128])) : nil
-      }
+      render json: ProfileSerializer.new(owner)
     end
   end
 end

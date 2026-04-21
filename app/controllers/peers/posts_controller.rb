@@ -2,18 +2,7 @@ module Peers
   class PostsController < PrivateBaseController
     def index
       posts = Current.owner.posts.order(created_at: :desc).limit(20).map do |post|
-        {
-          slug: post.slug,
-          title: post.title,
-          preview_text: post.preview_text,
-          preview_image_urls: post.preview_images.map { |blob| url_for(blob.representation(resize_to_limit: [ 800, 800 ])) },
-          is_article: post.article?,
-          created_at: post.created_at.iso8601,
-          user: {
-            name: post.user.name,
-            avatar_url: post.user.avatar.attached? ? url_for(post.user.avatar.variant(resize_to_limit: [ 128, 128 ])) : nil
-          }
-        }
+        PostSerializer.new(post).as_json
       end
 
       render json: posts
