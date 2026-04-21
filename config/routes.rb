@@ -19,9 +19,9 @@ Rails.application.routes.draw do
   get "/api/skills/manantial-api.sh" => "api/skills#script"
 
   # Peer connections — federation API (other instances call these)
-  scope "/peers", module: "peers" do
+  namespace :peers do
+    resources :posts, only: [ :index ]
     get "profile", to: "profiles#show", as: :peers_profile
-    get "posts", to: "posts#index"
     post "connection", to: "connection_requests#create"
     post "connection/confirm", to: "connection_requests#confirm"
     post "connection/verify", to: "connection_requests#verify"
