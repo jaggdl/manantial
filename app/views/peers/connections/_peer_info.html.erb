@@ -1,7 +1,5 @@
-<% peer_user = connection.peer_profile || Peers::PeerUser.new(hostname: connection.hostname, name: connection.hostname, avatar_url: nil) %>
-
 <%= link_to "https://#{connection.hostname}", class: "flex items-center gap-3", target: "_blank", rel: "noopener" do %>
   <span class="w-2 h-2 <%= local_assigns[:status_color] %> rounded-full"></span>
-  <%= render "shared/avatar", user: peer_user, size: "w-8 h-8", text_size: "text-xs" %>
-  <span class="font-mono text-sm <%= local_assigns[:text_color] || "text-zinc-300" %>"><%= peer_user.display_name %></span>
+  <%= render "shared/avatar", user: connection.user, size: "w-8 h-8", text_size: "text-xs" %>
+  <span class="font-mono text-sm <%= local_assigns[:text_color] || "text-zinc-300" %>"><%= connection.user.display_name %></span>
 <% end %>

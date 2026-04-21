@@ -119,8 +119,8 @@ module Peers
       self.access_key = SecureRandom.hex(32) if access_key.blank?
     end
 
-    def peer_profile
-      @peer_profile ||= fetch_peer_profile
+    def user
+      @user ||= fetch_user || PeerUser.new(hostname: hostname, name: hostname, avatar_url: nil)
     end
 
     def fetch_posts
@@ -136,8 +136,8 @@ module Peers
 
     private
 
-    def fetch_peer_profile
-      Rails.cache.fetch("peer_profile/#{hostname}", expires_in: 30.minutes) do
+    def fetch_user
+      Rails.cache.fetch("peer_user/#{hostname}", expires_in: 30.minutes) do
         response = self.class.get_from_peer(hostname, "/peers/profile")
         next nil unless response[:success]
 
