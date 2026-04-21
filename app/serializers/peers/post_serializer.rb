@@ -2,8 +2,9 @@ module Peers
   class PostSerializer
     include ActiveModel::Serializers::JSON
 
-    def initialize(post)
+    def initialize(post, view_context)
       @post = post
+      @view_context = view_context
     end
 
     def attributes
@@ -31,7 +32,7 @@ module Peers
     end
 
     def preview_image_urls
-      @post.preview_images.map { |blob| url_for(blob.representation(resize_to_limit: [800, 800])) }
+      @post.preview_images.map { |blob| @view_context.url_for(blob.representation(resize_to_limit: [800, 800])) }
     end
 
     def is_article
@@ -43,7 +44,7 @@ module Peers
     end
 
     def user
-      ProfileSerializer.new(@post.user).as_json
+      ProfileSerializer.new(@post.user, @view_context).as_json
     end
   end
 end

@@ -13,7 +13,7 @@ module Peers
         return render json: { error: "No owner configured" }, status: :not_found
       end
 
-      render json: ProfileSerializer.new(owner)
+      render json: ProfileSerializer.new(owner, self)
     end
   end
 end
