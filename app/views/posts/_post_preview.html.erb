@@ -31,31 +31,7 @@
       <%= post_preview.preview_text %>
     </p>
 
-    <% if post_preview.preview_image_urls.any? %>
-      <% urls = post_preview.preview_image_urls.first(4) %>
-      <% count = urls.count %>
-      <div class="mt-4 rounded-xl overflow-hidden border border-zinc-700
-        <%= 'grid grid-cols-2 grid-rows-2 aspect-square' if count >= 4 %>
-        <%= 'grid grid-cols-2 aspect-[2/1]' if count == 2 %>
-        <%= 'grid grid-cols-2 grid-rows-2 aspect-square' if count == 3 %>
-      ">
-        <% urls.each_with_index do |url, index| %>
-          <% if count == 1 %>
-            <%= image_tag url, alt: "", loading: "lazy", class: "w-full h-full object-cover" %>
-          <% elsif count == 2 %>
-            <%= image_tag url, alt: "", loading: "lazy", class: "w-full h-full object-cover" %>
-          <% elsif count == 3 %>
-            <% if index == 0 %>
-              <%= image_tag url, alt: "", loading: "lazy", class: "w-full h-full object-cover row-span-2" %>
-            <% else %>
-              <%= image_tag url, alt: "", loading: "lazy", class: "w-full h-full object-cover border-l border-zinc-700" %>
-            <% end %>
-          <% else # count == 4 %>
-            <%= image_tag url, alt: "", loading: "lazy", class: "w-full h-full object-cover #{'border-r border-zinc-700' if index == 0 || index == 2} #{'border-b border-zinc-700' if index == 0 || index == 1}" %>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
+    <%= render 'posts/image_grid', images: post_preview.preview_image_urls if post_preview.preview_image_urls.any? %>
 
     <% if post_preview.article? %>
       <div class="mt-4">
