@@ -1,5 +1,13 @@
 <article class="group border-b border-zinc-800 py-6 first:pt-0">
   <%= link_to post_preview.url, class: "block", target: post_preview.local? ? nil : "_blank", rel: post_preview.local? ? nil : "noopener" do %>
+    <% if post_preview.pinned %>
+      <div class="mb-3">
+        <span class="font-mono text-xs tracking-widest text-emerald-500 uppercase border border-emerald-800 px-2 py-0.5 rounded-full">
+          PINNED
+        </span>
+      </div>
+    <% end %>
+
     <%# Avatar, name and time ago %>
     <div class="flex items-center gap-3 mb-4">
       <% if post_preview.user_avatar_url.present? %>

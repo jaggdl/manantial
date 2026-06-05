@@ -1,8 +1,8 @@
 class PostPreview
-  attr_reader :title, :preview_text, :created_at, :user_name, :user_avatar_url, :preview_image_urls, :url, :local
+  attr_reader :title, :preview_text, :created_at, :user_name, :user_avatar_url, :preview_image_urls, :url, :local, :pinned
 
   def self.for_owner(owner, context)
-    owner.posts.order(created_at: :desc).map { |post| from_post(post, context) }
+    owner.posts.by_pinned_first.map { |post| from_post(post, context) }
   end
 
   def self.federated(owner, context)
@@ -21,7 +21,8 @@ class PostPreview
       user_avatar_url: post.user.avatar.attached? ? context.url_for(post.user.avatar.variant(resize_to_limit: [128, 128])) : nil,
       preview_image_urls: post.preview_images.map { |blob| context.url_for(blob.representation(resize_to_limit: [800, 800])) },
       url: context.post_path(post),
-      local: true
+      local: true,
+      pinned: post.pinned?
     )
   end
 
@@ -35,11 +36,12 @@ class PostPreview
       user_avatar_url: remote_post.user.avatar_url,
       preview_image_urls: remote_post.preview_image_urls,
       url: remote_post.url,
-      local: false
+      local: false,
+      pinned: false
     )
   end
 
-  def initialize(title:, preview_text:, created_at:, article:, user_name:, user_avatar_url:, preview_image_urls:, url:, local:)
+  def initialize(title:, preview_text:, created_at:, article:, user_name:, user_avatar_url:, preview_image_urls:, url:, local:, pinned: false)
     @title = title
     @preview_text = preview_text
     @created_at = created_at
@@ -49,6 +51,7 @@ class PostPreview
     @preview_image_urls = preview_image_urls
     @url = url
     @local = local
+    @pinned = pinned
   end
 
   def article?
