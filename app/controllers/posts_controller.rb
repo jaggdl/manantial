@@ -1,12 +1,14 @@
 class PostsController < ApplicationController
   allow_unauthenticated_access only: [ :index, :show ]
 
+  before_action :set_post, only: [ :show ]
+  before_action :set_owner_post, only: [ :edit, :update, :destroy, :pin, :unpin ]
+
   def index
     @post_previews = authenticated? ? PostPreview.federated(Current.owner, self) : PostPreview.for_owner(Current.owner, self)
   end
 
   def show
-    @post = Post.find_by!(slug: params[:slug])
   end
 
   def new
@@ -23,11 +25,9 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Current.user.posts.find_by!(slug: params[:slug])
   end
 
   def update
-    @post = Current.user.posts.find_by!(slug: params[:slug])
     if @post.update(post_params)
       redirect_to @post, notice: "Post was successfully updated."
     else
@@ -36,12 +36,29 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Current.user.posts.find_by!(slug: params[:slug])
     @post.destroy
     redirect_to posts_path, notice: "Post was successfully deleted."
   end
 
+  def pin
+    @post.pin!
+    redirect_to @post, notice: "Post pinned."
+  end
+
+  def unpin
+    @post.unpin!
+    redirect_to @post, notice: "Post unpinned."
+  end
+
   private
+
+  def set_post
+    @post = Post.find_by!(slug: params[:slug])
+  end
+
+  def set_owner_post
+    @post = Current.user.posts.find_by!(slug: params[:slug])
+  end
 
   def post_params
     params.require(:post).permit(:title, :body)

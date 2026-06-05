@@ -33,6 +33,15 @@
   <% content_for(:header_actions) do %>
     <% if Current.user == @post.user %>
       <div class="flex items-center gap-4">
+        <% if @post.pinned? %>
+          <%= button_to unpin_post_path(@post), method: :post, class: "font-mono text-sm tracking-widest text-emerald-600 uppercase hover:text-emerald-500 transition-colors bg-transparent border-none cursor-pointer" do %>
+            UNPIN
+          <% end %>
+        <% else %>
+          <%= button_to pin_post_path(@post), method: :post, class: "font-mono text-sm tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors bg-transparent border-none cursor-pointer" do %>
+            PIN
+          <% end %>
+        <% end %>
         <%= link_to edit_post_path(@post), class: "font-mono text-sm tracking-widest text-zinc-500 uppercase hover:text-zinc-200 transition-colors" do %>
           EDIT
         <% end %>
@@ -54,6 +63,11 @@
         <span class="font-display text-xl md:text-2xl tracking-tight text-white uppercase">
           <%= @post.post_type %>
         </span>
+        <% if @post.pinned? %>
+          <span class="font-mono text-sm tracking-widest text-emerald-500 uppercase border border-emerald-800 px-2 py-0.5 rounded-full">
+            PINNED
+          </span>
+        <% end %>
     </div>
 
     <div class="prose prose-invert prose-zinc max-w-none">

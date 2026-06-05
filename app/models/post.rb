@@ -10,6 +10,8 @@ class Post < ApplicationRecord
 
   scope :articles, -> { where.not(title: nil) }
   scope :regular_posts, -> { where(title: nil) }
+  scope :pinned, -> { where.not(pinned_at: nil) }
+  scope :by_pinned_first, -> { order(Arel.sql("pinned_at DESC NULLS LAST, created_at DESC")) }
 
   PREVIEW_LENGTH = 160
 
@@ -51,6 +53,19 @@ class Post < ApplicationRecord
 
   def post_type
     article? ? "article" : "post"
+  end
+
+  def pinned?
+    pinned_at.present?
+  end
+
+  def pin!
+    self.class.where.not(id: id).update_all(pinned_at: nil)
+    update!(pinned_at: Time.current)
+  end
+
+  def unpin!
+    update!(pinned_at: nil)
   end
 
   def to_param
