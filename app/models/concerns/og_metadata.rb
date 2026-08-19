@@ -6,7 +6,7 @@ module OgMetadata
   end
 
   def og_description
-    body.to_plain_text.truncate(140)
+    preview_text(140).presence
   end
 
   def og_image_url(view_context)

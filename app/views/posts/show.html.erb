@@ -6,7 +6,7 @@
   <% end %>
 
   <% content_for(:head) do %>
-    <meta name="description" content="<%= @post.body.to_plain_text.truncate(280) %>">
+    <meta name="description" content="<%= og[:description] %>">
     <link rel="canonical" href="<%= post_url(@post) %>">
 
     <meta property="og:type" content="article">
