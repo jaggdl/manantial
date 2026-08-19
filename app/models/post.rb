@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+  include OgMetadata
+
   belongs_to :user
 
   validates :slug, presence: true, uniqueness: true
