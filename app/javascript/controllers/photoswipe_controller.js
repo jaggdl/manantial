@@ -7,6 +7,8 @@ export default class extends Controller {
       gallery: this.element,
       children: "a",
       showHideAnimationType: "none",
+      doubleTapAction: false,
+      imageClickAction: false,
       pswpModule: () => import("photoswipe")
     })
 
