@@ -45,6 +45,10 @@ class Post < ApplicationRecord
     body.embeds.map(&:blob).select(&:image?)
   end
 
+  def preview_videos
+    body.embeds.map(&:blob).select(&:video?)
+  end
+
   def article?
     title.present? || (body&.to_plain_text&.length || 0) > 280 || @had_h1
   end

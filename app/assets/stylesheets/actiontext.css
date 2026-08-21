@@ -376,6 +376,10 @@ trix-editor .attachment__metadata {
   .trix-content img {
     max-width: 100%;
     height: auto; }
+  .trix-content .attachment__video {
+    display: block;
+    width: 100%;
+    height: auto; }
   .trix-content .attachment {
     display: inline-block;
     position: relative;

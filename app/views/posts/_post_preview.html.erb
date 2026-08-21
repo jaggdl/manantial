@@ -1,5 +1,5 @@
 <article class="group border-b border-zinc-800 py-6 first:pt-0">
-  <%= link_to post_preview.url, class: "block", target: post_preview.local? ? nil : "_blank", rel: post_preview.local? ? nil : "noopener" do %>
+  <%= link_to post_preview.url, class: "block w-full", target: post_preview.local? ? nil : "_blank", rel: post_preview.local? ? nil : "noopener" do %>
     <% if post_preview.pinned %>
       <div class="mb-3">
         <span class="font-mono text-xs tracking-widest text-emerald-500 uppercase border border-emerald-800 px-2 py-0.5 rounded-full">
@@ -39,8 +39,6 @@
       <%= post_preview.preview_text %>
     </p>
 
-    <%= render 'posts/image_grid', images: post_preview.preview_image_urls if post_preview.preview_image_urls.any? %>
-
     <% if post_preview.article? %>
       <div class="mt-4">
         <span class="font-mono text-sm tracking-widest text-zinc-600 uppercase border border-zinc-700 px-2 py-0.5 rounded-full">
@@ -48,5 +46,13 @@
         </span>
       </div>
     <% end %>
+  <% end %>
+
+  <%= render 'posts/image_grid', images: post_preview.preview_image_urls if post_preview.preview_image_urls.any? %>
+
+  <% post_preview.preview_video_urls.each do |video_url| %>
+    <video controls preload="metadata" class="attachment__video w-full mt-4 max-h-[480px]">
+      <source src="<%= video_url %>">
+    </video>
   <% end %>
 </article>
