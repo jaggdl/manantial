@@ -11,9 +11,8 @@
     <% width = image[:width].to_i %>
     <% height = image[:height].to_i %>
     <% if width > 0 && height > 0 %>
-      <% scale = 1600.0 / [width, height].max %>
-      <% pswp_width = (width * scale).round %>
-      <% pswp_height = (height * scale).round %>
+      <% pswp_width = width %>
+      <% pswp_height = height %>
     <% else %>
       <% pswp_width = 1600 %>
       <% pswp_height = 1600 %>

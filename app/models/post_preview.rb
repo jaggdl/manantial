@@ -77,7 +77,7 @@ class PostPreview
   def self.image_data(blob, context)
     {
       url: context.url_for(blob.representation(resize_to_limit: [800, 800])),
-      large_url: context.url_for(blob.representation(resize_to_limit: [1600, 1600])),
+      large_url: context.url_for(blob),
       width: blob.metadata[:width],
       height: blob.metadata[:height]
     }
