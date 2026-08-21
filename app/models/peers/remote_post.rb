@@ -1,12 +1,13 @@
 module Peers
   class RemotePost
-    attr_reader :slug, :title, :preview_text, :preview_image_urls, :created_at, :user, :hostname
+    attr_reader :slug, :title, :preview_text, :preview_image_urls, :preview_video_urls, :created_at, :user, :hostname
 
     def initialize(attrs = {})
       @slug = attrs["slug"] || attrs[:slug]
       @title = attrs["title"] || attrs[:title]
       @preview_text = attrs["preview_text"] || attrs[:preview_text]
       @preview_image_urls = attrs["preview_image_urls"] || attrs[:preview_image_urls] || []
+      @preview_video_urls = attrs["preview_video_urls"] || attrs[:preview_video_urls] || []
       @is_article = attrs["is_article"] || attrs[:is_article]
       @created_at = Time.parse(attrs["created_at"] || attrs[:created_at]) rescue nil
       @hostname = attrs["hostname"] || attrs[:hostname]
