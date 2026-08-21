@@ -6,6 +6,7 @@ export default class extends Controller {
     this.lightbox = new PhotoSwipeLightbox({
       gallery: this.element,
       children: "a",
+      showHideAnimationType: "none",
       pswpModule: () => import("photoswipe")
     })
 
