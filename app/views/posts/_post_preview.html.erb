@@ -48,7 +48,7 @@
     <% end %>
   <% end %>
 
-  <%= render 'posts/image_grid', images: post_preview.preview_image_urls if post_preview.preview_image_urls.any? %>
+  <%= render 'posts/image_grid', images: post_preview.preview_images if post_preview.preview_images.any? %>
 
   <% post_preview.preview_video_urls.each do |video_url| %>
     <video controls preload="metadata" class="attachment__video w-full mt-4 max-h-[480px]">

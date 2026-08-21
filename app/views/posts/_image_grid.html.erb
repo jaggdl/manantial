@@ -4,20 +4,27 @@
   <%= 'grid grid-cols-2 grid-rows-2 aspect-square' if count >= 4 %>
   <%= 'grid grid-cols-2 aspect-[2/1]' if count == 2 %>
   <%= 'grid grid-cols-2 grid-rows-2 aspect-square' if count == 3 %>
-">
-  <% images.each_with_index do |url, index| %>
-    <% if count == 1 %>
-      <%= image_tag(url, alt: "", loading: "lazy", class: "w-full h-full object-cover") %>
-    <% elsif count == 2 %>
-      <%= image_tag(url, alt: "", loading: "lazy", class: "w-full h-full object-cover") %>
-    <% elsif count == 3 %>
-      <% if index == 0 %>
-        <%= image_tag(url, alt: "", loading: "lazy", class: "w-full h-full object-cover row-span-2") %>
-      <% else %>
-        <%= image_tag(url, alt: "", loading: "lazy", class: "w-full h-full object-cover border-l border-zinc-700") %>
-      <% end %>
-    <% else # count == 4 %>
-      <%= image_tag(url, alt: "", loading: "lazy", class: "w-full h-full object-cover #{'border-r border-zinc-700' if index == 0 || index == 2} #{'border-b border-zinc-700' if index == 0 || index == 1}") %>
+" data-controller="photoswipe">
+  <% images.each_with_index do |image, index| %>
+    <% image_url = image[:url] %>
+    <% large_url = image[:large_url] || image_url %>
+    <% width = image[:width].to_i %>
+    <% height = image[:height].to_i %>
+    <% if width > 0 && height > 0 %>
+      <% scale = 1600.0 / [width, height].max %>
+      <% pswp_width = (width * scale).round %>
+      <% pswp_height = (height * scale).round %>
+    <% else %>
+      <% pswp_width = 1600 %>
+      <% pswp_height = 1600 %>
+    <% end %>
+    <% classes = "relative block" %>
+    <% classes = "#{classes} row-span-2" if count == 3 && index == 0 %>
+    <% classes = "#{classes} border-l border-zinc-700" if count == 3 && index != 0 %>
+    <% classes = "#{classes} #{'border-r border-zinc-700' if index == 0 || index == 2}" if count == 4 %>
+    <% classes = "#{classes} #{'border-b border-zinc-700' if index == 0 || index == 1}" if count == 4 %>
+    <%= link_to large_url, class: classes, data: { pswp_width: pswp_width, pswp_height: pswp_height } do %>
+      <%= image_tag image_url, alt: "", loading: "lazy", class: "w-full h-full object-cover" %>
     <% end %>
   <% end %>
 </div>
